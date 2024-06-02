@@ -1,25 +1,129 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import { faker } from "@faker-js/faker";
+Cypress.Commands.add("createUser", function (nome, email, senha) {
+  let uId;
+  cy.request("POST", "users", {
+    name: nome,
+    email: email,
+    password: senha,
+  })
+    .then(function (response) {
+      uId = response.body.id;
+    })
+    .then(function () {
+      return {
+        id: uId,
+      };
+    });
+});
+
+Cypress.Commands.add("createAndLoginUser", function (nome, email, senha) {
+  let uId;
+  let uToken;
+  cy.request("POST", "/users", {
+    name: nome,
+    email: email,
+    password: senha,
+  }).then(function (response) {
+    uId = response.body.id;
+    return cy
+      .request("POST", "/auth/login", {
+        email: email,
+        password: senha,
+      })
+      .then(function (response) {
+        uToken = response.body.accessToken;
+        {
+          return {
+            id: uId,
+            token: uToken,
+          };
+        }
+      });
+  });
+});
+
+Cypress.Commands.add("deleteUser", function (id, token) {
+  cy.log("Deletando o usuario");
+  cy.request({
+    method: "DELETE",
+    url: "/users/" + id,
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+});
+
+Cypress.Commands.add("inactivateUser", function (token) {
+  cy.request({
+    method: "PATCH",
+    url: "/users/inactivate",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+});
+
+Cypress.Commands.add("createAndLogAdmin", function (nome, email, senha) {
+  let uId;
+  let uToken;
+  cy.log("Cria um usuario, faz o login e da permissão de ADM ");
+  cy.request("POST", "/users", {
+    name: nome,
+    email: email,
+    password: senha,
+  }).then(function (response) {
+    uId = response.body.id;
+    return cy
+      .request("POST", "/auth/login", {
+        email: email,
+        password: senha,
+      })
+      .then(function (response) {
+        uToken = response.body.accessToken;
+        cy.request({
+          method: "PATCH",
+          url: "/users/admin",
+          headers: {
+            Authorization: "Bearer " + uToken,
+          },
+        }).then(function () {
+          return {
+            token: uToken,
+            id: uId,
+          };
+        });
+      });
+  });
+});
+
+Cypress.Commands.add("createAndLoginCritic", function (nome, email, senha) {
+  let uId;
+  let uToken;
+  cy.request("POST", "/users", {
+    name: nome,
+    email: email,
+    password: senha,
+  }).then(function (response) {
+    uId = response.body.id;
+    return cy
+      .request("POST", "/auth/login", {
+        email: email,
+        password: senha,
+      })
+      .then(function (response) {
+        uToken = response.body.accessToken;
+        cy.request({
+          method: "PATCH",
+          url: "/users/apply",
+          headers: {
+            Authorization: "Bearer " + uToken,
+          },
+        }).then(function () {
+          return {
+            id: uId,
+            token: uToken,
+          };
+        });
+      });
+  });
+});
