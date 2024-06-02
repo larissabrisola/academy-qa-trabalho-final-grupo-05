@@ -1,19 +1,13 @@
 import { faker } from "@faker-js/faker";
-Cypress.Commands.add("createUser", function (nome, email, senha) {
-  let uId;
-  cy.request("POST", "users", {
-    name: nome,
-    email: email,
-    password: senha,
-  })
-    .then(function (response) {
-      uId = response.body.id;
-    })
-    .then(function () {
-      return {
-        id: uId,
-      };
-    });
+
+Cypress.Commands.add("createUser", function (nome, email, senha, failOnStatusCode) {
+  cy.request( 
+    {method:'POST', url: `/users`,
+     body: {
+      "name": nome,
+       "email": email,
+        "password": senha
+    }, failOnStatusCode: failOnStatusCode})
 });
 
 Cypress.Commands.add("createAndLoginUser", function (nome, email, senha) {
@@ -43,7 +37,6 @@ Cypress.Commands.add("createAndLoginUser", function (nome, email, senha) {
 });
 
 Cypress.Commands.add("deleteUser", function (id, token) {
-  cy.log("Deletando o usuario");
   cy.request({
     method: "DELETE",
     url: "/users/" + id,
@@ -66,7 +59,6 @@ Cypress.Commands.add("inactivateUser", function (token) {
 Cypress.Commands.add("createAndLogAdmin", function (nome, email, senha) {
   let uId;
   let uToken;
-  cy.log("Cria um usuario, faz o login e da permissão de ADM ");
   cy.request("POST", "/users", {
     name: nome,
     email: email,
