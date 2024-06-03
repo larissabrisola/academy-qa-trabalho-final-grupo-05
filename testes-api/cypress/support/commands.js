@@ -36,13 +36,13 @@ Cypress.Commands.add("createAndLoginUser", function (nome, email, senha) {
   });
 });
 
-Cypress.Commands.add("deleteUser", function (id, token) {
+Cypress.Commands.add("deleteUser", function (id, token, failOnStatusCode) {
   cy.request({
     method: "DELETE",
     url: "users/" + id,
     headers: {
       Authorization: "Bearer " + token,
-    },
+    }, failOnStatusCode: failOnStatusCode
   });
 });
 
