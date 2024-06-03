@@ -103,8 +103,8 @@ Feature: Cadastro de usuário
     Scenario: Não deve ser possivel cadastrar com senha contendo 5 ou menos caracteres
         When preencher o formulário com nome válido 
         And preencher o formulário com email válido
-        And preencher o formulário com senha "asdf"
-        And confirmar a senha "asdf"
+        And preencher o formulário com senha "assdf"
+        And confirmar a senha "assdf"
         And clicar em Cadastrar 
         Then o usuário não será cadastrado e receberá um aviso "A senha deve ter pelo menos 6 dígitos."
 
