@@ -72,15 +72,20 @@ describe('Cadastro de usuário', ()=>{
     })
 
     it('Não deve ser possivel cadastrar com formato de email inválido', ()=>{
-        cy.createUser('Michael', 'lori🤓smgmail.com', 'linuxtips', false).then((response)=>{
-            expect(response.body).to.deep.equal( {
-                "message": [
-                "email must be an email"
-                ],
-                "error": "Bad Request",
-                "statusCode": 400
-                })
-        })
+        let emailsInvalidos = ["joca@mo.", "lori🤓j@gmail.com", "lori@#s.com", "pamela@", "*****@****.***"] // emails com emoji no dominio estão sendo permitidos
+        emailsInvalidos.forEach(email => {
+
+            cy.createUser('Michael', email, 'linuxtips', false).then((response)=>{
+                expect(response.body).to.deep.equal( {
+                    "message": [
+                    "email must be an email"
+                    ],
+                    "error": "Bad Request",
+                    "statusCode": 400
+                    })
+            })
+        });
+
     })
 
     it('Não deve ser possivel cadastrar com email contendo 61 ou mais caracteres', ()=>{
