@@ -72,7 +72,7 @@ describe('Cadastro de usuário', ()=>{
     })
 
     it('Não deve ser possivel cadastrar com formato de email inválido', ()=>{
-        let emailsInvalidos = ["joca@mo.", "lori🤓j@gmail.com", "lori@#s.com", "pamela@", "*****@****.***"] // emails com emoji no dominio estão sendo permitidos
+        let emailsInvalidos = ["joca@mo.", "lori🤓j@gmail.com", "lori@#s.com", "pamela@", "*****@****.***", "joaquim@doi👾s.com"] 
         emailsInvalidos.forEach(email => {
 
             cy.createUser('Michael', email, 'linuxtips', false).then((response)=>{
