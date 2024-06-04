@@ -72,7 +72,8 @@ describe('Cadastro de usuário', ()=>{
     })
 
     it('Não deve ser possivel cadastrar com formato de email inválido', ()=>{
-        let emailsInvalidos = ["joca@mo.", "lori🤓j@gmail.com", "lori@#s.com", "pamela@", "*****@****.***", "joaquim@doi👾s.com"] 
+        let base = faker.string.alpha(8)
+        let emailsInvalidos = [base +"@mo.", base + "🤓j@gmail.com", base + "@#s.com", base + "@3", "*****@****.com", base + "@doi👾s.com"] 
         emailsInvalidos.forEach(email => {
 
             cy.createUser('Michael', email, 'linuxtips', false).then((response)=>{
