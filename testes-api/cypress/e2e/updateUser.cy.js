@@ -13,17 +13,27 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
 
     it('Deve ser possível atualizar um usuário com sucesso', () => {
 
-    });
+    })
     
-    it('Como um usuário comum, não deve ser possível atualizar outra contas', () => {
+    it('Não deve ser possível atualizar outra contas como um usuário comum', () => {
 
-    });
+    })
 
-    it('Como um usuário admin, deve ser possível atualizar outras contas', () => {
+    it('Deve ser possível atualizar outras contas como um usuário admin', () => {
 
-    });
+    })
 
-    it('Como um usuário critic, não deve ser possível atualizar outras contas', () => {
+    it('Não deve ser possível atualizar outras contas Como um usuário critico', () => {
         
-    });
+    })
+
+    it('Não deve ser possível deixar campos sem informação', () => {
+        
+    })
+    it('O novo nome precisa estar entre 1 e 100 caracteres', () => {
+        
+    })
+    it('A nova senha precisa estar entre 6 a 12 caracteres', () => {
+        
+    })
 })
