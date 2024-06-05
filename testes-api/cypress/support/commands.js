@@ -2,13 +2,37 @@ import { faker } from "@faker-js/faker";
 
 Cypress.Commands.add("createUser", function (nome, email, senha, failOnStatusCode) {
   cy.request( 
-    {method:'POST', url: `users`,
+    {method:'POST', url: "/users",
      body: {
       "name": nome,
        "email": email,
         "password": senha
     }, failOnStatusCode: failOnStatusCode})
 });
+
+Cypress.Commands.add("login", function (email, senha) {
+  cy.request({
+    method: "POST",
+    url: "auth/login",
+    body: {
+      email: email,
+      password: senha
+    }
+  }).then((response) => {
+    const accessToken = response.body.accessToken
+    Cypress.env('accessToken', accessToken)
+  })
+})
+
+Cypress.Commands.add('promoteAdmin', function () {
+  cy.request({
+    method: 'PATCH',
+    url: '/users/admin',
+    headers: {
+      Authorization: `Bearer ${Cypress.env('accessToken')}`
+    }
+  })
+})
 
 Cypress.Commands.add("createAndLoginUser", function (nome, email, senha) {
   let uId;
@@ -20,7 +44,7 @@ Cypress.Commands.add("createAndLoginUser", function (nome, email, senha) {
   }).then(function (response) {
     uId = response.body.id;
     return cy
-      .request("POST", "auth/login", {
+      .request("POST", "/auth/login", {
         email: email,
         password: senha,
       })
@@ -36,20 +60,20 @@ Cypress.Commands.add("createAndLoginUser", function (nome, email, senha) {
   });
 });
 
-Cypress.Commands.add("deleteUser", function (id, token, failOnStatusCode) {
+Cypress.Commands.add("deleteUser", function (id, token) {
   cy.request({
     method: "DELETE",
-    url: "users/" + id,
+    url: "/users/" + id,
     headers: {
       Authorization: "Bearer " + token,
-    }, failOnStatusCode: failOnStatusCode
+    },
   });
 });
 
 Cypress.Commands.add("inactivateUser", function (token) {
   cy.request({
     method: "PATCH",
-    url: "users/inactivate",
+    url: "/users/inactivate",
     headers: {
       Authorization: "Bearer " + token,
     },
@@ -59,14 +83,14 @@ Cypress.Commands.add("inactivateUser", function (token) {
 Cypress.Commands.add("createAndLogAdmin", function (nome, email, senha) {
   let uId;
   let uToken;
-  cy.request("POST", "users", {
+  cy.request("POST", "/users", {
     name: nome,
     email: email,
     password: senha,
   }).then(function (response) {
     uId = response.body.id;
     return cy
-      .request("POST", "auth/login", {
+      .request("POST", "/auth/login", {
         email: email,
         password: senha,
       })
@@ -74,7 +98,7 @@ Cypress.Commands.add("createAndLogAdmin", function (nome, email, senha) {
         uToken = response.body.accessToken;
         cy.request({
           method: "PATCH",
-          url: "users/admin",
+          url: "/users/admin",
           headers: {
             Authorization: "Bearer " + uToken,
           },
@@ -91,14 +115,14 @@ Cypress.Commands.add("createAndLogAdmin", function (nome, email, senha) {
 Cypress.Commands.add("createAndLoginCritic", function (nome, email, senha) {
   let uId;
   let uToken;
-  cy.request("POST", "users", {
+  cy.request("POST", "/users", {
     name: nome,
     email: email,
     password: senha,
   }).then(function (response) {
     uId = response.body.id;
     return cy
-      .request("POST", "auth/login", {
+      .request("POST", "/auth/login", {
         email: email,
         password: senha,
       })
@@ -106,7 +130,7 @@ Cypress.Commands.add("createAndLoginCritic", function (nome, email, senha) {
         uToken = response.body.accessToken;
         cy.request({
           method: "PATCH",
-          url: "users/apply",
+          url: "/users/apply",
           headers: {
             Authorization: "Bearer " + uToken,
           },
@@ -119,29 +143,3 @@ Cypress.Commands.add("createAndLoginCritic", function (nome, email, senha) {
       });
   });
 });
-
-
-Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationInMinutes, releaseYear, failOnStatusCode)=>{
-
-  cy.createAndLogAdmin(faker.animal.fish(), faker.internet.exampleEmail(), 'lionxitps').then((response)=>{
-    let token = response.token
-
-    cy.request({
-      method: "POST",
-      url: "movies",
-      headers: {
-        Authorization: "Bearer " + `${token}`,
-      },
-      body: {
-        title: title,
-        genre: genre,
-        description: description,
-        durationInMinutes: durationInMinutes,
-        releaseYear: releaseYear,
-      }, failOnStatusCode
-    })
-  })
-  });
-
-
-  
