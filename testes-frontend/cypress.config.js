@@ -9,6 +9,7 @@ const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
 
 module.exports = defineConfig({
   e2e: {
+    defaultCommandTimeout: 10000, // o site tá lentinho, tive que aumentar 
     env: {
       register_url: "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/register",
       login_url: "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/login", 
