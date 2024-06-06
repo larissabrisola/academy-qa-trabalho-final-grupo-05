@@ -465,69 +465,46 @@ describe("Cadastro de filme", () => {
         });
       });
   })
-  it('Não deve ser possivel cadastrar um filme com duração contendo letras', ()=>{
-    cy.createAndLogAdmin(faker.animal.cow(), faker.internet.exampleEmail(),"linuxtiops").then((response) => {
-        let token = response.token;
-        cy.request({
-          method: "POST",
-          url: "movies",
-          headers: {
-            Authorization: "Bearer " + `${token}`,
-          },
-          body: {
-            title: titleMovie,
-            genre: genreMovie,
-            description: descriptionMovie,
-            durationInMinutes: "60 minutos",
-            releaseYear: releaseYear,
-          }, failOnStatusCode: false
-        }).then((response) => {
-          expect(response.body).to.deep.equal( {
-            "message": [
-            "durationInMinutes must not be greater than 43200",
-            "durationInMinutes must not be less than 1",
-            "durationInMinutes must be an integer number",
-            "durationInMinutes must be a number conforming to the specified constraints"
-            ],
-            "error": "Bad Request",
-            "statusCode": 400
-            })
-        
-        });
-      });
+  it('Não deve ser possivel cadastrar um filme com valor inválido em tempo de duração', ()=>{
+    let invalidDuration = [ "dois mil", "#@!", "😁", "    ", "ç[e"]
 
+    invalidDuration.forEach(invalidDuration =>{
+      cy.adminCreatesAMovie(titleMovie, genreMovie, descriptionMovie, invalidDuration, releaseYear, false).then((response)=>{
+        expect(response.body).to.deep.equal({
+                  "message": [
+                  "durationInMinutes must not be greater than 43200",
+                  "durationInMinutes must not be less than 1",
+                  "durationInMinutes must be an integer number",
+                  "durationInMinutes must be a number conforming to the specified constraints"
+                  ],
+                  "error": "Bad Request",
+                  "statusCode": 400
+                  })
+      })
+    })
   })
 
-  it('Não deve ser possivel cadastrar um filme com ano de lançamento contendo letras', ()=>{
-    cy.createAndLogAdmin(faker.animal.cow(), faker.internet.exampleEmail(),"linuxtiops").then((response) => {
-        let token = response.token;
-        cy.request({
-          method: "POST",
-          url: "movies",
-          headers: {
-            Authorization: "Bearer " + `${token}`,
-          },
-          body: {
-            title: titleMovie,
-            genre: genreMovie,
-            description: descriptionMovie,
-            durationInMinutes: durationInMinutes,
-            releaseYear: "dois mil e vinte",
-          }, failOnStatusCode: false
-        }).then((response) => {
-          expect(response.body).to.deep.equal( {
-            "message": [
-            "releaseYear must not be greater than 2024",
-            "releaseYear must not be less than 1895",
-            "releaseYear must be an integer number",
-            "releaseYear must be a number conforming to the specified constraints"
-            ],
-            "error": "Bad Request",
-            "statusCode": 400
-            })
-        
-        });
-      });
+  it('Não deve ser possivel cadastrar um filme com valor inválido em ano de lançamento', ()=>{
+
+    let notAReleaseYear = [ "dois mil", "#@!", "😁", "    ", "ç[e"]
+
+    notAReleaseYear.forEach(notYear =>{
+
+      cy.adminCreatesAMovie(titleMovie, genreMovie, descriptionMovie, durationInMinutes, notYear, false).then((response)=>{
+        expect(response.body).to.deep.equal( {
+                "message": [
+                "releaseYear must not be greater than 2024",
+                "releaseYear must not be less than 1895",
+                "releaseYear must be an integer number",
+                "releaseYear must be a number conforming to the specified constraints"
+                ],
+                "error": "Bad Request",
+                "statusCode": 400
+                })
+      })
+
+    })
+
   })
 
 });
