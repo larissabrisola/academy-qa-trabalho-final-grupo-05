@@ -50,7 +50,7 @@ When('preencher o formulário com senha {string}', (string)=>{
 })
 
 When('preencher o formulário com email já cadastrado', ()=>{
-    pageRegister.typeEmail('robinscherbatsy@gmail.com')
+    pageRegister.typeEmail('robinscherbatsy10@gmail.com')
 })
 When('confirmar a senha {string}', (string)=>{
     pageRegister.typePasswordConfirm(string)

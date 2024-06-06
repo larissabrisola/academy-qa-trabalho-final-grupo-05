@@ -45,7 +45,7 @@ Feature: Cadastro de usuário
         When preencher o formulário com nome válido
         And preencher o formulário com email já cadastrado
         And preencher o formulário com senha válida
-        And clicar em Cadastrar
+        And confirmar
         Then o usuário não será cadastrado e receberá um aviso "E-mail já cadastrado. Utilize outro e-mail"
 
     Scenario: Não deve ser possivel cadastrar se o campo nome estiver vazio
