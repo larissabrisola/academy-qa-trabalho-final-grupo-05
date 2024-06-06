@@ -3,8 +3,10 @@ import { faker } from "@faker-js/faker"
 describe('Deletar conta', ()=>{
     let userId 
     let token
+
+
     it('Administrador deve ser capaz de excluir a própria conta', ()=>{
-        cy.createAndLogAdmin('Doctor', faker.internet.exampleEmail(), 'caocovarde').then((response)=>{
+        cy.createAndLogAdmin('Doctor Who', faker.internet.exampleEmail(), 'caocovarde').then((response)=>{
             userId = response.id
              token = response.token
             cy.deleteUser(userId, token).then((response)=>{
@@ -43,7 +45,7 @@ describe('Deletar conta', ()=>{
     })
 
     it('Usuário comum não deve conseguir excluir a própria conta', ()=>{
-        cy.createAndLoginUser('Rochelle', faker.internet.exampleEmail(), 'Danone1').then((response)=>{
+        cy.createAndLoginUser('Capitao Holt', faker.internet.exampleEmail(), 'lovecheddar').then((response)=>{
             userId = response.id
              token = response.token
             cy.log(token)
@@ -59,7 +61,7 @@ describe('Deletar conta', ()=>{
     })
 
     it('Usuário critico não deve conseguir excluir a própria conta', ()=>{
-        cy.createAndLoginCritic('lucasfresno', faker.internet.exampleEmail(), 'Danone1').then((response)=>{
+        cy.createAndLoginCritic('lucasfresno', faker.internet.exampleEmail(), 'frioempoa').then((response)=>{
             userId = response.id
              token = response.token
             cy.log(token)

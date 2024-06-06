@@ -45,7 +45,7 @@ Feature: Cadastro de usuário
         When preencher o formulário com nome válido
         And preencher o formulário com email já cadastrado
         And preencher o formulário com senha válida
-        And clicar em Cadastrar
+        And confirmar
         Then o usuário não será cadastrado e receberá um aviso "E-mail já cadastrado. Utilize outro e-mail"
 
     Scenario: Não deve ser possivel cadastrar se o campo nome estiver vazio
@@ -84,6 +84,7 @@ Feature: Cadastro de usuário
             | joca.com        |
             | ruivo!k!@.com |
             | boi@boi|
+            | boi@car😁a.com|
 
 
     Scenario: Não deve ser possivel cadastrar com email contendo 61 ou mais caracteres
@@ -123,7 +124,7 @@ Feature: Cadastro de usuário
         And clicar em Cadastrar
         Then o usuário não será cadastrado e receberá um aviso "O nome deve ter no máximo 100 dígitos."
 
-    Scenario: Não deve ser possivel realizar o cadastro se a senha e confirmação da senha estiverem diferentes
+    Scenario: Não deve ser possivel realizar o cadastro se a senha e confirmação da senha não forem iguais
         When preencher o formulário com nome válido 
         And preencher o formulário com email válido 
         And preencher o formulário com senha "umdoistresq"
@@ -132,9 +133,9 @@ Feature: Cadastro de usuário
         Then o usuário não será cadastrado e receberá um aviso "As senhas devem ser iguais."
 
 
-    Scenario: Não deve ser possivel realizar o cadastro com campo confirmação senha vazio
+    Scenario: Não deve ser possivel realizar o cadastro sem confirmar senha
         When preencher o formulário com nome válido 
         And preencher o formulário com email válido 
         And preencher o formulário com senha "umdoistresq"
-         And clicar em Cadastrar
+        And clicar em Cadastrar
         Then o usuário não será cadastrado e receberá um aviso "Informe a senha"
