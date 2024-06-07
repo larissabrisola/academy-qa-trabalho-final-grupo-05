@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-describe("Teste promover usuário a administrador", function () {
+describe("Teste promover usuário a crítico", function () {
     beforeEach(function () {
         let nome = faker.person.fullName()
         let email = faker.internet.email()
@@ -34,8 +34,7 @@ describe("Teste promover usuário a administrador", function () {
         })
     })
 
-    it("Deve ser possível um usuário critico passar a ser um usuário admin", function () {
-
+    it("Deve ser possível um usuário crítico passar a ser um usuário admin", function () {
         cy.promoteCritic()
         cy.request({
             method: 'PATCH',
