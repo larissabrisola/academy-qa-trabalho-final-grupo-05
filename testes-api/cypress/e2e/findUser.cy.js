@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker"
+import { criaUsuario } from "../support/usuario";
 
 describe('Testes da funcionalidade de encontrar usuários', () => {
     let userName;
@@ -61,8 +62,6 @@ describe('Testes da funcionalidade de encontrar usuários', () => {
                 expect(response.body).not.contain(userEmail);
             })
         })
-
-
     })
 
     it('Não deve ser possível encontrar usuário por meio de outros dados', () => {
@@ -72,7 +71,8 @@ describe('Testes da funcionalidade de encontrar usuários', () => {
             headers: {
                 Authorization: `Bearer ${uToken}`
             },
-
+        }).then((response) => {
+    
         })
     })
 
@@ -80,8 +80,23 @@ describe('Testes da funcionalidade de encontrar usuários', () => {
 
     })
 
-    it('Um usuário comum não deve encontrar outros cadastros', () => {
-
+    it.only('Um usuário comum não deve encontrar outros cadastros', () => {
+        let id;
+        cy.createUser(faker.person.firstName(), faker.internet.email(), '123456').then((response) => {
+            id = response.body.id;
+            cy.log(id)
+        });
+        cy.request({
+            method: 'GET',
+            url: 'users/' + id,
+            headers: {
+                Authorization: `Bearer ${uToken}`
+            },
+            failOnStatusCode: false
+        }).then((response) => {
+            expect(response.status).to.equal(403);
+            expect(response.body.message).to.equal("Forbidden");
+        })
     })
 
     it('Apenas um usuário do tipo admin pode encontrar outros cadastros', () => {
