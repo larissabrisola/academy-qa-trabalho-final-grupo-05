@@ -9,10 +9,10 @@ describe("Teste promover usuário a administrador", function () {
     afterEach(function () {
         cy.inactivateUser()
     })
-    it("Não deve ser possível fazer a promoção sem autenticar o usuário", function () {
+    it("Não deve ser possível fazer a promoção para crítico sem autenticar o usuário", function () {
         cy.request({
             method: "PATCH",
-            url: "users/admin",
+            url: "users/apply",
             failOnStatusCode: false
         }).then(function (response) {
             expect(response.body.statusCode).to.equal(401)
@@ -21,10 +21,10 @@ describe("Teste promover usuário a administrador", function () {
         })
     })
 
-    it("Deve ser possível fazer a promoção com um usuário propriamente logado e autenticado", function () {
+    it("Deve ser possível fazer a promoção para crítico com um usuário propriamente logado e autenticado", function () {
         cy.request({
             method: "PATCH",
-            url: "users/admin",
+            url: "users/apply",
             failOnStatusCode: true,
             headers: {
                 Authorization: `Bearer ${Cypress.env('accessToken')}`
@@ -34,11 +34,12 @@ describe("Teste promover usuário a administrador", function () {
         })
     })
 
-    it("Deve ser possível um usuário admin passar a ser um usuário critico", function () {
-        cy.promoteAdmin()
+    it("Deve ser possível um usuário critico passar a ser um usuário admin", function () {
+
+        cy.promoteCritic()
         cy.request({
             method: 'PATCH',
-            url: 'users/apply',
+            url: 'users/admin',
             headers: {
                 Authorization: `Bearer ${Cypress.env('accessToken')}`
             }
@@ -47,12 +48,11 @@ describe("Teste promover usuário a administrador", function () {
         })
     })
 })
-
-describe("Não deve ser possível fazer a promoção sem fazer o login do usuário", function () {
-    it("Não deve ser possível fazer a promoção sem fazer o login do usuário", function () {
+describe("Não deve ser possível fazer a promoção para crítico sem fazer o login do usuário", function () {
+    it("Não deve ser possível fazer a promoção para crítico sem fazer o login do usuário", function () {
         cy.request({
             method: "PATCH",
-            url: "users/admin",
+            url: "users/apply",
             failOnStatusCode: false
         }).then(function (response) {
             expect(response.body.statusCode).to.equal(401)
