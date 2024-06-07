@@ -11,6 +11,7 @@ module.exports = defineConfig({
   e2e: {
     defaultCommandTimeout: 10000, // o site tá lentinho, tive que aumentar 
     env: {
+      api_url: "https://raromdb-3c39614e42d4.herokuapp.com/api/",
       register_url: "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/register",
       login_url: "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/login", 
       manageAccount: "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/account", 
