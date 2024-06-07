@@ -186,7 +186,7 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
             url: 'users/' + uId,
             body: {
                 name: 'Zelda',
-                password: '252525'.repeat(101)
+                password: '252525'.repeat(13)
             },
             headers: {
                 Authorization: `Bearer ${uToken}`
