@@ -97,11 +97,10 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
         })
     })
 
-
     it('Não deve ser possível atualizar outras contas como um usuário critico', () => {
         let name = faker.person.firstName();
         let email = faker.internet.email().toLowerCase();
-        
+
         cy.promoteCritic();
         cy.createUser(name, email, '1234567').then((response) => {
             cy.wrap(response.body).as('body')
@@ -122,16 +121,80 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
                 expect(response.body.message).to.equal("Forbidden");
             })
         })
-
     })
 
-    it('Não deve ser possível deixar campos sem informação', () => {
-
+    it('Não deve ser possível deixar campo nome sem informação (sem o mínimo valor de caracteres)', () => {
+        cy.request({
+            method: 'PUT',
+            url: 'users/' + uId,
+            body: {
+                name: '',
+                password: '252525'
+            },
+            headers: {
+                Authorization: `Bearer ${uToken}`
+            }, failOnStatusCode: false
+        }).then((response) => {
+            expect(response.status).to.equal(400)
+            expect(response.body.statusCode).to.equal(400)
+            expect(response.body.error).to.equal("Bad Request")
+            expect(response.body.message[0]).to.equal('name must be longer than or equal to 1 characters')
+        })
     })
-    it('O novo nome precisa estar entre 1 e 100 caracteres', () => {
 
+    it('Não deve ser possível deixar campo senha sem informação (sem o mínimo valor de caracteres)', () => {
+        cy.request({
+            method: 'PUT',
+            url: 'users/' + uId,
+            body: {
+                name: 'Zelda',
+                password: ''
+            },
+            headers: {
+                Authorization: `Bearer ${uToken}`
+            }, failOnStatusCode: false
+        }).then((response) => {
+            expect(response.status).to.equal(400)
+            expect(response.body.statusCode).to.equal(400)
+            expect(response.body.error).to.equal("Bad Request")
+            expect(response.body.message[0]).to.equal('password must be longer than or equal to 6 characters')
+        })
     })
-    it('A nova senha precisa estar entre 6 a 12 caracteres', () => {
 
+
+    it('O novo nome precisa ter no máximo 100 caracteres', () => {
+        cy.request({
+            method: 'PUT',
+            url: 'users/' + uId,
+            body: {
+                name: 'a'.repeat(101),
+                password: '252525'
+            },
+            headers: {
+                Authorization: `Bearer ${uToken}`
+            }, failOnStatusCode: false
+        }).then((response) => {
+            expect(response.body.statusCode).to.equal(400)
+            expect(response.body.error).to.equal("Bad Request")
+            expect(response.body.message[0]).to.equal('name must be shorter than or equal to 100 characters')
+        })
+    })
+
+    it('A nova senha precisa ter no máximo 12 caracteres', () => {
+        cy.request({
+            method: 'PUT',
+            url: 'users/' + uId,
+            body: {
+                name: 'Zelda',
+                password: '252525'.repeat(101)
+            },
+            headers: {
+                Authorization: `Bearer ${uToken}`
+            }, failOnStatusCode: false
+        }).then((response) => {
+            expect(response.body.statusCode).to.equal(400)
+            expect(response.body.error).to.equal("Bad Request")
+            expect(response.body.message[0]).to.equal('password must be shorter than or equal to 12 characters')
+        })
     })
 })
