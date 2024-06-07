@@ -1,0 +1,74 @@
+[
+    {
+        "id": 3,
+        "title": "Romeu e Julieta",
+        "genre": "Romance",
+        "description": "Um filme baseado em uma história de amor",
+        "totalRating": 6,
+        "durationInMinutes": 185,
+        "releaseYear": 1996
+    },
+    {
+        "id": 3,
+        "title": "Troia",
+        "genre": "Ação",
+        "description": "Um filme onde conta a história de um guerreiro",
+        "totalRating": 8.5,
+        "durationInMinutes": 185,
+        "releaseYear": 2001
+    },
+    {
+        "id": 3,
+        "title": "Batman",
+        "genre": "Ação",
+        "description": "É o batman...",
+        "totalRating": 6.5,
+        "durationInMinutes": 185,
+        "releaseYear": 1996
+    },
+    {
+        "id": 3,
+        "title": "Super Man",
+        "genre": "Ação",
+        "description": "É melhor do que o Batman...",
+        "totalRating": 10,
+        "durationInMinutes": 185,
+        "releaseYear": 1996
+    },
+    {
+        "id": 3,
+        "title": "2012",
+        "genre": "Ação",
+        "description": "O fim e o recomeço do mundo",
+        "totalRating": 4,
+        "durationInMinutes": 185,
+        "releaseYear": 1996
+    },
+    {
+        "id": 3,
+        "title": "O ultimo Samurai",
+        "genre": "Ação",
+        "description": "Que puta filme top",
+        "totalRating": 9,
+        "durationInMinutes": 185,
+        "releaseYear": 1996
+    },
+    {
+        "id": 3,
+        "title": "Homem Aranha",
+        "genre": "Ação",
+        "description": "O menino que virou aranha",
+        "totalRating": 8.5,
+        "durationInMinutes": 185,
+        "releaseYear": 1996
+    },
+    {
+        "id": 3,
+        "title": "Homem Formiga",
+        "genre": "Ação",
+        "description": "O homem que se tornou uma formiga",
+        "totalRating": 8.5,
+        "durationInMinutes": 185,
+        "releaseYear": 1996
+    }
+]
