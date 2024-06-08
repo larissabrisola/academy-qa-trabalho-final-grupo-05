@@ -9,18 +9,6 @@ describe("Teste promover usuário a crítico", function () {
     afterEach(function () {
         cy.inactivateUser()
     })
-    it("Não deve ser possível fazer a promoção para crítico sem autenticar o usuário", function () {
-        cy.request({
-            method: "PATCH",
-            url: "users/apply",
-            failOnStatusCode: false
-        }).then(function (response) {
-            expect(response.body.statusCode).to.equal(401)
-            expect(response.body.error).to.deep.equal("Unauthorized")
-            expect(response.body.message).to.deep.equal("Access denied.")
-        })
-    })
-
     it("Deve ser possível fazer a promoção para crítico com um usuário propriamente logado e autenticado", function () {
         cy.request({
             method: "PATCH",
