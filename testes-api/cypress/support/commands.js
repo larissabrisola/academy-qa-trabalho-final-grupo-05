@@ -2,7 +2,8 @@ import { faker } from "@faker-js/faker";
 
 Cypress.Commands.add("createUser", function (nome, email, senha, failOnStatusCode) {
   cy.request( 
-    {method:'POST', url: `users`,
+
+    {method:'POST', url: "users",
      body: {
       "name": nome,
        "email": email,
@@ -27,7 +28,8 @@ Cypress.Commands.add("login", function (email, senha) {
 Cypress.Commands.add('promoteAdmin', function () {
   cy.request({
     method: 'PATCH',
-    url: '/users/admin',
+
+    url: 'users/admin',
     headers: {
       Authorization: `Bearer ${Cypress.env('accessToken')}`
     }
@@ -37,13 +39,12 @@ Cypress.Commands.add('promoteAdmin', function () {
 Cypress.Commands.add('promoteCritic', function () {
   cy.request({
     method: 'PATCH',
-    url: '/users/apply',
+    url: 'users/apply',
     headers: {
       Authorization: `Bearer ${Cypress.env('accessToken')}`
     }
   })
 })
-
 
 Cypress.Commands.add("createAndLoginUser", function (nome, email, senha) {
   let uId;
@@ -154,10 +155,7 @@ Cypress.Commands.add("createAndLoginCritic", function (nome, email, senha) {
       });
   });
 });
-
-
 Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationInMinutes, releaseYear, failOnStatusCode)=>{
-
   cy.createAndLogAdmin(faker.animal.fish(), faker.internet.exampleEmail(), 'lionxitps').then((response)=>{
     let token = response.token
 
@@ -177,6 +175,3 @@ Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationI
     })
   })
   });
-
-
-  
