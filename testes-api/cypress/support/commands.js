@@ -13,14 +13,15 @@ Cypress.Commands.add("createUser", function (nome, email, senha, failOnStatusCod
     })
 });
 
-Cypress.Commands.add("login", function (email, senha) {
+Cypress.Commands.add("login", function (email, senha, failOnStatusCode) {
   cy.request({
     method: "POST",
     url: "auth/login",
     body: {
       email: email,
       password: senha
-    }
+    },
+    failOnStatusCode: failOnStatusCode
   }).then((response) => {
     const accessToken = response.body.accessToken
     Cypress.env('accessToken', accessToken)
@@ -178,7 +179,7 @@ Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationI
   })
 });
 
-Cypress.Commands.add('getUserViaID', (id,failOnStatusCode) => {
+Cypress.Commands.add('getUserViaID', (id, failOnStatusCode) => {
   cy.request({
     method: "GET",
     url: "users/" + id,
@@ -188,3 +189,49 @@ Cypress.Commands.add('getUserViaID', (id,failOnStatusCode) => {
     failOnStatusCode: failOnStatusCode
   })
 })
+
+Cypress.Commands.add('createMovie', () => {
+  let idFilme
+  cy.request({
+    method: "POST",
+    url: "movies",
+    headers: {
+      Authorization: `Bearer ${Cypress.env('accessToken')}`
+    },
+    body: {
+      title: faker.person.firstName() + " o retorno",
+      genre: "Terror",
+      description: faker.lorem.words({ min: 6, max: 12 }),
+      durationInMinutes: 120,
+      releaseYear: 2000,
+    },
+  }).then((response) => {
+    idFilme = response.body.id
+    return { idFilme: idFilme }
+  })
+})
+
+Cypress.Commands.add('postReview', (idFilme,token) => {
+  cy.request({
+    method: "POST",
+    url: "users/review",
+    headers: {
+      Authorization: "Bearer " + token
+    },
+    body: {
+      movieId: idFilme,
+      score: 5,
+      reviewText: "Teste review usuário inativado",
+    },
+  })
+})
+
+Cypress.Commands.add("inactivateWithToken", function (token) {
+  cy.request({
+    method: "PATCH",
+    url: "users/inactivate",
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  });
+});
