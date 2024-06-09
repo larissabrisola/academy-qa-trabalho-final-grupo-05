@@ -207,7 +207,7 @@ Cypress.Commands.add('createMovie', () => {
     },
   }).then((response) => {
     idFilme = response.body.id
-    return { idFilme: idFilme }
+    return response.body
   })
 })
 
