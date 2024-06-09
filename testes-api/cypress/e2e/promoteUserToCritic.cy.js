@@ -34,7 +34,7 @@ describe("Teste promover usuário a crítico", () => {
             expect(response.status).to.equal(204)
         })
     })
-    it("A review anterior não deve ser alterada após a promoção do usuário a critic", () => {
+    it.only("A review anterior não deve ser alterada após a promoção do usuário a critic", () => {
         let token
         cy.promoteAdmin()
         cy.createMovie().then((response) => {
@@ -45,6 +45,7 @@ describe("Teste promover usuário a crítico", () => {
             token = data.token
             cy.get("@data").then((data) => { cy.postReview(data.id, token) })
             cy.promoteCriticWithToken(token)
+            cy.inactivateWithToken(token)
         })
         cy.createAndLoginUser(faker.person.fullName(), faker.internet.email(), "123456").then((data) => {
             token = data.token
@@ -53,6 +54,7 @@ describe("Teste promover usuário a crítico", () => {
                     expect(response.body.reviews[0].reviewText).to.deep.equal("Teste review usuário inativado / promovido")
                     expect(response.body.reviews[0].reviewType).to.equal(0)
                     expect(response.body.reviews[0].score).to.equal(5)
+                    expect(response.body.reviews[0].user.type).to.equal(2)
                     Cypress.env('accessToken', token)
                 })
             })

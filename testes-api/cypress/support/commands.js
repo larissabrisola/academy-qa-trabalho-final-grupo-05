@@ -191,7 +191,6 @@ Cypress.Commands.add('getUserViaID', (id, failOnStatusCode) => {
 })
 
 Cypress.Commands.add('createMovie', () => {
-  let idFilme
   cy.request({
     method: "POST",
     url: "movies",
@@ -206,7 +205,6 @@ Cypress.Commands.add('createMovie', () => {
       releaseYear: 2000,
     },
   }).then((response) => {
-    idFilme = response.body.id
     return response.body
   })
 })

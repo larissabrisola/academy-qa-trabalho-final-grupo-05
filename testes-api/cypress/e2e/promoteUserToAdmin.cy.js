@@ -54,6 +54,7 @@ describe("Teste promover usuário a administrador", () => {
                     expect(response.body.reviews[0].reviewText).to.deep.equal("Teste review usuário inativado / promovido")
                     expect(response.body.reviews[0].reviewType).to.equal(0)
                     expect(response.body.reviews[0].score).to.equal(5)
+                    expect(response.body.reviews[0].user.type).to.equal(1)
                     Cypress.env('accessToken', token)
                 })
             })
