@@ -66,7 +66,7 @@ When('confirmar', ()=>{
 })
 
 Then('o usuário será cadastrado', ()=>{
-    cy.get('#root > div > main > div > div.modal-overlay > div > div.modal-body > h3').should('contain', 'Sucesso').and('be.visible')
+    cy.get('.modal-body > h3').should('contain', 'Sucesso').and('be.visible')
 })
 
 
