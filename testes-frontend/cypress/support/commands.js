@@ -34,6 +34,17 @@ Cypress.Commands.add('promoteAdmin', function () {
   })
 })
 
+// abrange mais testes quando recebe parametros. considerar atualizar os testes para esse comando apos todos entregarem os cards. 
+
+Cypress.Commands.add('promoveAdmin', function (token) {
+  cy.request({
+    method: 'PATCH',
+    url:  Cypress.env('api_url') + 'users/admin',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+})
 Cypress.Commands.add('promoteCritic', function () {
   cy.request({
     method: 'PATCH',
