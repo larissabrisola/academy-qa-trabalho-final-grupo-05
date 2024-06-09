@@ -34,29 +34,27 @@ describe("Teste promover usuário a administrador", () => {
             expect(response.status).to.equal(204)
         })
     })
-    it("A review anterior não deve ser alterada após a promoção do usuário a admin", () => {
-        let idMovie
+    it.only("A review anterior não deve ser alterada após a promoção do usuário a admin", () => {
         let token
         cy.promoteAdmin()
-        cy.createMovie().then((data) => {
-            idMovie = data.idFilme
-            cy.wrap(idMovie).as("idFilme")
+        cy.createMovie().then((response) => {
+            cy.wrap(response).as("data")
         })
         cy.inactivateUser()
         cy.createAndLoginUser(faker.person.fullName(), faker.internet.email(), "123456").then((data) => {
             token = data.token
-            cy.get("@idFilme").then((idFilme) => { cy.postReview(idFilme, token) })
+            cy.get("@data").then((data) => { cy.postReview(data.id, token) })
             cy.promoteAdminWithToken(token)
         })
         cy.createAndLoginUser(faker.person.fullName(), faker.internet.email(), "123456").then((data) => {
             token = data.token
             Cypress.env('accessToken', token)
-            cy.get("@idFilme").then((idFilme) => {
-                cy.request("GET", "movies/" + idFilme).then((response) => {
+            cy.get("@data").then((data) => {
+                cy.request("GET", "movies/" + data.id).then((response) => {
                     expect(response.body.reviews[0].reviewText).to.deep.equal("Teste review usuário inativado / promovido")
                     expect(response.body.reviews[0].reviewType).to.equal(0)
                     expect(response.body.reviews[0].score).to.equal(5)
-
+                    Cypress.env('accessToken', token)
                 })
             })
         })

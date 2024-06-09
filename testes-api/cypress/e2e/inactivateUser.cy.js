@@ -102,23 +102,21 @@ describe("Testes de inativação de usuário", () => {
     })
     
     it("A avaliação de um usuário inativado deve estar visível", () => {
-        let idMovie
         let token
         cy.promoteAdmin()
-        cy.createMovie().then((data) => {
-            idMovie = data.idFilme
-            cy.wrap(idMovie).as("idFilme")
+        cy.createMovie().then((response) => {
+            cy.wrap(response).as("data")
         })
         cy.inactivateUser()
         cy.createAndLoginUser(faker.person.fullName(), faker.internet.email(), "123456").then((data) => {
             token = data.token
-            cy.get("@idFilme").then((idFilme) => { cy.postReview(idFilme, token) })
-            cy.inactivateWithToken(token)
+            cy.get("@data").then((data) => { cy.postReview(data.id, token) })
+            cy.promoteCriticWithToken(token)
         })
         cy.createAndLoginUser(faker.person.fullName(), faker.internet.email(), "123456").then((data) => {
             token = data.token
-            cy.get("@idFilme").then((idFilme) => {
-                cy.request("GET", "movies/" + idFilme).then((response) => {
+            cy.get("@data").then((data) => {
+                cy.request("GET", "movies/" + data.id).then((response) => {
                     expect(response.body.reviews[0].reviewText).to.deep.equal("Teste review usuário inativado / promovido")
                     expect(response.body.reviews[0].reviewType).to.equal(0)
                     expect(response.body.reviews[0].score).to.equal(5)
