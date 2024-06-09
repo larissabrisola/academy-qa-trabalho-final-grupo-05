@@ -34,7 +34,7 @@ describe("Teste promover usuário a crítico", () => {
             expect(response.status).to.equal(204)
         })
     })
-    it("Caso um usuário ja tenha uma review feita anteriormente apos a promoção a review não deve ser alterada", () => {
+    it("A review anterior não deve ser alterada após a promoção do usuário a critic", () => {
         let idMovie
         let token
         cy.promoteAdmin()
