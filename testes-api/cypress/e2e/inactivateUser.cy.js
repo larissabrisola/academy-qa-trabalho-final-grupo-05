@@ -101,7 +101,7 @@ describe("Testes de inativação de usuário", () => {
         cy.login(email, "123456").then(() => { cy.inactivateUser() })
     })
     
-    it("Caso um usuário ja tenha feito uma avaliação de um filme inativa-lo não exclui a avaliação", () => {
+    it("A avaliação de um usuário inativado deve estar visível", () => {
         let idMovie
         let token
         cy.promoteAdmin()
