@@ -221,7 +221,7 @@ Cypress.Commands.add('postReview', (idFilme,token) => {
     body: {
       movieId: idFilme,
       score: 5,
-      reviewText: "Teste review usuário inativado",
+      reviewText: "Teste review usuário inativado / promovido",
     },
   })
 })
@@ -235,3 +235,22 @@ Cypress.Commands.add("inactivateWithToken", function (token) {
     }
   });
 });
+Cypress.Commands.add('promoteAdminWithToken', function (token) {
+  cy.request({
+    method: 'PATCH',
+
+    url: 'users/admin',
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  })
+})
+Cypress.Commands.add('promoteCriticWithToken', function (token) {
+  cy.request({
+    method: 'PATCH',
+    url: 'users/apply',
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  })
+})

@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 describe("Testes de inativação de usuário", () => {
     let id
     let token
@@ -7,6 +8,7 @@ describe("Testes de inativação de usuário", () => {
     beforeEach(() => {
         cy.createAndLoginUser(nome, email, "123456", true).then((data) => {
             id = data.id
+            Cypress.env('id', id)
             token = data.token
             Cypress.env('accessToken', token)
         })
@@ -44,6 +46,7 @@ describe("Testes de inativação de usuário", () => {
             expect(response.body.error).to.deep.equal("Unauthorized")
         })
     })
+
     it("Deve ser possível inativar um usuário admin", () => {
         cy.promoteAdmin()
         cy.request({
@@ -62,6 +65,7 @@ describe("Testes de inativação de usuário", () => {
             expect(response.body.error).to.deep.equal("Unauthorized")
         })
     })
+
     it("Deve ser possível inativar um usuário Critico", () => {
         cy.promoteCritic()
         cy.request({
@@ -96,6 +100,7 @@ describe("Testes de inativação de usuário", () => {
         //desativa o email de confirmação
         cy.login(email, "123456").then(() => { cy.inactivateUser() })
     })
+    
     it("Caso um usuário ja tenha feito uma avaliação de um filme inativa-lo não exclui a avaliação", () => {
         let idMovie
         let token
@@ -114,7 +119,7 @@ describe("Testes de inativação de usuário", () => {
             token = data.token
             cy.get("@idFilme").then((idFilme) => {
                 cy.request("GET", "movies/" + idFilme).then((response) => {
-                    expect(response.body.reviews[0].reviewText).to.deep.equal("Teste review usuário inativado")
+                    expect(response.body.reviews[0].reviewText).to.deep.equal("Teste review usuário inativado / promovido")
                     expect(response.body.reviews[0].reviewType).to.equal(0)
                     expect(response.body.reviews[0].score).to.equal(5)
                 })

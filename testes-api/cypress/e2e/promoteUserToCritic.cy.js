@@ -34,6 +34,32 @@ describe("Teste promover usuário a crítico", () => {
             expect(response.status).to.equal(204)
         })
     })
+    it("Caso um usuário ja tenha uma review feita anteriormente apos a promoção a review não deve ser alterada", () => {
+        let idMovie
+        let token
+        cy.promoteAdmin()
+        cy.createMovie().then((data) => {
+            idMovie = data.idFilme
+            cy.wrap(idMovie).as("idFilme")
+        })
+        cy.inactivateUser()
+        cy.createAndLoginUser(faker.person.fullName(), faker.internet.email(), "123456").then((data) => {
+            token = data.token
+            Cypress.env('accessToken', token)
+            cy.get("@idFilme").then((idFilme) => { cy.postReview(idFilme, token) })
+            cy.promoteCriticWithToken(token)
+        })
+        cy.createAndLoginUser(faker.person.fullName(), faker.internet.email(), "123456").then((data) => {
+            token = data.token
+            cy.get("@idFilme").then((idFilme) => {
+                cy.request("GET", "movies/" + idFilme).then((response) => {
+                    expect(response.body.reviews[0].reviewText).to.deep.equal("Teste review usuário inativado / promovido")
+                    expect(response.body.reviews[0].reviewType).to.equal(0)
+                    expect(response.body.reviews[0].score).to.equal(5)
+                })
+            })
+        })
+    })
 })
 describe("Não deve ser possível fazer a promoção para crítico sem fazer o login do usuário", () => {
     it("Não deve ser possível fazer a promoção para crítico sem fazer o login do usuário", () => {
