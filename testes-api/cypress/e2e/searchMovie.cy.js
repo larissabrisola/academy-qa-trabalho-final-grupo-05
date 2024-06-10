@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker"
 
-
 describe('Buscar filme com o usuário logado e autenticado no sistema', () => {
     let uId;
     let uToken;
@@ -28,7 +27,6 @@ describe('Buscar filme com o usuário logado e autenticado no sistema', () => {
     })
 
     it('Deve ser possível encontrar um filme por meio de seu título estando logado no sistema', () => {
-
         cy.request({
             method: 'GET',
             url: 'movies/search?title=' + filme.title,
@@ -39,7 +37,6 @@ describe('Buscar filme com o usuário logado e autenticado no sistema', () => {
             expect(response.status).to.equal(200);
             expect(response.body[0]).to.include(filme)
         })
-
     })
 
     it('Deve ser possível encontrar um filme por meio de seu título sem estar logado no sistema', () => {
@@ -74,7 +71,6 @@ describe('Buscar filme com o usuário logado e autenticado no sistema', () => {
             expect(response.status).to.equal(200);
             expect(response.body).be.empty;
         })
-
     })
 
     it('Deve ser possível encontrar um filme inserindo dados parciais', () => {
@@ -103,6 +99,15 @@ describe('Buscar filme com o usuário logado e autenticado no sistema', () => {
         })
     })
 
+    it('Não deve ser possível buscar filme pela ID', () => {
+        cy.request({
+            method: 'GET',
+            url: 'movies/search?title=' + filme.id
+            }).then((response) => {
+                expect(response.status).to.equal(200);
+                expect(response.body).be.empty;
+        })
+    })
 })
 
 function createUserForMovies() {
