@@ -199,7 +199,6 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
             url: 'users/' + uId,
             body: {
                 name: 'a'.repeat(101),
-                password: '252525'
             },
             headers: {
                 Authorization: `Bearer ${uToken}`
@@ -218,7 +217,6 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
             url: 'users/' + uId,
             body: {
                 name: name,
-                password: '252525'
             },
             headers: {
                 Authorization: `Bearer ${uToken}`
@@ -237,8 +235,7 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
             method: 'PUT',
             url: 'users/' + uId,
             body: {
-                name: 'Zelda',
-                password: '252525'.repeat(13)
+                password: '2'.repeat(13)
             },
             headers: {
                 Authorization: `Bearer ${uToken}`
@@ -295,8 +292,6 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
             method: 'PUT',
             url: 'users/' + uId,
             body: {
-                name: userName,
-                password: password,
                 type: 1
             },
             headers: {
