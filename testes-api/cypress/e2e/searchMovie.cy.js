@@ -11,8 +11,10 @@ describe('Testes da funcionalidade de buscar filme', () => {
         })
         cy.login(user.email, user.password).then((response) => {
             uToken = response.body.accessToken;
+            cy.log(uToken)
         })
-        cy.promoteAdmin(uId, uToken);
+
+        cy.promoteAdmin(uToken);
         cy.createMovie().then((response) => {
             cy.wrap(response).as('data')
         });
