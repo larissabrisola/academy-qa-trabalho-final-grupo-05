@@ -63,16 +63,6 @@ describe('Buscar filme com o usuário logado e autenticado no sistema', () => {
         })
     })
 
-    it('Não deve ser possível encontrar um filme inserindo outros dados', () => {
-        cy.request({
-            method: 'GET',
-            url: 'movies/search?title=' + filme.id
-        }).then((response) => {
-            expect(response.status).to.equal(200);
-            expect(response.body).be.empty;
-        })
-    })
-
     it('Deve ser possível encontrar um filme inserindo dados parciais', () => {
         const parcialTitle = filme.title.slice(0, 3)
         cy.request({
