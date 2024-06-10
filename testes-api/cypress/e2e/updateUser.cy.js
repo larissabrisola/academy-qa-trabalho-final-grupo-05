@@ -49,7 +49,6 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
             url: 'users/' + uId,
             body: {
                 name: 'Zelda',
-                password: password
             },
             headers: {
                 Authorization: `Bearer ${uToken}`
@@ -66,7 +65,6 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
             method: 'PUT',
             url: 'users/' + uId,
             body: {
-                name: userName,
                 password: '2525252'
             },
             headers: {
@@ -159,13 +157,12 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
         })
     })
 
-    it('Não deve ser possível atualizar usuário sem informar nome', () => {
+    it('Não deve ser possível deixar campo nome em branco', () => {
         cy.request({
             method: 'PUT',
             url: 'users/' + uId,
             body: {
                 name: '',
-                password: '252525'
             },
             headers: {
                 Authorization: `Bearer ${uToken}`
@@ -178,12 +175,11 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
         })
     })
 
-    it('Não deve ser possível atualizar usuário sem informar senha', () => {
+    it('Não deve ser possível atualizar usuário com o campo senha em branco', () => {
         cy.request({
             method: 'PUT',
             url: 'users/' + uId,
             body: {
-                name: 'Zelda',
                 password: ''
             },
             headers: {
@@ -274,13 +270,11 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
         })
     })
 
-    it('Mesmo inserindo novo e-mail no body da requisição, o dado não deve ser atualizado', () => {
+    it('Não deve ser possível atualizar email', () => {
         cy.request({
             method: 'PUT',
             url: 'users/' + uId,
             body: {
-                name: userName,
-                password: '252525',
                 email: 'lurdes@gmail.com'
             },
             headers: {
