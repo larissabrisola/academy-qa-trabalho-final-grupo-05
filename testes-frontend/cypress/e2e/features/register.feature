@@ -60,7 +60,6 @@ Feature: Cadastro de usuário
         And clicar em Cadastrar
         Then o usuário não será cadastrado e receberá um aviso "Informe o e-mail."
 
-
     Scenario: Não deve ser possivel cadastrar se o campo senha estiver vazio
         When preencher o formulário com nome válido
         And preencher o formulário com email válido
@@ -80,62 +79,60 @@ Feature: Cadastro de usuário
         And clicar em Cadastrar
         Then o usuário não será cadastrado e receberá um aviso "Informe um e-mail válido."
         Examples:
-            | email           |
-            | joca.com        |
-            | ruivo!k!@.com |
-            | boi@boi|
-            | boi@car😁a.com|
-
+            | email          |
+            | joca.com       |
+            | ruivo!k!@.com  |
+            | boi@boi        |
+            | boi@car😁a.com |
 
     Scenario: Não deve ser possivel cadastrar com email contendo 61 ou mais caracteres
-        When preencher o formulário com nome válido 
+        When preencher o formulário com nome válido
         And preencher o formulário com email "IwishyouthebestfortherestofyourlifeFeltsorryfor@ouwhenIl.oked"
-        And preencher o formulário com senha válida 
+        And preencher o formulário com senha válida
         And clicar em Cadastrar
         Then o usuário não será cadastrado e receberá um aviso "O e-mail deve ter no máximo 60 dígitos."
 
     Scenario: Não deve ser possivel cadastrar com email contendo 4 ou menos caracteres
-        When preencher o formulário com nome válido 
+        When preencher o formulário com nome válido
         And preencher o formulário com email "a@c."
-        And preencher o formulário com senha válida 
-        And clicar em Cadastrar 
+        And preencher o formulário com senha válida
+        And clicar em Cadastrar
         Then o usuário não será cadastrado e receberá um aviso "Informe pelo menos 5 dígitos para o e-mail"
 
     Scenario: Não deve ser possivel cadastrar com senha contendo 5 ou menos caracteres
-        When preencher o formulário com nome válido 
+        When preencher o formulário com nome válido
         And preencher o formulário com email válido
         And preencher o formulário com senha "assdf"
         And confirmar a senha "assdf"
-        And clicar em Cadastrar 
+        And clicar em Cadastrar
         Then o usuário não será cadastrado e receberá um aviso "A senha deve ter pelo menos 6 dígitos."
 
     Scenario: Não deve ser possivel cadastrar com senha contendo 13 ou mais caracteres
-        When preencher o formulário com nome válido 
+        When preencher o formulário com nome válido
         And preencher o formulário com email válido
         And preencher o formulário com senha "kokoliupokjhn"
         And confirmar a senha "kokoliupokjhn"
-        And clicar em Cadastrar 
+        And clicar em Cadastrar
         Then o usuário não será cadastrado e receberá um aviso "A senha deve ter no máximo 12 dígitos."
 
     Scenario: Não deve ser possivel cadastrar nome contendo 101 ou mais caracteres
         When preencher o formulário com nome "IwishyouthebestfortherestofyourlifeFeltsorryforyouwhenIlookedinyoureyesbutIneedtoconfessItoldyoualiea"
-        And preencher o formulário com email válido 
-        And preencher o formulário com senha válida 
+        And preencher o formulário com email válido
+        And preencher o formulário com senha válida
         And clicar em Cadastrar
         Then o usuário não será cadastrado e receberá um aviso "O nome deve ter no máximo 100 dígitos."
 
     Scenario: Não deve ser possivel realizar o cadastro se a senha e confirmação da senha não forem iguais
-        When preencher o formulário com nome válido 
-        And preencher o formulário com email válido 
+        When preencher o formulário com nome válido
+        And preencher o formulário com email válido
         And preencher o formulário com senha "umdoistresq"
         And confirmar a senha "doistresumq"
         And clicar em Cadastrar
         Then o usuário não será cadastrado e receberá um aviso "As senhas devem ser iguais."
 
-
     Scenario: Não deve ser possivel realizar o cadastro sem confirmar senha
-        When preencher o formulário com nome válido 
-        And preencher o formulário com email válido 
+        When preencher o formulário com nome válido
+        And preencher o formulário com email válido
         And preencher o formulário com senha "umdoistresq"
         And clicar em Cadastrar
         Then o usuário não será cadastrado e receberá um aviso "Informe a senha"
