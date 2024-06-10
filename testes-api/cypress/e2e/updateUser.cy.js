@@ -252,7 +252,6 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
             method: 'PUT',
             url: 'users/' + uId,
             body: {
-                name: 'Zelda',
                 password: '2'.repeat(12)
             },
             headers: {
