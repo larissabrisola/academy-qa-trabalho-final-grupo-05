@@ -12,17 +12,41 @@ Cypress.Commands.add("createUser", function (nome, email, senha, failOnStatusCod
     })
 });
 
-Cypress.Commands.add("login", function (email, senha) {
+Cypress.Commands.add("login", function (email, senha, failOnStatusCode) {
   cy.request({
     method: "POST",
     url: "auth/login",
     body: {
       email: email,
       password: senha
-    }
+    },
+    failOnStatusCode: failOnStatusCode
   }).then((response) => {
     const accessToken = response.body.accessToken
     Cypress.env('accessToken', accessToken)
+  })
+})
+
+
+Cypress.Commands.add('promoteAdmin', function () {
+  cy.request({
+    method: 'PATCH',
+
+    url: 'users/admin',
+    headers: {
+      Authorization: `Bearer ${Cypress.env('accessToken')}`
+    }
+  })
+})
+
+
+Cypress.Commands.add('promoteCritic', function () {
+  cy.request({
+    method: 'PATCH',
+    url: 'users/apply',
+    headers: {
+      Authorization: `Bearer ${Cypress.env('accessToken')}`
+    }
   })
 })
 
@@ -62,13 +86,13 @@ Cypress.Commands.add("deleteUser", function (id, token, failOnStatusCode) {
   });
 });
 
-Cypress.Commands.add("inactivateUser", function (token) {
+Cypress.Commands.add("inactivateUser", function () {
   cy.request({
     method: "PATCH",
     url: "users/inactivate",
     headers: {
-      Authorization: "Bearer " + token,
-    },
+      Authorization: `Bearer ${Cypress.env('accessToken')}`
+    }
   });
 });
 
@@ -137,7 +161,6 @@ Cypress.Commands.add("createAndLoginCritic", function (nome, email, senha) {
 });
 
 Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationInMinutes, releaseYear, failOnStatusCode) => {
-
   cy.createAndLogAdmin(faker.animal.fish(), faker.internet.exampleEmail(), 'lionxitps').then((response) => {
     let token = response.token
 
@@ -223,7 +246,6 @@ Cypress.Commands.add('promoteAdmin', function (token) {
     }
   })
 })
-
 Cypress.Commands.add('promoteCritic', function (token) {
   cy.request({
     method: 'PATCH',
