@@ -12,15 +12,15 @@ describe('Testes da funcionalidade de buscar filme', () => {
         cy.login(user.email, user.password).then((response) => {
             uToken = response.body.accessToken;
         })
-        cy.promoteAdmin();
+        cy.promoteAdmin(uId, uToken);
         cy.createMovie().then((response) => {
             cy.wrap(response).as('data')
         });
     })
 
-    after(() => {
-        cy.deleteUser(uId, uToken);
-    })
+    // after(() => {
+    //     cy.deleteUser(uId, uToken);
+    // })
 
     it('Deve ser possível encontrar um filme por meio de seu título sem estar logado no sistema', () => {
         cy.get('@data').then((data) => {
@@ -50,11 +50,15 @@ describe('Testes da funcionalidade de buscar filme', () => {
     })
 
     it.only('Não deve ser possível encontrar um filme deletado', () => {
+
         cy.get('@data').then((data) => {
             cy.deleteMovie(data.id, uToken)
             cy.request({
                 method: 'GET',
                 url: 'movies/search?title=' + data.title,
+                headers: {
+                    Authorization: `Bearer ${uToken}`
+                }
             }).then((response) => {
                 expect(response.status).to.equal(200);
                 expect(response.body).be.empty;
@@ -63,7 +67,15 @@ describe('Testes da funcionalidade de buscar filme', () => {
     })
 
     it('Não deve ser possível encontrar um filme inserindo outros dados', () => {
-
+        cy.get('@data').then((data) => {
+            cy.request({
+                method: 'GET',
+                url: 'movies/search?title=' + data.id
+            }).then((response) => {
+                expect(response.status).to.equal(200);
+                expect(response.body).be.empty;
+            })
+        })
     })
 })
 

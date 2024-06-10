@@ -21,7 +21,7 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
     })
 
     afterEach(() => {
-        cy.promoteAdmin();
+        cy.promoteAdmin(uToken);
         cy.deleteUser(uId, uToken);
     })
 
@@ -83,7 +83,7 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
         let name = faker.person.firstName();
         let email = faker.internet.email().toLowerCase();
 
-        cy.promoteAdmin();
+        cy.promoteAdmin(uToken);
         cy.createUser(name, email, '1234567').then((response) => {
             cy.wrap(response.body).as('body')
         });
@@ -137,7 +137,7 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
         let name = faker.person.firstName();
         let email = faker.internet.email().toLowerCase();
 
-        cy.promoteCritic();
+        cy.promoteCritic(uToken);
         cy.createUser(name, email, '1234567').then((response) => {
             cy.wrap(response.body).as('body')
         });
@@ -264,7 +264,7 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
             },
             headers: {
                 Authorization: `Bearer ${uToken}`
-            }, failOnStatusCode: false
+            },
         }).then((response) => {
             expect(response.body.name).to.equal('Zelda');
             expect(response.body.email).to.equal(userEmail);
@@ -296,7 +296,7 @@ describe('Testes da funcionalidade de atualizar usuários', () => {
         })
     })
 
-    it.only('Não deve ser possível alterar o tipo do usuário', () => {
+    it('Não deve ser possível alterar o tipo do usuário', () => {
         cy.request({
             method: 'PUT',
             url: 'users/' + uId,
