@@ -39,6 +39,7 @@ Cypress.Commands.add('promoteAdmin', function () {
   })
 })
 
+
 Cypress.Commands.add('promoteCritic', function () {
   cy.request({
     method: 'PATCH',
@@ -158,6 +159,7 @@ Cypress.Commands.add("createAndLoginCritic", function (nome, email, senha) {
       });
   });
 });
+
 Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationInMinutes, releaseYear, failOnStatusCode) => {
   cy.createAndLogAdmin(faker.animal.fish(), faker.internet.exampleEmail(), 'lionxitps').then((response) => {
     let token = response.token
@@ -177,6 +179,7 @@ Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationI
       }, failOnStatusCode
     })
   })
+
 });
 
 Cypress.Commands.add('getUserViaID', (id, failOnStatusCode) => {
