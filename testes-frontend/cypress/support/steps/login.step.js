@@ -53,7 +53,6 @@ When('clicar em Login', ()=>{
 
 Then('o login é realizado com sucesso', ()=>{
     cy.url().should('eq', 'https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/')
-
 })
 
 

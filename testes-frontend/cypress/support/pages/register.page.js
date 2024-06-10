@@ -1,8 +1,8 @@
 export default class RegisterPage {
-    inputName = "#root > div > main > div > form > div:nth-child(1) > input"
-    inputEmail = "#root > div > main > div > form > div:nth-child(2) > input"
-    inputPassword = "#root > div > main > div > form > div:nth-child(3) > input"
-    inputConfirmPassword = "#root > div > main > div > form > div:nth-child(4) > input"
+    inputName = '[name="name"]'
+    inputEmail = '[name="email"]'
+    inputPassword = '[name="password"]'
+    inputConfirmPassword = '[name="confirmPassword"]'
     buttonSave = '.account-save-button'
     
    
