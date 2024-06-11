@@ -21,7 +21,7 @@ describe('Testes da funcionalidade de encontrar usuários', () => {
     })
 
     afterEach(() => {
-        cy.promoteAdmin();
+        cy.promoteAdmin(uToken);
         cy.deleteUser(uId, uToken);
     })
 
@@ -44,7 +44,7 @@ describe('Testes da funcionalidade de encontrar usuários', () => {
 
     it('Não deve ser possível encontrar usuário deletado', () => {
         let id;
-        cy.promoteAdmin();
+        cy.promoteAdmin(uToken);
         cy.createUser(faker.person.fullName(), faker.internet.email(), '123456').then((response) => {
             id = response.body.id;
             cy.log(id)
@@ -64,7 +64,7 @@ describe('Testes da funcionalidade de encontrar usuários', () => {
     })
 
     it('Não deve ser possível encontrar usuário por meio de outros dados', () => {
-        cy.promoteAdmin();
+        cy.promoteAdmin(uToken);
         cy.request({
             method: 'GET',
             url: 'users/' + userEmail,
@@ -102,7 +102,7 @@ describe('Testes da funcionalidade de encontrar usuários', () => {
     it('Um usuário do tipo crítico não deve encontrar outros usuários', () => {
         let name = faker.person.firstName();
         let email = faker.internet.email().toLowerCase();
-        cy.promoteCritic();
+        cy.promoteCritic(uToken);
         cy.createUser(name, email, '1234567').then((response) => {
             cy.wrap(response.body).as('body')
         });
@@ -124,7 +124,7 @@ describe('Testes da funcionalidade de encontrar usuários', () => {
     it('Apenas um usuário do tipo admin pode encontrar outros usuários', () => {
         let name = faker.person.firstName();
         let email = faker.internet.email().toLowerCase();
-        cy.promoteAdmin();
+        cy.promoteAdmin(uToken);
         cy.createUser(name, email, '1234567').then((response) => {
             cy.wrap(response.body).as('body')
         });
