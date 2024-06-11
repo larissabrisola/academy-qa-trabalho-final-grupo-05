@@ -8,18 +8,21 @@ Feature: Avaliação de filmes
         And 
         Then 
     
-    Scenario: Não deve ser possível criar uma avaliação para um filme
-        When 
-        And 
-        Then 
+    Scenario: Não deve ser possível consultar avaliação do usuário sem estar logado
+        Given quando acesso à tela de filmes
+        When selecionar um filme qualquer
+        Then não será possível criar uma avaliação
+        And será possível visualizar a opção "Entre para poder escrever sua review"
+        And serei encaminhado para a página de login
 
     Scenario: Deve ser possível atribuir uma nota sem criar texto avaliativo
-        When 
-        And 
-        Then 
+        Given estou logado e na tela de um filme específico
+        When atribuir uma nota
+        And concluir a operação
+        Then a nota é exibida e avaliação fica em branco
 
     Scenario: Não deve ser possível duplicar uma avaliação
-        Given que estou logado e autenticado no sistema
+        Given que estou logado
         When acessar meu perfil
         And selecionar uma avaliação feita anteriormente
         And atribuir nova avaliação
