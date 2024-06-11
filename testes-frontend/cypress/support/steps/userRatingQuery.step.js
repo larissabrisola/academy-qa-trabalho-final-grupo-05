@@ -1,0 +1,4 @@
+import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
+import { faker } from "@faker-js/faker";
+import LoginPage from "../pages/login.page";
+const pageLogin = new LoginPage()
