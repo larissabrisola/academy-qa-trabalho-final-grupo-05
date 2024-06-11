@@ -109,7 +109,7 @@ Não deve ser possivel cadastrar com email contendo 61 ou mais caracteres
     E preencher o formulário com senha válida
     E clicar em Cadastrar
     Entao o usuário não será cadastrado e receberá um aviso "O e-mail deve ter no máximo 60 dígitos."
-
+#TODO ver o erro, ta falando que o email é invalido, 1 letra a mais passa, mensagem de pelomenos 5 digitos n existe
 Não deve ser possivel cadastrar com email contendo 4 ou menos caracteres
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com nome válido
@@ -118,12 +118,13 @@ Não deve ser possivel cadastrar com email contendo 4 ou menos caracteres
     E clicar em Cadastrar
     Entao o usuário não será cadastrado e receberá um aviso "Informe pelo menos 5 dígitos para o e-mail"
 
+# TODO verificar o aviso de erro no appium
 Não deve ser possivel cadastrar com senha contendo 5 ou menos caracteres
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com nome válido
     E preencher o formulário com email válido
-    E preencher o formulário com senha "assdf"
-    E confirmar a senha "assdf"
+    E preencher o formulário com senha com 5 digitos
+    E confirmar a senha com 5 digitos
     E clicar em Cadastrar
     Entao o usuário não será cadastrado e receberá um aviso "A senha deve ter pelo menos 6 dígitos."
 

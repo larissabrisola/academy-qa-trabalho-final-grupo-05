@@ -101,6 +101,12 @@ E preencher o formulário com senha contendo 12 caracteres
     Clica e digita    ${inputSenha}        123456654321
     Clica e digita    ${inputConfSenha}    123456654321
 
+E preencher o formulário com senha com 5 digitos
+    Clica e digita    ${inputSenha}        12345
+    
+E confirmar a senha com 5 digitos
+    Clica e digita    ${inputConfSenha}    12345
+
 E preencher o formulário com nome "A"
     Clica e digita       ${inputNome}    A
 
@@ -108,5 +114,5 @@ Entao o usuário não será cadastrado e receberá um aviso "O e-mail deve ter n
     Wait Until Element Is Visible    ${erroEmailLongo}
     Verifica contentDesc    ${erroEmailLongo}    Ocorreu um erro ao realizar o cadastro. Tente novamente mais tarde.
 
-Entao o usuário não será cadastrado e receberá um aviso "Informe pelo menos 5 dígitos para o e-mail"
+
     
