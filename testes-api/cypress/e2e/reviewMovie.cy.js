@@ -17,7 +17,7 @@ describe('Avaliação de Filmes', function () {
             cy.log(response)
             Cypress.env('accessToken', token)
 
-            cy.promoteAdminWithToken(token);
+            cy.promoteAdmin(token);
             cy.createMovie().then(function (response) {
                 cy.wrap(response).as('filmeCriado')
                 cy.inactivateWithToken(token)
@@ -59,7 +59,7 @@ describe('Avaliação de Filmes', function () {
     it('Deve ser possível um usuário critico criar review de um filme', () => {
         cy.createAndLoginUser('Janaina', faker.internet.exampleEmail(), '123456').then(function (response) {
             token = response.token
-            cy.promoteCriticWithToken(token)
+            cy.promoteCritic(token)
             cy.get('@filmeCriado').then(function (filme) {
                 cy.request({
                     method: "POST",
@@ -88,7 +88,7 @@ describe('Avaliação de Filmes', function () {
     it('Deve ser possível um usuário administrador criar review de um filme', function () {
         cy.createAndLoginUser('Joelma', faker.internet.exampleEmail(), '123456').then(function (response) {
             token = response.token
-            cy.promoteAdminWithToken(token)
+            cy.promoteAdmin(token)
             cy.get('@filmeCriado').then(function (filme) {
                 cy.request({
                     method: "POST",
@@ -140,7 +140,7 @@ describe('Avaliação de Filmes', function () {
     it('Não deve ser possível um filme ter uma nota (score) 0', function () {
         cy.createAndLoginUser(faker.animal.horse(), faker.internet.exampleEmail(), '123456').then(function (response) {
             token = response.token
-            cy.promoteAdminWithToken(token)
+            cy.promoteAdmin(token)
             cy.get('@filmeCriado').then(function (filme) {
                 cy.request({
                     method: "POST",
@@ -168,7 +168,7 @@ describe('Avaliação de Filmes', function () {
     it('Não deve ser possível um filme ter uma nota (score) superior a 5', function () {
         cy.createAndLoginUser(faker.animal.horse(), faker.internet.exampleEmail(), '123456').then(function (response) {
             token = response.token
-            cy.promoteAdminWithToken(token)
+            cy.promoteAdmin(token)
             cy.get('@filmeCriado').then(function (filme) {
                 cy.request({
                     method: "POST",
@@ -279,7 +279,7 @@ describe('Avaliação de Filmes', function () {
     it('Não deve ser possível escrever review de um filme informando 501 ou mais caracteres', function () {
         cy.createAndLoginUser('Janaina', faker.internet.exampleEmail(), '123456').then(function (response) {
             token = response.token
-            cy.promoteCriticWithToken(token)
+            cy.promoteCritic(token)
             cy.get('@filmeCriado').then(function (filme) {
                 cy.request({
                     method: "POST",
@@ -309,7 +309,7 @@ describe('Avaliação de Filmes', function () {
     it('Deve ser possível escrever review de um filme informando 500 caracteres', function () {
         cy.createAndLoginUser('Janaina', faker.internet.exampleEmail(), '123456').then(function (response) {
             token = response.token
-            cy.promoteCriticWithToken(token)
+            cy.promoteCritic(token)
             cy.get('@filmeCriado').then(function (filme) {
                 cy.request({
                     method: "POST",
@@ -352,6 +352,34 @@ describe('Avaliação de Filmes', function () {
                         ],
                         "error": "Bad Request",
                         "statusCode": 400
+                    });
+                });
+            });
+        });
+    });
+
+    it('Não deve ser possível criar review usando numeros decimais', function () {
+        cy.createAndLoginUser(faker.animal.horse(), faker.internet.exampleEmail(), '123456').then(function (response) {
+            token = response.token
+            cy.promoteAdmin(token)
+            cy.get('@filmeCriado').then(function (filme) {
+                cy.request({
+                    method: "POST",
+                    url: "users/review",
+                    headers: {
+                        Authorization: 'Bearer ' + token,
+                    },
+                    body: {
+                        movieId: filme.id,
+                        score: 2.2,
+                        reviewText: "Gostei demais!",
+                    }, failOnStatusCode: false
+                }).then(function (response) {
+                    expect(response.status).to.equal(400);
+                    expect(response.body).to.deep.equal({
+                        error: "Bad Request",
+                        message: "Score should be between 1 and 5",
+                        statusCode: 400
                     });
                 });
             });
