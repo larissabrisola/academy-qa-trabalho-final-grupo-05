@@ -5,7 +5,7 @@ Resource    ..//base.robot
 
 *** Variables ***
 ${ANDROID_AUTOMATION_NAME}    UIAutomator2
-${ANDROID_PLATFORM_VERSION}    14   
+${ANDROID_PLATFORM_VERSION}    11 
 ${APP_PACKAGE}    com.example.raromdb
 ${APP_ACTIVITY}    .MainActivity
 ${ANDROID_PLATFORM_NAME}    Android

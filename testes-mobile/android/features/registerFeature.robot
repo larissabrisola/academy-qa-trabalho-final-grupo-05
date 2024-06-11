@@ -19,7 +19,7 @@ Deve ser possivel cadastrar usuário
 
 Deve ser possivel cadastrar com nome contendo 100 caracteres
     Dado que o usuário se encontra na página de cadastro
-    Quando preencher o formulário com nome "IwishyouthebestfortherestofyourlifeFeltsorryforyouwhenlookedinyoureyesbutIneedto confessItoldyouali"
+    Quando preencher o formulário com nome com 100 caracteres
     E preencher o formulário com email válido
     E preencher o formulário com senha válida
     E clicar em Cadastrar
@@ -46,15 +46,16 @@ Deve ser possivel cadastrar com nome contendo 1 caractere
     E preencher o formulário com nome "A"
     E preencher o formulário com email válido
     E preencher o formulário com senha válida
-    clicar em Cadastrar
-    o usuário será cadastrado
+    E clicar em Cadastrar
+    Entao o usuário será cadastrado
 
+# TODO Aprender a usar api pra montar esse teste
 Não deve ser possivel cadastrar com email já utilizado - mensagem de alerta deve ser exibida
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com nome válido
     E preencher o formulário com email já cadastrado
     E preencher o formulário com senha válida
-    E confirmar
+    E clicar em Cadastrar
     Entao o usuário não será cadastrado e receberá um aviso "E-mail já cadastrado. Utilize outro e-mail"
 
 Não deve ser possivel cadastrar se o campo nome estiver vazio
@@ -76,15 +77,16 @@ Não deve ser possivel cadastrar se o campo senha estiver vazio
     Quando preencher o formulário com nome válido
     E preencher o formulário com email válido
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "Informe a senha"
+    Entao o usuário não será cadastrado e receberá um aviso "Informe uma senha."
 
 Não deve ser possivel cadastrar se todos campos estiverem vazios
     Dado que o usuário se encontra na página de cadastro
     Quando clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "Informe o nome"
-    Entao o usuário não será cadastrado e receberá um aviso "Informe o e-mail"
-    Entao o usuário não será cadastrado e receberá um aviso "Informe a senha"
+    Entao o usuário não será cadastrado e receberá um aviso "Informe o nome."
+    Entao o usuário não será cadastrado e receberá um aviso "Informe o e-mail."
+    Entao o usuário não será cadastrado e receberá um aviso "Informe uma senha."
 
+#TODO montar o template
 Scenario Outline: Não deve ser possivel cadastrar com formato de email inválido
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com nome válido
@@ -99,10 +101,11 @@ Scenario Outline: Não deve ser possivel cadastrar com formato de email inválid
         | boi@boi        |
         | boi@car😁a.com |
 
+
 Não deve ser possivel cadastrar com email contendo 61 ou mais caracteres
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com nome válido
-    E preencher o formulário com email "IwishyouthebestfortherestofyourlifeFeltsorryfor@ouQuando l.oked"
+    E preencher o formulário com email contendo 61 caracteres
     E preencher o formulário com senha válida
     E clicar em Cadastrar
     Entao o usuário não será cadastrado e receberá um aviso "O e-mail deve ter no máximo 60 dígitos."
