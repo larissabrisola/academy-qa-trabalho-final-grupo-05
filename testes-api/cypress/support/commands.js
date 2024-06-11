@@ -2,7 +2,6 @@ import { faker } from "@faker-js/faker";
 
 Cypress.Commands.add("createUser", function (nome, email, senha, failOnStatusCode) {
   cy.request(
-
     {
       method: 'POST', url: "users",
       body: {
@@ -28,6 +27,7 @@ Cypress.Commands.add("login", function (email, senha, failOnStatusCode) {
   })
 })
 
+
 Cypress.Commands.add('promoteAdmin', function () {
   cy.request({
     method: 'PATCH',
@@ -38,6 +38,7 @@ Cypress.Commands.add('promoteAdmin', function () {
     }
   })
 })
+
 
 Cypress.Commands.add('promoteCritic', function () {
   cy.request({
@@ -158,6 +159,7 @@ Cypress.Commands.add("createAndLoginCritic", function (nome, email, senha) {
       });
   });
 });
+
 Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationInMinutes, releaseYear, failOnStatusCode) => {
   cy.createAndLogAdmin(faker.animal.fish(), faker.internet.exampleEmail(), 'lionxitps').then((response) => {
     let token = response.token
@@ -209,7 +211,7 @@ Cypress.Commands.add('createMovie', () => {
   })
 })
 
-Cypress.Commands.add('postReview', (idFilme,token) => {
+Cypress.Commands.add('postReview', (idFilme, token) => {
   cy.request({
     method: "POST",
     url: "users/review",
@@ -233,7 +235,8 @@ Cypress.Commands.add("inactivateWithToken", function (token) {
     }
   });
 });
-Cypress.Commands.add('promoteAdminWithToken', function (token) {
+
+Cypress.Commands.add('promoteAdmin', function (token) {
   cy.request({
     method: 'PATCH',
 
@@ -243,10 +246,20 @@ Cypress.Commands.add('promoteAdminWithToken', function (token) {
     }
   })
 })
-Cypress.Commands.add('promoteCriticWithToken', function (token) {
+Cypress.Commands.add('promoteCritic', function (token) {
   cy.request({
     method: 'PATCH',
     url: 'users/apply',
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  })
+})
+
+Cypress.Commands.add('deleteMovie', function (id, token) {
+  cy.request({
+    method: 'DELETE',   
+    url: 'movies/' + id,
     headers: {
       Authorization: "Bearer " + token
     }
