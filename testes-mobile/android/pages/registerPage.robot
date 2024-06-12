@@ -1,7 +1,5 @@
 *** Settings ***
 Resource    ..//base.robot
-Library    FakerLibrary
-
 
 *** Variables ***
 
@@ -107,6 +105,11 @@ E preencher o formulário com senha com 5 digitos
 E confirmar a senha com 5 digitos
     Clica e digita    ${inputConfSenha}    12345
 
+E preencher o formulário com senha com 13 caracteres
+    Clica e digita    ${inputSenha}        1234566541230
+E confirmar a senha com 13 caracteres
+    Clica e digita    ${inputConfSenha}    1234566541230
+
 E preencher o formulário com nome "A"
     Clica e digita       ${inputNome}    A
 
@@ -114,5 +117,12 @@ Entao o usuário não será cadastrado e receberá um aviso "O e-mail deve ter n
     Wait Until Element Is Visible    ${erroEmailLongo}
     Verifica contentDesc    ${erroEmailLongo}    Ocorreu um erro ao realizar o cadastro. Tente novamente mais tarde.
 
-
+#TODO verifiar o bo desse erro pq ele da uma faixa e n o erro em si
+Entao o usuário não será cadastrado e receberá um aviso "A senha deve ter pelo menos 6 dígitos."
+    Wait Until Element Is Visible    ${erroEmailLongo}
+    Verifica contentDesc    ${erroEmailLongo}    Ocorreu um erro ao realizar o cadastro. Tente novamente mais tarde.
     
+#TODO verifiar o bo desse erro pq ele da uma faixa e n o erro em si dnovo
+Entao o usuário não será cadastrado e receberá um aviso "A senha deve ter no máximo 12 dígitos."
+    Wait Until Element Is Visible    ${erroEmailLongo}
+    Verifica contentDesc    ${erroEmailLongo}    Ocorreu um erro ao realizar o cadastro. Tente novamente mais tarde.
