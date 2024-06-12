@@ -15,8 +15,9 @@ ${BASE_URL}              https://raromdb-3c39614e42d4.herokuapp.com/api
 ${buttonRegistrar}       ${prefixoBTN}     [@content-desc="Registrar"]
 ${buttonMenu}            ${prefixoBTN}     [@content-desc="Open navigation menu"]
 ${buttonRegistrese}      ${prefixoView}    [@content-desc="Registre-se"]
-${buttonLogin}           ${prefixoView}    [@content-desc="Login"]
+${buttonMenuLogin}       ${prefixoView}    [@content-desc="Login"]
 ${buttonFilmes}          ${prefixoView}    [@content-desc="Filmes"]
+${buttonLogin}           ${prefixoBTN}     [@content-desc="Login"]
 
 #alertas
 ${informNome}            ${prefixoView}    [@content-desc="Informe o nome."]
@@ -28,6 +29,9 @@ ${senhasDiferentes}      ${prefixoView}    [@content-desc="As senhas não coinci
 ${emailCadastrado}       ${prefixoView}    [@content-desc="E-mail já cadastrado. Utilize outro e-mail."]
 ${cadastroRealizado}     ${prefixoView}    [@content-desc="Cadastro realizado!"]
 ${erroRegInvalid}        ${prefixoView}    [@content-desc="Ocorreu um erro ao realizar o cadastro. Tente novamente mais tarde."]
+${sucessoLogin}          ${prefixoView}    [@content-desc="Login realizado!"]
+${userOuSenhaInvalido}   ${prefixoView}    [@content-desc="Usuário ou senha inválidos."]    
+     
 
 #Campos input
 ${inputNome}             ${prefixo}        android.widget.EditText[1]
@@ -35,15 +39,53 @@ ${inputEmail}            ${prefixo}        android.widget.EditText[2]
 ${inputSenha}            ${prefixo}        android.widget.EditText[3]
 ${inputConfSenha}        ${prefixo}        android.widget.EditText[4]
 
+${inputEmailLogin}       ${prefixo}        android.widget.EditText[1]
+${inputSenhaLogin}       ${prefixo}        android.widget.EditText[2]
+
 *** Keywords ***
 Dado que o usuário se encontra na página de cadastro
     Wait Until Element Is Visible                  ${buttonMenu}
     Clica e espera    ${buttonMenu}                ${buttonRegistrese}
     Clica e espera    ${buttonRegistrese}          ${inputNome}
 
+Dado que usuário está na tela de login
+    Wait Until Element Is Visible                  ${buttonMenu}
+    Clica e espera    ${buttonMenu}                ${buttonMenuLogin}
+    Clica e espera    ${buttonMenuLogin}               ${inputEmailLogin}
+
+Quando informar email cadastrado
+    ${nome}    FakerLibrary.Name
+    ${email}   FakerLibrary.Email
+    Create Session  criar_sessao  ${BASE_URL}
+    ${payload}=  Create Dictionary  name=${nome}  email=${email}  password=123456
+    ${response}=  POST On Session  criar_sessao  /users  json=${payload}
+    Should Be Equal As Numbers  ${response.status_code}  201
+    
+    Clica e digita    ${inputEmailLogin}        ${email}
+E preencher a senha corretamente
+    Clica e digita    ${inputSenhaLogin}        123456
+
+Quando informar o email um email nao cadastrado
+    ${email}    FakerLibrary.Email
+    Clica e digita    ${inputEmailLogin}        em${email}
+
+Quando preencher a senha corretamente
+    Clica e digita    ${inputSenhaLogin}        123456
+
+E clicar em Login
+    Clica e espera    ${buttonLogin}    ${inputEmailLogin}
+
+Quando clicar em Login
+    Clica e espera    ${buttonLogin}    ${informEmail}
+Entao o login é realizado com sucesso
+    Verifica contentDesc    ${sucessoLogin}    Login realizado!
+
+E preencher a senha incorretamente
+    Clica e digita    ${inputSenhaLogin}        654321
+
 Quando preencher o formulário com nome válido
     ${nome}    FakerLibrary.Name
-    Clica e digita       ${inputNome}    ${nome}
+    Clica e digita       ${inputNome}      ${nome}
 
 
 E preencher o formulário com email válido
@@ -141,6 +183,14 @@ Entao o usuário não será cadastrado e receberá um aviso "As senhas não coin
 
 Entao o usuário não será cadastrado e receberá um aviso "Confirme a senha."
     Verifica contentDesc    ${informConfSenha}   Confirme a senha.
+
+Entao o login não é realizado e a mensagem "Usuário ou senha inválidos." é exibida
+    Verifica contentDesc    ${userOuSenhaInvalido}    Usuário ou senha inválidos.
+
+Entao o login não é realizado e uma mensagem deve ser exibida "Informe o e-mail."
+    Verifica contentDesc    ${informEmail}    Informe o e-mail.
+Entao o login não é realizado e uma mensagem deve ser exibida "Informe a senha"
+    Verifica contentDesc    ${informSenha}    Informe uma senha.
 E preencher o formulário com uma senha
     Clica e digita    ${inputSenha}    123456
 
