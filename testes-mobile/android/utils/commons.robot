@@ -18,6 +18,7 @@ Clica e digita
 
 Verifica contentDesc
     [Arguments]    ${elemento}    ${conteudo}
+    Wait Until Element Is Visible    ${elemento}
     Element Should Be Visible    ${elemento}
     ${contentDesc}=    AppiumLibrary.Get Element Attribute    ${elemento}    content-desc
     Should Contain    ${contentDesc}    ${conteudo}

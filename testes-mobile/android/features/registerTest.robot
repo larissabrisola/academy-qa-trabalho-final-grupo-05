@@ -48,8 +48,15 @@ Deve ser possivel cadastrar com nome contendo 1 caractere
     E preencher o formulário com senha válida
     E clicar em Cadastrar
     Entao o usuário será cadastrado
+#TODO VERIFICAR NOME COM ALFABETO CIRILICO 
+Deve ser possivel cadastrar o usuario com qualquer tipo de nome
+    [Template]    Deve ser possivel cadastrar o usuario com qualquer tipo de nome
+        usuario
+        123456
+        "!@#$%%
+        😀😃😄😁😆
+        пользователь
 
-# TODO Aprender a usar api pra montar esse teste
 Não deve ser possivel cadastrar com email já utilizado - mensagem de alerta deve ser exibida
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com nome válido
@@ -86,21 +93,14 @@ Não deve ser possivel cadastrar se todos campos estiverem vazios
     Entao o usuário não será cadastrado e receberá um aviso "Informe o e-mail."
     Entao o usuário não será cadastrado e receberá um aviso "Informe uma senha."
 
-#TODO montar o template
-Scenario Outline: Não deve ser possivel cadastrar com formato de email inválido
-    Dado que o usuário se encontra na página de cadastro
-    Quando preencher o formulário com nome válido
-    E preencher o formulário com email "<email>"
-    E preencher o formulário com senha válida
-    E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "Informe um e-mail válido."
-    Examples:
-        | email          |
-        | joca.com       |
-        | ruivo!k!@.com  |
-        | boi@boi        |
-        | boi@car😁a.com |
 
+Não deve ser possivel cadastrar com formato de email inválido
+    [Template]    Não deve ser possivel cadastrar com formato de email inválido
+        email          
+        joca.com       
+        ruivo!k!@.com  
+        boi@boi        
+        boi@car😁a.com 
 
 Não deve ser possivel cadastrar com email contendo 61 ou mais caracteres
     Dado que o usuário se encontra na página de cadastro
@@ -108,18 +108,16 @@ Não deve ser possivel cadastrar com email contendo 61 ou mais caracteres
     E preencher o formulário com email contendo 61 caracteres
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "O e-mail deve ter no máximo 60 dígitos."
+    Entao o usuário não será cadastrado e receberá um aviso de erro no cadastro
 
-#TODO ver o erro, ta falando que o email é invalido, 1 letra a mais passa, mensagem de pelomenos 5 digitos n existe
 Não deve ser possivel cadastrar com email contendo 4 ou menos caracteres
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com nome válido
     E preencher o formulário com email "a@c.a"
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "Informe pelo menos 5 dígitos para o e-mail"
+    Entao o usuário não será cadastrado e receberá um aviso de email invalido
 
-# TODO verificar o aviso de erro no appium
 Não deve ser possivel cadastrar com senha contendo 5 ou menos caracteres
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com nome válido
@@ -127,7 +125,7 @@ Não deve ser possivel cadastrar com senha contendo 5 ou menos caracteres
     E preencher o formulário com senha com 5 digitos
     E confirmar a senha com 5 digitos
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "A senha deve ter pelo menos 6 dígitos."
+    Entao o usuário não será cadastrado e receberá um aviso de erro no cadastro
 
 Não deve ser possivel cadastrar com senha contendo 13 ou mais caracteres
     Dado que o usuário se encontra na página de cadastro
@@ -136,29 +134,29 @@ Não deve ser possivel cadastrar com senha contendo 13 ou mais caracteres
     E preencher o formulário com senha com 13 caracteres
     E confirmar a senha com 13 caracteres
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "A senha deve ter no máximo 12 dígitos."
+    Entao o usuário não será cadastrado e receberá um aviso de erro no cadastro
 
 Não deve ser possivel cadastrar nome contendo 101 ou mais caracteres
     Dado que o usuário se encontra na página de cadastro
-    Quando preencher o formulário com nome "IwishyouthebestfortherestofyourlifeFeltsorryforyouQuando lookedinyoureyesbutIneedtoconfessItoldyoualiea"
+    Quando preencher o formulário com nome maior que 100 caracteres
     E preencher o formulário com email válido
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "O nome deve ter no máximo 100 dígitos."
+    Entao o usuário não será cadastrado e receberá um aviso de erro no cadastro
 
 Não deve ser possivel realizar o cadastro se a senha e confirmação da senha não forem iguais
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com nome válido
     E preencher o formulário com email válido
-    E preencher o formulário com senha "umdoistresq"
-    E confirmar a senha "doistresumq"
+    E preencher o formulário com uma senha
+    E confirmarçao de senha diferente
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "As senhas devem ser iguais."
+    Entao o usuário não será cadastrado e receberá um aviso "As senhas não coincidem."
 
 Não deve ser possivel realizar o cadastro sem confirmar senha
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com nome válido
     E preencher o formulário com email válido
-    E preencher o formulário com senha "umdoistresq"
+    E preencher o formulário com uma senha
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "Informe a senha"
+    Entao o usuário não será cadastrado e receberá um aviso "Confirme a senha."

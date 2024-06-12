@@ -2,12 +2,12 @@
 
 Library    AppiumLibrary
 Library    FakerLibrary
-Library    XML
+Library    RequestsLibrary
+Library    XML    
 
 #resource
 Resource    utils/config.robot
 Resource    utils/commons.robot
 
-Resource    pages/registerPage.robot
-Resource    pages/loginPage.robot
-Resource    pages/filmesPage.robot
+Resource    pages/raroMDB.robot
+
