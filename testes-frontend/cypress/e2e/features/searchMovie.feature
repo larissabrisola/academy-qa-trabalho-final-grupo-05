@@ -1,13 +1,17 @@
 Feature: Pesquisa de filme
+    Como uma pessoa qualquer acessando o sistema
+    Desejo poder pesquisar entre os filmes cadastrados
+    Para ser mais eficiente em minha busca pelo catálogo de filmes
 
-    Scenario: Deve ser possível encontrar um filme por meio do seu título estando logado
-        Given que estou logado e na tela de filmes
+
+    Scenario: Deve ser possível encontrar um filme por meio do seu título sem estar logado
+        Given que estou na tela de filmes
         When informar o nome de um filme na barra de pesquisa
         And concluir operação
         Then será possível visualizar o filme pesquisado
 
-    Scenario: Deve ser possível encontrar um filme por meio do seu título sem estar logado
-        Given que estou na tela de filmes
+    Scenario: Deve ser possível encontrar um filme por meio do seu título estando logado
+        Given que estou logado e na tela de filmes
         When informar o nome de um filme na barra de pesquisa
         And concluir operação
         Then será possível visualizar o filme pesquisado
@@ -16,7 +20,7 @@ Feature: Pesquisa de filme
         Given que estou na tela de filmes
         When informar o nome de um filme que foi deletado
         And concluir operação
-        Then não será possível visualizar o filme na lista 
+        Then não será possível visualizar o filme na lista
     
     Scenario: Deve ser possível encontrar um filme inserindo seu título parcialmente
         Given que estou na tela de filmes
@@ -32,6 +36,6 @@ Feature: Pesquisa de filme
     
     Scenario: Não deve ser possível buscar filme pela ID
         Given que estou na tela de filmes
-        When informar o id de um filme
+        When informar o id de um filme no campo de pesquisa
         And concluir operação
         Then não será possível visualizar o filme na lista

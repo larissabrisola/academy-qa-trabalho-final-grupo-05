@@ -1,5 +1,8 @@
 Feature: Consulta de detalhes de filmes
-
+    Como uma pessoa qualquer acessando o sistema
+    Desejo poder consultar mais detalhes de um filme
+    Para poder visualizar todas as informações registradas para aquele filme
+    
     Scenario: Deve ser possível visualizar todas as informações de um filme com um usuário do tipo comum
         Given que estou logado e na tela de filmes
         And sou um usuário do tipo comum

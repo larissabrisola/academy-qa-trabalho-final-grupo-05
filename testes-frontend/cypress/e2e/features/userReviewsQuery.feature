@@ -1,5 +1,8 @@
 Feature: Consulta de avaliações de usuário
-
+    Como um usuário da aplicação
+    Desejo poder consultar as avaliações feitas por mim
+    Para poder ter um histórico de minhas avaliações
+    
     Scenario: Deve ser possível visualizar todas as avaliações feitas por mim
         Given que estou logado
         When acessar meu perfil

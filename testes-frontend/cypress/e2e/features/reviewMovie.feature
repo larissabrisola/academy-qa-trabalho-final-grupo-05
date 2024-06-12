@@ -1,5 +1,8 @@
 Feature: Avaliação de filmes
-
+    Como um usuário da aplicação
+    Desejo poder escrever avaliações sobre os filmes
+    Para ser capas de compartilhar minha opinião sobre os filmes
+    
     Scenario: Deve ser possível criar uma avaliação e atribuir uma nota para um filme
         Given acesso à tela de filmes
         When selecionar um filme qualquer
