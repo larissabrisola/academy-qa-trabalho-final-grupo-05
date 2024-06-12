@@ -35,5 +35,3 @@ Feature: Consulta de avaliações de usuário
         And não relizei avaliações previamente
         When acessar meu perfil
         Then visualizo a lista de avaliações em branco
-    
-    
