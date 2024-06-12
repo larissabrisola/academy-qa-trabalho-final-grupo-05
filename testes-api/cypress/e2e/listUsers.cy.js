@@ -30,7 +30,7 @@ describe("Testes de listagem de usuarios", () => {
   });
 
   it("Não deve ser possível um usuário critico acessar a lista de usuários", () => {
-    cy.promoteCriticWithToken(token);
+    cy.promoteCritic(token);
     cy.request({
       method: "GET",
       url: "users",
@@ -44,7 +44,7 @@ describe("Testes de listagem de usuarios", () => {
     });
   });
   it("Deve ser possível um usuário administrador acessar a lista de usuários", () => {
-    cy.promoteAdminWithToken(token);
+    cy.promoteAdmin(token);
     cy.request({
       method: "GET",
       url: "users",
@@ -56,8 +56,8 @@ describe("Testes de listagem de usuarios", () => {
         expect(response.body).to.be.an("Array")
     });
   });
-  it("Deve ser possível verificar informações dos usuários na lista", ()=>{
-    cy.promoteAdminWithToken(token);
+  it.only("Deve ser possível verificar informações dos usuários na lista", ()=>{
+    cy.promoteAdmin(token);
     cy.request({
       method: "GET",
       url: "users",
@@ -67,7 +67,11 @@ describe("Testes de listagem de usuarios", () => {
     }).then((response) => {
         let tamanho = response.body.length - 1
         expect(response.status).to.equal(200)
-        expect(response.body).to.be.an("Array")
+        expect(response.body[tamanho].id).to.equal(id)
+        expect(response.body[tamanho].name).to.equal(nome)
+        expect(response.body[tamanho].email).to.equal(email.toLowerCase())
+        expect(response.body[tamanho].type).to.equal(1)
+        expect(response.body[tamanho].active).to.equal(true)
     });
   })
 });
