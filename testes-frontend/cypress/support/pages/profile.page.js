@@ -1,6 +1,11 @@
 export default class ProfilePage {
-    linkNomeFilme = '.review-card-header'
+    notaEstrelas = '.stars';
+    estrelaCheia = '.star filled';
     
+    linkNomeFilme = '.review-card-header';
 
+    clickLinkFilme(){
+        cy.get(this.linkNomeFilme).click()
+       }
 
 }
