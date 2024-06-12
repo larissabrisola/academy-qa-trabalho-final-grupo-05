@@ -56,7 +56,7 @@ describe("Testes de listagem de usuarios", () => {
         expect(response.body).to.be.an("Array")
     });
   });
-  it.only("Deve ser possível verificar informações dos usuários na lista", ()=>{
+  it("Deve ser possível verificar informações dos usuários na lista", ()=>{
     cy.promoteAdmin(token);
     cy.request({
       method: "GET",
