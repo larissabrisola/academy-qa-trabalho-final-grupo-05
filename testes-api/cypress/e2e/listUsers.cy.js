@@ -56,4 +56,18 @@ describe("Testes de listagem de usuarios", () => {
         expect(response.body).to.be.an("Array")
     });
   });
+  it("Deve ser possível verificar informações dos usuários na lista", ()=>{
+    cy.promoteAdminWithToken(token);
+    cy.request({
+      method: "GET",
+      url: "users",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }).then((response) => {
+        let tamanho = response.body.length - 1
+        expect(response.status).to.equal(200)
+        expect(response.body).to.be.an("Array")
+    });
+  })
 });
