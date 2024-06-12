@@ -71,9 +71,9 @@ Then('será possível visualizar lista de filmes que contem o que foi pesquisado
 })
 
 When('informar o nome e o ano de lançamento do filme', () => {
-
+    inicialPage.typePesquisa(filme.title + ' ' + filme.releaseYear)
 })
 
 When('informar o id de um filme no campo de pesquisa', () => {
-
+    inicialPage.typePesquisa(filme.id)
 })
