@@ -22,18 +22,13 @@ Feature: Consulta de detalhes de filmes
         Given que estou na tela de filmes
         When selecionar um filme qualquer
         Then tenho acesso à todas aos detalhes do filme selecionado
-    
-    # Scenario: Deve ser possível acessar um filme pela ID na URL
-    #     Given que estou na tela de filmes
-    #     When selecionar um filme qualquer
-    #     Then tenho acesso à todas aos detalhes do filme selecionado
 
     Scenario: Deve ser possível visualizar a soma das avaliações da audiência
         Given que estou na tela de filmes
         When selecionar um filme qualquer
         Then consigo visualizar a média das avaliações da audiência
     
-    Scenario: Deve ser possível visualizar a soma das avaliações da crítica
+    Scenario: Deve ser possível visualizar a média das avaliações da crítica
         Given que estou na tela de filmes
         When selecionar um filme qualquer
         Then consigo visualizar a média das avaliações da crítica
