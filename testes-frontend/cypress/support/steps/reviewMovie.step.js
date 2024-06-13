@@ -46,7 +46,7 @@ Given('que estou logado e na tela de um filme específico', () => {
     cy.visit(Cypress.env('inicial_url') + 'login');
     pageLogin.login(email, password);
     cy.wait(2000);
-    inicialPage.selecionaFilmeEspecifico(filme.title)
+    inicialPage.selecionaFilme(filme.title)
 })
 
 Given('que acesso à tela de filmes', () => {
@@ -57,12 +57,12 @@ Given('que fiz a avaliação de um filme', () => {
     cy.visit(Cypress.env('inicial_url') + 'login');
     pageLogin.login(email, password);
     cy.wait(2000);
-    inicialPage.selecionaFilmeEspecifico(filme.title)
+    inicialPage.selecionaFilme(filme.title)
     movieDetails.avaliarFilme('Bom!')
 })
 
 When('buscar e selecionar um filme específico', () => {
-    inicialPage.selecionaFilmeEspecifico(filme.title)
+    inicialPage.selecionaFilme(filme.title)
 })
 
 When('criar uma nova avaliação', () => {

@@ -244,7 +244,7 @@ Cypress.Commands.add('promoteAdmin', function (token) {
     headers: {
       Authorization: "Bearer " + token
     }
-  })
+  }).then(response => Cypress.env('adminAccessToken', token))
 })
 Cypress.Commands.add('promoteCritic', function (token) {
   cy.request({
@@ -253,7 +253,7 @@ Cypress.Commands.add('promoteCritic', function (token) {
     headers: {
       Authorization: "Bearer " + token
     }
-  })
+  }).then(response => Cypress.env('criticAccessToken', token))
 })
 
 Cypress.Commands.add('deleteMovie', function (id, token) {

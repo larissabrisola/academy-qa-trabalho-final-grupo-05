@@ -10,8 +10,11 @@ export default class MovieDetailsPage {
     modalErro = '.modal-content'
     buttonModalOk = '.modal-actions'
     cardReview = '.user-review-card'
-
-
+    titleMovie = '.movie-details-title'
+    descriptionMovie = '.movie-detail-description'
+    dataMovie = '.movie-details-info-with-icon'
+    moviePoster = '.w-full.h-auto.rounded-lg'
+    
     buttonSignInToReview = '[href="/login"]'
     buttonEnviar = '[type="submit"]'
 
@@ -23,13 +26,7 @@ export default class MovieDetailsPage {
         cy.get(this.stars).each(($e) => {
             cy.wrap($e).click()
         })
-
-        // cy.get(this.ratingStarstars).eq(3).click({ multiple: true })
     }
-
-    // clickRatingStars(){
-    //     cy.get(this.ratingStar).click()
-    // }
 
     clickButtonEnviar() {
         cy.get(this.buttonEnviar).click()

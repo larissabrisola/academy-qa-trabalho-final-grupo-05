@@ -16,10 +16,10 @@ export default class InicialPage {
     }
 
     clickMovieCard() {
-        cy.get(this.movieCard).click()
+        cy.get(this.movieCard).click({multiple: false})
     }
 
-    selecionaFilmeEspecifico(filme){
+    selecionaFilme(filme){
         this.typePesquisa(filme);
         this.clickButtonSearch();
         this.clickMovieCard();
