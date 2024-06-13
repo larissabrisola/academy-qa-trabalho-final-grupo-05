@@ -196,3 +196,22 @@ Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationI
       }
     })
   })
+
+  Cypress.Commands.add('createMovie', () => {
+    cy.request({
+      method: "POST",
+      url: Cypress.env('api_url') + "movies",
+      headers: {
+        Authorization: `Bearer ${Cypress.env('accessToken')}`
+      },
+      body: {
+        title: faker.person.firstName() + " o retorno",
+        genre: "Terror",
+        description: faker.lorem.words({ min: 6, max: 12 }),
+        durationInMinutes: 120,
+        releaseYear: 2000,
+      },
+    }).then((response) => {
+      return response.body
+    })
+  })
