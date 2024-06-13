@@ -4,12 +4,13 @@ export default class ListMoviesPage {
     btnAnteriorAvaliados = ".top-rated-movies > div.carousel-container > button:nth-child(1)"
     btnProximoAvaliados = ".top-rated-movies > div.carousel-container > button:nth-child(3)"
 
-    firstMovieList = "#root > div > main > section.featured-movies > div.carousel-container > div.carousel-data > a:nth-child(1)"
+    firstMovieList = ".featured-movies > div.carousel-container > div.carousel-data > a:nth-child(1)"
 
 
     clickBtnProximoDestaque (){
         cy.get(this.btnProximoDestaque).click()
     }
+
     clickBtnAnteriorDestaque (){
         cy.get(this.btnAnteriorDestaque).click()
     }

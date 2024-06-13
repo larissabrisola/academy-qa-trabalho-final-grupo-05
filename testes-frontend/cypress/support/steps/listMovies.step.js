@@ -4,6 +4,8 @@ import ListMoviesPage from "../pages/listMovies.page";
 let pageListMovies = new ListMoviesPage()
 
 let movieId
+
+
 Given('usuário está na tela inicial', ()=>{
     cy.visit('https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/')
     cy.url().should('eq', 'https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/')
@@ -19,23 +21,46 @@ When('existir filmes cadastrados', ()=>{
         } else 
             return
     })
-
 })
+
+When('está autenticado', ()=>{
+    cy.createAndLoginUser('Flora', faker.internet.exampleEmail(), 'linuxtips').then(()=>{
+        cy.visit('https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/')
+    })
+})
+
+When('existir 10 filmes cadastrados', ()=>{
+    cy.intercept('GET', 'https://raromdb-3c39614e42d4.herokuapp.com/api/movies', {
+        body: [
+            {"title": "Suzume","genre": "Animation","description": "hings right.","durationInMinutes": 120,"releaseYear": 2022},
+            {"title": "Suzume","genre": "Animation","description": "hings right.","durationInMinutes": 120,"releaseYear": 2022},
+            {"title": "Suzume","genre": "Animation","description": "hings right.","durationInMinutes": 120,"releaseYear": 2022},
+            {"title": "Suzume","genre": "Animation","description": "hings right.","durationInMinutes": 120,"releaseYear": 2022},
+            {"title": "Suzume","genre": "Animation","description": "hings right.","durationInMinutes": 120,"releaseYear": 2022},
+            {"title": "Suzume","genre": "Animation","description": "hings right.","durationInMinutes": 120,"releaseYear": 2022},
+            {"title": "Suzume","genre": "Animation","description": "hings right.","durationInMinutes": 120,"releaseYear": 2022},
+            {"title": "Suzume","genre": "Animation","description": "hings right.","durationInMinutes": 120,"releaseYear": 2022},
+            {"title": "Suzume","genre": "Animation","description": "hings right.","durationInMinutes": 120,"releaseYear": 2022},
+            {"title": "Suzume","genre": "Animation","description": "hings right.","durationInMinutes": 120,"releaseYear": 2022},
+        ]
+    })
+});
 
 When('clicar no botão de próximo em filmes em destaque', ()=>{
     pageListMovies.clickBtnProximoDestaque()
 })
 
-When('clicar no botão de anterior em filmes em destaque', ()=>{
-    pageListMovies.clickBtnProximoDestaque()
+When('clicar no botão anterior em filmes em destaque', ()=>{
+    pageListMovies.clickBtnAnteriorDestaque()
+
 })
 
 When('clicar no botão de próximo em filmes mais bem avaliados', ()=>{
     pageListMovies.clickBtnProximoAvaliados()
 })
 
-When('clicar no botão de anterior em filmes mais bem avaliados', ()=>{
-    pageListMovies.clickBtnProximoAvaliados()
+When('clicar no botão anterior em filmes mais bem avaliados', ()=>{
+    pageListMovies.clickBtnAnteriorAvaliados()
 })
 
 
@@ -76,23 +101,28 @@ Then('deve ser possivel visualizar as informações dos filmes', ()=>{
     })
 })
 
-Then('deve ser possivel visualizar mais filmes', ()=>{
-    cy.log('n sei ainda') 
+Then('deve ser possivel visualizar mais filmes em destaque', ()=>{
+    cy.get(pageListMovies.btnAnteriorDestaque).should('be.enabled')
 })
 
-Then('não deve ser possivel avançar', ()=>{
-    cy.get(pageListMovies.clickBtnProximoDestaque()).should('be.disabled')
+Then('deve ser possivel visualizar mais filmes bem avaliados', ()=>{
+    cy.get(pageListMovies.btnAnteriorAvaliados).should('be.enabled')
+})
+
+Then('não deve ser possivel clicar no botão de próximo de filmes em destaque', ()=>{
+    cy.get(pageListMovies.btnProximoDestaque).should('be.disabled')
+})
+
+
+Then('não deve ser possivel clicar no botão de próximo de filmes mais bem avaliados', ()=>{
+    cy.get(pageListMovies.btnProximoAvaliados).should('be.disabled')
 })
 
 Then('não deve ser possivel clicar no botão anterior de filmes em destaque', ()=>{
-    cy.get(pageListMovies.clickBtnAnteriorDestaque()).should('be.disabled')
-})
-
-Then('não deve ser possivel clicar no botão de próximo de filmes mais bem avaliados', ()=>{
-    cy.get(pageListMovies.clickBtnProximoAvaliados()).should('be.disabled')
+    cy.get(pageListMovies.btnAnteriorDestaque).should('be.disabled')
 })
 
 Then('não deve ser possivel clicar no botão anterior de filmes mais bem avaliados', ()=>{
-    cy.get(pageListMovies.clickBtnAnteriorAvaliados()).should('be.disabled')
+    cy.get(pageListMovies.btnAnteriorAvaliados).should('be.disabled')
 })
 
