@@ -187,9 +187,6 @@ Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationI
   })
   });
 
-
-
-
   Cypress.Commands.add('adminCreatesALotOfMovies', function (movies, failOnStatusCode) {
     cy.createAndLogAdmin(faker.animal.fish(), faker.internet.exampleEmail(), 'lionxitps').then((response) => {
       let token = response.token

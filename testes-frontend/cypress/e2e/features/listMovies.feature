@@ -42,5 +42,3 @@ Feature: Lista de filmes
     Scenario: Não deve ser possivel voltar ao chegar ao inicio da lista de filmes mais bem avaliados
         When existir filmes cadastrados 
         Then não deve ser possivel clicar no botão anterior de filmes mais bem avaliados
-
-
