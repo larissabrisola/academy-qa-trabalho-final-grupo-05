@@ -187,3 +187,12 @@ Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationI
   })
   });
 
+  Cypress.Commands.add('deleteMovie', function (id, token) {
+    cy.request({
+      method: 'DELETE',   
+      url: Cypress.env('api_url') + "movies/" + id,
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+  })

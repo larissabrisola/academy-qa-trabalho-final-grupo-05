@@ -60,8 +60,11 @@ Then('será possível visualizar a avaliação criada', () => {
 })
 
 Then('não será possível criar uma avaliação', () => {
+    movieDetails.typeReview('Gostei!')
+    })
     
-})
+    Then('será possível visualizar a opção ${string}')
+    cy.contains(movieDetails.buttonSignInToReview, "Entre para poder escrever sua review" )
 
 
 When('atribuir uma nota', () => {

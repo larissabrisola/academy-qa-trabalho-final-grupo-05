@@ -5,9 +5,10 @@ export default class MovieDetailsPage {
     ratedStar = '.filled'
     nameUser = '.user-reviecard-info'
     userReviewCard = '.user-review-card'
-
+    
     capa = '.w-full h-auto rounded-lg'
-
+    
+    buttonSignInToReview = '[href="/login"]'
     buttonEnviar = 'button[type="submit"]'
 
     typeReview(review){
@@ -24,6 +25,10 @@ export default class MovieDetailsPage {
 
     clickButtonEnviar(){
         cy.get(this.buttonEnviar).click()
+    }
+
+    clickButtonSignInToReview(){
+        cy.get(this.buttonSignInToReview).click()
     }
 
     
