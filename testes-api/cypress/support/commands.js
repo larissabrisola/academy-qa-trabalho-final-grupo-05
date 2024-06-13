@@ -28,16 +28,16 @@ Cypress.Commands.add("login", function (email, senha, failOnStatusCode) {
 })
 
 
-Cypress.Commands.add('promoteAdmin', function () {
-  cy.request({
-    method: 'PATCH',
+// Cypress.Commands.add('promoteAdmin', function () {
+//   cy.request({
+//     method: 'PATCH',
+//     url:  Cypress.env('api_url') + 'users/admin',
+//     headers: {
+//       Authorization: `Bearer ${Cypress.env('accessToken')}`
+//     }
+//   })
+// })
 
-    url: 'users/admin',
-    headers: {
-      Authorization: `Bearer ${Cypress.env('accessToken')}`
-    }
-  })
-})
 
 
 Cypress.Commands.add('promoteCritic', function () {

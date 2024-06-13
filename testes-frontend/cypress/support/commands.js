@@ -215,3 +215,27 @@ Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationI
       return response.body
     })
   })
+
+Cypress.Commands.add('adminCreatesALotOfMovies', function (movies, failOnStatusCode) {
+    cy.createAndLogAdmin(faker.animal.fish(), faker.internet.exampleEmail(), 'lionxitps').then((response) => {
+      let token = response.token
+  
+      movies.forEach(movie => {
+        cy.request({
+          method: "POST",
+          url: Cypress.env('api_url') + "movies",
+          headers: {
+            Authorization: "Bearer " + `${token}`,
+          },
+          body: {
+            title: movie.title,
+            genre: movie.genre,
+            description: movie.description,
+            durationInMinutes: movie.durationInMinutes,
+            releaseYear: movie.releaseYear,
+          }, failOnStatusCode
+        })
+      })
+    })
+  });
+  
