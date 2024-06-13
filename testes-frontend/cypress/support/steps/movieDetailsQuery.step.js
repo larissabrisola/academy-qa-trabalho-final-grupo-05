@@ -8,10 +8,11 @@ const movieDetails = new MovieDetailsPage()
 const pageLogin = new LoginPage();
 const inicialPage = new InicialPage()
 
-let uId;
-let uToken;
-let filme;
-
+let uId
+let uToken
+let filme
+let mediaAudiencia
+let mediaCritica
 let name
 let email
 let password = "1234567"
@@ -42,7 +43,7 @@ AfterAll(() => {
 Given('que estou logado e na tela de filmes', () => {
     cy.visit(Cypress.env('inicial_url') + 'login');
     pageLogin.login(email, password);
-    cy.wait(2000);
+    cy.wait(1500);
 })
 
 When('selecionar um filme', () => {
@@ -67,11 +68,29 @@ Given('que estou na tela de filmes', () => {
 })
 
 Then('consigo visualizar a média das avaliações da audiência', () => {
+    // cy.request({
+    //     method: 'GET',
+    //     url: Cypress.env('api_url') + "movies/" + filme.id,
+    //     headers: {
+    //         Authorization: `Bearer ${uToken}`
+    //     },
+    // }).then((response) => {
+    //     mediaCritica = response.body.criticScore
+    // })
     cy.contains('Avaliação da audiência').should('be.visible');
     
 })
 
 Then('consigo visualizar a média das avaliações da crítica', () => {
+    // cy.request({
+    //     method: 'GET',
+    //     url: Cypress.env('api_url') + "movies/" + filme.id,
+    //     headers: {
+    //         Authorization: `Bearer ${uToken}`
+    //     },
+    // }).then((response) => {
+    //     mediaCritica = response.body.criticScore
+    // })
     cy.contains('Avaliação da crítica').should('be.visible')
 })
 

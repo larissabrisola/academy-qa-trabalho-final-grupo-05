@@ -5,6 +5,7 @@ export default class InicialPage {
     movieCard = '.movie-card';
     noMovies = '.main';
 
+    linkPerfil = '[href="/profile"]'
     buttonSearch = '.search-button'
 
     typePesquisa(filme){
@@ -17,6 +18,10 @@ export default class InicialPage {
 
     clickMovieCard() {
         cy.get(this.movieCard).click({multiple: false})
+    }
+
+    clicklinkPerfil() {
+        cy.get(this.linkPerfil).click()
     }
 
     selecionaFilme(filme){

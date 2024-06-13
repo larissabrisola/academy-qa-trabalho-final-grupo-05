@@ -1,8 +1,12 @@
-import { Given, When, Then, Before, After } from "@badeball/cypress-cucumber-preprocessor";
+import { Given, When, Then, Before, BeforeAll, After } from "@badeball/cypress-cucumber-preprocessor";
 import { faker } from "@faker-js/faker";
 import InicialPage from "../pages/inicial.page";
+import LoginPage from "../pages/login.page";
+import ProfilePage from "../pages/profile.page";
 
 const inicialPage = new InicialPage()
+const loginPage = new LoginPage()
+const profilePage = new ProfilePage();
 
 let uId;
 let uToken;
@@ -26,8 +30,15 @@ Before(() => {
     cy.get('@data').then((data) => {
         filme = data;
     })
+})
 
-    After(() => {
+// Before({ tags: '@usuarioQualquer'}, () => {
+//     cy.visit(Cypress.env('manageAccount'))
+//     profilePage.clickLogoutLink();
+// })
+
+After(() => {
+    cy.promoteAdmin(uToken).then(() => {
         cy.deleteUser(uId, uToken, true)
     })
 })
@@ -37,7 +48,8 @@ Given('que estou na tela de filmes', () => {
 })
 
 Given('que estou logado e na tela de filmes', () => {
-    cy.visit(Cypress.env('inicial_url'))
+    cy.visit(Cypress.env('inicial_url') + 'login')
+    loginPage.login(email, password)
 })
 
 When('informar o nome de um filme na barra de pesquisa', () => {

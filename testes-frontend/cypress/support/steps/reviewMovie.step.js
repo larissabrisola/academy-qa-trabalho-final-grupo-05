@@ -73,7 +73,7 @@ When('concluir operação', () => {
     cy.contains('button', 'Enviar').click();
 })
 
-Then('será possível visualizar a avaliação criada', () => {
+Then('será possível visualizar imediatamente a avaliação criada', () => {
     cy.contains(movieDetails.nameUser, name);
     cy.contains(name).should('be.visible');
     cy.get(movieDetails.ratedStar).should('be.visible')

@@ -8,7 +8,7 @@ Feature: Avaliação de filmes
         Given que estou logado e na tela de um filme específico
         When criar uma nova avaliação
         And concluir operação
-        Then será possível visualizar a avaliação criada
+        Then será possível visualizar imediatamente a avaliação criada
     
     # @ignore
     Scenario: Não deve ser possível consultar avaliação do usuário sem estar logado
@@ -32,7 +32,7 @@ Feature: Avaliação de filmes
         Then a nota é exibida e avaliação fica em branco
     
     # @ignore
-    Scenario: Deve ser possivel editar uma avaliação
+    Scenario: Deve ser possivel apenas editar uma avaliação, sem duplicá-la
         Given que fiz a avaliação de um filme
         When reescrever nova avaliação
         And concluir operação
