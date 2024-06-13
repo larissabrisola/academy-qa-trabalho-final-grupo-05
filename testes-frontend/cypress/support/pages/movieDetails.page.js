@@ -1,8 +1,12 @@
 export default class MovieDetailsPage {
 
     inputReview = 'textarea[placeholder="O que você acha deste filme ?"]'
-    reviewStars = '.stars'
-    capa = '.class="w-full h-auto rounded-lg'
+    ratingStar = '.review-form-star filled false'
+    ratedStar = '.filled'
+    nameUser = '.user-reviecard-info'
+    userReviewCard = '.user-review-card'
+
+    capa = '.w-full h-auto rounded-lg'
 
     buttonEnviar = 'button[type="submit"]'
 
@@ -10,7 +14,17 @@ export default class MovieDetailsPage {
         cy.get(this.inputReview).type(review)
     };
 
-    
+    clickReviewStars(){
+        cy.get(this.reviewStars).click()
+    }
+
+    clickRatingStars(){
+        cy.get(this.ratingStar).click()
+    }
+
+    clickButtonEnviar(){
+        cy.get(this.buttonEnviar).click()
+    }
 
     
 }

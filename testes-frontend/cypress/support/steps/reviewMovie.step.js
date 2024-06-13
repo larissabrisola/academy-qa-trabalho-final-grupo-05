@@ -1,39 +1,71 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import { faker } from "@faker-js/faker";
 import MovieDetailsPage from "../pages/movieDetails.page";
+import InicialPage from "../pages/inicial.page";
 
+
+const inicialPage = new InicialPage();
 const movieDetails = new MovieDetailsPage();
 
-Given('acesso à tela de filmes', () => {
+let uId;
+let uToken;
+let filme;
 
-})
+let name = faker.person.fullName();
+let email = faker.internet.email().toLowerCase();
+let password = "1234567"
 
-When('selecionar um filme qualquer', () => {
+Before(() => {
 
-})
+    cy.createAndLoginUser(name,email, password).then((response)=>{
+        uId = response.id
+        uToken = response.token
+    })
 
-When('criar uma nova avaliação', () => {
 
-})
-
-When('concluir operação', () => {
-
-})
-
-Then('será possível visualizar a avaliação criada', () => {
-
-})
-
-Then('não será possível criar uma avaliação', () => {
-
+    After(()=>{
+        cy.promoveAdmin(uToken)
+        cy.deleteUser(uId, uToken)
+    })
 })
 
 Given('que estou logado e na tela de um filme específico', () => {
+    cy.visit(Cypress.env('inicial_url') + '/login')
 
+    pageLogin.typeEmail(email)
+    pageLogin.typePassword(password)
+    pageLogin.clickButtonLogin()
 })
 
-When('atribuir uma nota', () => {
+Given('acesso à tela de filmes', () => {
+    cy.visit(Cypress.env('inicial_url'))
+})
+
+When('selecionar um filme qualquer', () => {
+    inicialPage.clickButtonSearch(filme.title);
+})
+
+When('criar uma nova avaliação', () => {
+    movieDetails.typeReview('Gostei!')
+    movieDetails.clickRatingStars()
+})
+
+When('concluir operação', () => {
+    movieDetails.clickButtonEnviar();
+})
+
+Then('será possível visualizar a avaliação criada', () => {
+    cy.contains(movieDetails.nameUser, name)
+    cy.contains(movieDetails.userReviewCard, name)
+})
+
+Then('não será possível criar uma avaliação', () => {
     
+})
+
+
+When('atribuir uma nota', () => {
+
 })
 
 Then('a nota é exibida e avaliação fica em branco', () => {

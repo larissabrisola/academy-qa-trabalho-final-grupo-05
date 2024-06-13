@@ -18,20 +18,22 @@ Feature: Consulta de avaliações de usuário
         Given que estou logado
         When acessar meu perfil
         And selecionar uma avaliação feita anteriormente
-        Then será possível editar o comentário e a nota
+        And editar avaliação
+        Then a avaliação antiga será atualizada
+
 
     Scenario: Não deve ser possível duplicar uma avaliação
         Given que estou logado
         When acessar meu perfil
         And selecionar uma avaliação feita anteriormente
-        And atribuir nova avaliação
+        And e inserir novas informaçoes
         Then a avaliação antiga será atualizada
         And não será possível criar nova avaliação
     
     Scenario: Não deve ser possível consultar avaliação do usuário sem estar logado
         Given sou um usuário qualquer
         Then não tenho acesso à tela de perfil
-        And não será possível consutar minha lista de avaliações
+        And não será possível consultar minha lista de avaliações
     
     Scenario: Deve exibir lista vazia se o usuário não realizou avaliaçoes
         Given que estou logado

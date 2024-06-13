@@ -4,7 +4,7 @@ Feature: Avaliação de filmes
     Para ser capas de compartilhar minha opinião sobre os filmes
     
     Scenario: Deve ser possível criar uma avaliação e atribuir uma nota para um filme
-        Given acesso à tela de filmes
+        Given que estou logado e na tela de um filme específico
         When selecionar um filme qualquer
         And criar uma nova avaliação
         And concluir operação
