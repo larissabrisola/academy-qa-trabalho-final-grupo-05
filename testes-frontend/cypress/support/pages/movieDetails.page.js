@@ -1,35 +1,51 @@
 export default class MovieDetailsPage {
 
     inputReview = 'textarea[placeholder="O que você acha deste filme ?"]'
-    ratingStar = '.review-form-star filled false'
-    ratedStar = '.filled'
+    stars = '.stars'
+    ratingStar = '.review-form-star.false'
+    ratedStar = 'div.star-container-reviewcard'
     nameUser = '.user-reviecard-info'
     userReviewCard = '.user-review-card'
-    
-    capa = '.w-full h-auto rounded-lg'
-    
-    buttonSignInToReview = '[href="/login"]'
-    buttonEnviar = 'button[type="submit"]'
+    userReviewInfo = '.user-review-info'
+    modalErro = '.modal-content'
+    buttonModalOk = '.modal-actions'
+    cardReview = '.user-review-card'
 
-    typeReview(review){
+
+    buttonSignInToReview = '[href="/login"]'
+    buttonEnviar = '[type="submit"]'
+
+    typeReview(review) {
         cy.get(this.inputReview).type(review)
     };
 
-    clickReviewStars(){
-        cy.get(this.reviewStars).click()
+    clickRatingStars() {
+        cy.get(this.stars).each(($e) => {
+            cy.wrap($e).click()
+        })
+
+        // cy.get(this.ratingStarstars).eq(3).click({ multiple: true })
     }
 
-    clickRatingStars(){
-        cy.get(this.ratingStar).click()
-    }
+    // clickRatingStars(){
+    //     cy.get(this.ratingStar).click()
+    // }
 
-    clickButtonEnviar(){
+    clickButtonEnviar() {
         cy.get(this.buttonEnviar).click()
     }
 
-    clickButtonSignInToReview(){
+    clickButtonSignInToReview() {
         cy.get(this.buttonSignInToReview).click()
     }
 
-    
+    clickButtonModalOk() {
+        cy.get(this.clickButtonModalOk).click()
+    }
+
+    avaliarFilme(texto) {
+        this.clickRatingStars();
+        this.typeReview(texto);
+        cy.wait(2000);
+    }
 }

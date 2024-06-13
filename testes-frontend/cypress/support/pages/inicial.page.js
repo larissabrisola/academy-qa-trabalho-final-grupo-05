@@ -1,5 +1,5 @@
 export default class InicialPage {
-    inputPesquisa = 'text[placeholder="Buscar filmes"]';
+    inputPesquisa = 'input[placeholder="Buscar filmes"]';
     movieTitle = '.movie-title';
     movieBackground = '.movie-details';
     movieCard = '.movie-card';
@@ -12,10 +12,16 @@ export default class InicialPage {
     }
 
     clickButtonSearch() {
-        cy.get(this.clickButtonSearch).click()
+        cy.get(this.buttonSearch).click()
     }
 
     clickMovieCard() {
         cy.get(this.movieCard).click()
+    }
+
+    selecionaFilmeEspecifico(filme){
+        this.typePesquisa(filme);
+        this.clickButtonSearch();
+        this.clickMovieCard();
     }
 }
