@@ -14,8 +14,8 @@ describe('Consulta detalhada de filmes', function () {
         cy.adminCreatesAMovie(faker.person.firstName() + 'âo O Filme', 'Ação', 'Não tenho nada...', 180, 2024).then(function (response) {
             movieId = response.body.id
             titleMovie = response.body.title
-            genreMovie = response.body.genre
             descriptionMovie = response.body.description
+            genreMovie = response.body.genre
             durationInMinutes = response.body.durationInMinutes
             releaseYear = response.body.releaseYear
         });
@@ -52,8 +52,8 @@ describe('Consulta detalhada de filmes', function () {
                 expect(response.body).to.deep.include({
                     "id": movieId,
                     "title": titleMovie,
-                    "genre": genreMovie,
                     "description": descriptionMovie,
+                    "genre": genreMovie,
                     "durationInMinutes": durationInMinutes,
                     "releaseYear": releaseYear,
                     "criticScore": 0,
@@ -112,8 +112,8 @@ describe('Consulta detalhada de filmes', function () {
                 expect(response.body).to.deep.include({
                     "id": movieId,
                     "title": titleMovie,
-                    "genre": genreMovie,
                     "description": descriptionMovie,
+                    "genre": genreMovie,
                     "durationInMinutes": durationInMinutes,
                     "releaseYear": releaseYear,
                     "criticScore": 5,
@@ -168,8 +168,8 @@ describe('Consulta detalhada de filmes', function () {
                 expect(response.body).to.deep.equal({
                     "id": movieId,
                     "title": titleMovie,
-                    "genre": genreMovie,
                     "description": descriptionMovie,
+                    "genre": genreMovie,
                     "durationInMinutes": durationInMinutes,
                     "releaseYear": releaseYear,
                     "criticScore": response.body.criticScore,
@@ -201,13 +201,31 @@ describe('Consulta detalhada de filmes', function () {
                 expect(response.body).to.deep.equal({
                     "id": movieId,
                     "title": titleMovie,
-                    "genre": genreMovie,
                     "description": descriptionMovie,
+                    "genre": genreMovie,
                     "durationInMinutes": durationInMinutes,
                     "releaseYear": releaseYear,
                     "criticScore": response.body.criticScore,
                     "audienceScore": response.body.audienceScore,
                     "reviews": response.body.reviews
+                });
+            });
+        });
+
+        it('Não deve ser possível encontrar um filme com um id inválido', function () {
+            let idInvalidosss = ['3.0', '3.5', '2.0', '4.2']
+            idInvalidosss.forEach(function (idInvalidosss) {
+                cy.request({
+                    method: 'GET',
+                    url: 'movies/' + idInvalidosss,
+                    failOnStatusCode: false
+                }).then(function (response) {
+                    expect(response.status).to.equal(400);
+                    expect(response.body).to.deep.equal({
+                        "message": "Validation failed (numeric string is expected)",
+                        "error": "Bad Request",
+                        "statusCode": 400
+                    });
                 });
             });
         });
