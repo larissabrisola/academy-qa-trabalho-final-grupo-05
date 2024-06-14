@@ -5,9 +5,10 @@ Library    Collections
 *** Variables ***
 
 # prefixos
-${prefixo}           xpath=//android.widget.ImageView/
-${prefixoBTN}        xpath=//android.widget.Button
-${prefixoView}       xpath=//android.view.View
+${prefixo}               xpath=//android.widget.ImageView/
+${prefixoBTN}            xpath=//android.widget.Button
+${prefixoView}           xpath=//android.view.View
+${prefixoFrame}           xpath=//android.widget.FrameLayout
 
 #Variados
 ${BASE_URL}              https://raromdb-3c39614e42d4.herokuapp.com/api
@@ -19,6 +20,13 @@ ${buttonRegistrese}      ${prefixoView}    [@content-desc="Registre-se"]
 ${buttonMenuLogin}       ${prefixoView}    [@content-desc="Login"]
 ${buttonFilmes}          ${prefixoView}    [@content-desc="Filmes"]
 ${buttonLogin}           ${prefixoBTN}     [@content-desc="Login"]
+${buttonReview}          ${prefixoFrame}   [@resource-id="android:id/content"]
+${1estrelas}             ${prefixoFrame}   [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[1]
+${2estrelas}             ${prefixoFrame}   [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[2]
+${3estrelas}             ${prefixoFrame}   [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[3]
+${4estrelas}             ${prefixoFrame}   [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[4]
+${5estrelas}             ${prefixoFrame}   [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[5]
+${buttonSalvar}          ${prefixoBTN}     [@content-desc="Salvar"]
 
 #alertas
 ${informNome}            ${prefixoView}    [@content-desc="Informe o nome."]
@@ -43,6 +51,14 @@ ${inputConfSenha}        ${prefixo}        android.widget.EditText[4]
 ${inputEmailLogin}       ${prefixo}        android.widget.EditText[1]
 ${inputSenhaLogin}       ${prefixo}        android.widget.EditText[2]
 
+${inputReview}           //android.widget.EditText
+
+#Filmes
+${reviewsAudience}       ${prefixoView}    [contains(@content-desc,"Avaliação da audiência")]
+${reviewsCritic}         ${prefixoView}    [contains(@content-desc,"Avaliação da crítica")]
+
+
+
 *** Keywords ***
 Dado que o usuário se encontra na página de cadastro
     Wait Until Element Is Visible                  ${buttonMenu}
@@ -52,7 +68,7 @@ Dado que o usuário se encontra na página de cadastro
 Dado que usuário está na tela de login
     Wait Until Element Is Visible                  ${buttonMenu}
     Clica e espera    ${buttonMenu}                ${buttonMenuLogin}
-    Clica e espera    ${buttonMenuLogin}               ${inputEmailLogin}
+    Clica e espera    ${buttonMenuLogin}           ${inputEmailLogin}
 
 Quando informar email cadastrado
     ${nome}    FakerLibrary.Name
@@ -242,33 +258,48 @@ Deve ser possivel cadastrar o usuario com qualquer tipo de nome
     Verifica contentDesc   ${cadastroRealizado}    Cadastro realizado!
 
 Dado que estou logado e na tela de filmes
-    #cria usuario pela API
-    ${nome}    FakerLibrary.Name
-    ${email}   FakerLibrary.Email
-    Create Session  criar_sessao  ${BASE_URL}
-    ${payload}=  Create Dictionary  name=${nome}  email=${email}  password=123456
-    ${response}=  POST On Session  criar_sessao  /users  json=${payload}
-    Should Be Equal As Numbers  ${response.status_code}  201
-    
-    #Loga usuario pela API
-    ${payloadLogin}=    Create Dictionary    email=${email}  password=123456
-    ${responseLogin}=  POST On Session  criar_sessao  /auth/login  json=${payloadLogin}
-    ${token}=   Get Dictionary Items   ${responseLogin.json()}    accessToken
-    ${token}=   Get From List    ${token}    1
-
-    #Promove Usuario Admin 
-    ${headers}=    Create Dictionary    Authorization=Bearer ${token}    Content-Type=application/json
-    ${responseLogin}=  PATCH On Session  criar_sessao  /users/admin    headers=${headers}    json=${payloadLogin}
-    
-    #Cria filme na API
-    ${basetitle}=    FakerLibrary.First Name 
-    ${title}=    Set Variable    a volta de ${basetitle}
-    ${description}=    FakerLibrary.Catch Phrase
-    ${duration}=    Convert To Integer    120
-    ${releaseYear}=    Convert To Integer    1999
-    ${payloadFilme}=    Create Dictionary    title=${title}    genre=Terror    description=${description}    durationInMinutes=${duration}    releaseYear=${releaseYear}
-    ${responseFilme}=    POST On Session    criar_sessao    /movies     headers=${headers}    json=${payloadFilme}
-
-
+    Cria Filme na api
+    Verifica primeiro filme
+    Wait Until Element Is Visible               ${buttonMenu}
+    Clica e espera    ${buttonMenu}             ${buttonMenuLogin}
+    Clica e espera    ${buttonMenuLogin}        ${inputEmailLogin}
     Clica e digita    ${inputEmailLogin}        ${email}
     Clica e digita    ${inputSenhaLogin}        123456
+    Clica e espera    ${buttonLogin}            ${buttonMenu}
+
+
+Quando selecionar um filme qualquer
+    ${filme}=    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]
+    Wait Until Element Is Visible    ${filme}
+    Click Element    ${filme}
+
+Entao tenho acesso à todas os detalhes do filme selecionado
+    Wait Until Element Is Visible    ${reviewsAudience}
+    ${tituloMovie}=     Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]
+    ${generoMovie}=     Set Variable    //android.widget.ImageView[contains(@content-desc,"${genero}")]
+    ${descMovie}=       Set Variable    //android.widget.ImageView[contains(@content-desc,"${descricao}")]
+    Verifica contentDesc    ${tituloMovie}    ${tituloM}
+    Verifica contentDesc    ${generoMovie}    ${genero}
+    Verifica contentDesc    ${descMovie}      ${descricao}
+
+Dado que estou na tela de filmes
+    Cria Filme na api
+    Verifica primeiro filme
+    Critica Primeiro Filme
+
+Entao consigo criar uma avaliação
+    Element Should Be Visible         ${1estrelas}
+    Element Should Be Visible         ${2estrelas}
+    Element Should Be Visible         ${3estrelas}
+    Element Should Be Visible         ${4estrelas}
+    Element Should Be Visible         ${5estrelas}
+    Element Should Be Visible         ${inputReview}
+    Element Should Be Visible         ${buttonSalvar}
+    Element Attribute Should Match    ${inputReview}    hint    Escreva aqui o que você achou do filme.
+
+Entao consigo visualizar todas os detalhes de uma avaliação
+    ${filme}=    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]/android.view.View[3]
+    ${textoReview}=     Set Variable    Por "${nomeUser}" em  
+    Verifica primeiro filme
+    Critica Primeiro Filme
+    Verifica contentDesc    ${filme}    ${textoReview}   

@@ -48,14 +48,14 @@ Deve ser possivel cadastrar com nome contendo 1 caractere
     E preencher o formulário com senha válida
     E clicar em Cadastrar
     Entao o usuário será cadastrado
-#TODO VERIFICAR NOME COM ALFABETO CIRILICO 
+    
 Deve ser possivel cadastrar o usuario com qualquer tipo de nome
     [Template]    Deve ser possivel cadastrar o usuario com qualquer tipo de nome
+        пользователь
         usuario
         123456
         "!@#$%%
         😀😃😄😁😆
-        пользователь
 
 Não deve ser possivel cadastrar com email já utilizado - mensagem de alerta deve ser exibida
     Dado que o usuário se encontra na página de cadastro
