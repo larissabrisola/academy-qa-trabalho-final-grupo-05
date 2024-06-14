@@ -32,11 +32,6 @@ Before(() => {
     })
 })
 
-// Before({ tags: '@usuarioQualquer'}, () => {
-//     cy.visit(Cypress.env('manageAccount'))
-//     profilePage.clickLogoutLink();
-// })
-
 After(() => {
     cy.promoteAdmin(uToken).then(() => {
         cy.deleteUser(uId, uToken, true)
@@ -64,26 +59,13 @@ When('informar o nome de um filme não cadastrado', () => {
     inicialPage.typePesquisa('AriErikoLariManoscreu')
 })
 
-Then('será possível visualizar o filme pesquisado', () => {
-    cy.contains(inicialPage.movieTitle, filme.title)
-})
-
 When('informar o nome de um filme que foi deletado', () => {
     cy.deleteMovie(filme.id, uToken)
     inicialPage.typePesquisa(filme.title)
 })
 
-Then('não será possível visualizar o filme na lista', () => {
-    cy.contains(inicialPage.noMovies, 'Nenhum filme encontrado')
-})
-
 When('informar parcialmente o nome de um filme', () => {
     inicialPage.typePesquisa(filme.title.slice(0, 3))
-})
-
-Then('será possível visualizar lista de filmes que contem o que foi pesquisado', () => {
-    cy.get(inicialPage.movieTitle).contains(filme.title.slice(0, 3)).and('be.visible')
-
 })
 
 When('informar o nome e o ano de lançamento do filme', () => {
@@ -92,4 +74,17 @@ When('informar o nome e o ano de lançamento do filme', () => {
 
 When('informar o id de um filme no campo de pesquisa', () => {
     inicialPage.typePesquisa(filme.id)
+})
+
+Then('será possível visualizar o filme pesquisado', () => {
+    cy.contains(inicialPage.movieTitle, filme.title)
+})
+
+Then('não será possível visualizar o filme na lista', () => {
+    cy.contains(inicialPage.noMovies, 'Nenhum filme encontrado')
+})
+
+Then('será possível visualizar lista de filmes que contem o que foi pesquisado', () => {
+    cy.get(inicialPage.movieTitle).contains(filme.title.slice(0, 3)).and('be.visible')
+
 })

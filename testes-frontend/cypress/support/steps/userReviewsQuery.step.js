@@ -9,8 +9,6 @@ const loginPage = new LoginPage()
 const profilePage = new ProfilePage();
 const movieDetails = new MovieDetailsPage();
 const inicialPage = new InicialPage();
-const pageLogin = new LoginPage();
-
 
 let uId;
 let uToken;
@@ -37,6 +35,7 @@ Before(() => {
     cy.get('@data').then((data) => {
         filme = data;
     })
+
 })
 
 After(() => {
@@ -54,10 +53,10 @@ Given('que estou logado e avaliei previamente um filme', () => {
 
 Given('sou um usuário qualquer', () => {
     cy.visit(Cypress.env('inicial_url'))
-
+    cy.wait(1200)
 })
 
-Given('que estou logado', () => {
+Given('que estou logado e não relizei avaliações previamente', () => {
     cy.visit(Cypress.env('inicial_url') + 'login')
     loginPage.login(email, password)
     cy.wait(1000)
@@ -68,48 +67,41 @@ When('acessar meu perfil', () => {
     inicialPage.clicklinkPerfil();
 })
 
+When('selecionar uma avaliação feita anteriormente', () => {
+    profilePage.clickLinkFilme();
+})
+
+When('e inserir novas informaçoes', () => {
+    cy.get(movieDetails.inputReview).clear();
+    movieDetails.typeReview('Não gostei!')
+    cy.contains('button', 'Enviar').click();
+})
+
 Then('visualizo nome, nota e texto avaliativo dos filmes avaliados', () => {
     cy.get(profilePage.linkNomeFilme).contains(filme.title)
     cy.get(profilePage.notaEstrelas).should('be.visible')
     cy.get(profilePage.movieCard).contains('Gostei!')
 })
 
-When('selecionar uma avaliação', () => {
-    profilePage.clickLinkFilme();
-})
-
 Then('será possível visualizar os detalhes do filme avaliado', () => {
-
+    cy.contains(movieDetails.titleMovie, filme.title).should('be.visible')
+    cy.contains(movieDetails.dataMovie, filme.releaseYear).should('be.visible')
+    cy.contains(movieDetails.dataMovie, filme.durationInMinutes / 60).should('be.visible')
+    cy.contains(movieDetails.dataMovie, filme.genre).should('be.visible')
+    cy.get(movieDetails.moviePoster).should('be.visible')
 })
 
-When('editar avaliação', () => {
-
+Then('a avaliação antiga será atualizada', () => {
+    cy.get(movieDetails.userReviewCard).contains(name)
+    cy.contains(movieDetails.userReviewCard, 'Não gostei!').should('be.visible')
 })
 
-Then('será possível editar o comentário e a nota', () => {
-
-})
-
-Then('não será possível criar nova avaliação', () => {
-
-})
-
-Given('sou um usuário qualquer', () => {
-
-})
-
-Then('não tenho acesso à tela de perfil', () => {
-
-})
-
-Then('não será possível consultar minha lista de avaliações', () => {
-
-})
-
-Given('não relizei avaliações previamente', () => {
-
+Then('não tenho acesso à tela de perfil e às avaliações', () => {
+    cy.get(inicialPage.linkPerfil).should('not.exist')
+    cy.contains('Minhas avaliações').should('not.exist')
 })
 
 Then('visualizo a lista de avaliações em branco', () => {
-    
+    cy.contains('Minhas avaliações').should('be.visible')
+    cy.get(profilePage.ratingsContainer).should('be.empty')
 })

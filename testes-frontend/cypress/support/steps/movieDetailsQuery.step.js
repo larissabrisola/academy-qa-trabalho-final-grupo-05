@@ -46,6 +46,10 @@ Given('que estou logado e na tela de filmes', () => {
     cy.wait(1500);
 })
 
+Given('que estou na tela de filmes', () => {
+    cy.visit(Cypress.env('inicial_url'));
+})
+
 When('selecionar um filme', () => {
     inicialPage.selecionaFilme(filme.title);
 })
@@ -61,10 +65,6 @@ Then('tenho acesso à todas aos detalhes do filme selecionado', () => {
     cy.contains(movieDetails.dataMovie, filme.durationInMinutes / 60).should('be.visible')
     cy.contains(movieDetails.dataMovie, filme.genre).should('be.visible')
     cy.get(movieDetails.moviePoster).should('be.visible')
-})
-
-Given('que estou na tela de filmes', () => {
-    cy.visit(Cypress.env('inicial_url'));
 })
 
 Then('consigo criar uma avaliação', () => {

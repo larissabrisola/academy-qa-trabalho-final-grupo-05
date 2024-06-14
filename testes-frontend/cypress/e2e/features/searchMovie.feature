@@ -3,7 +3,6 @@ Feature: Pesquisa de filme
     Desejo poder pesquisar entre os filmes cadastrados
     Para ser mais eficiente em minha busca pelo catálogo de filmes
 
-    # @usuarioQualquer
     Scenario: Deve ser possível encontrar um filme por meio do seu título sem estar logado
         Given que estou na tela de filmes
         When informar o nome de um filme na barra de pesquisa

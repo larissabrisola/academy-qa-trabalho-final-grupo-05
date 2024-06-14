@@ -3,7 +3,8 @@ export default class ProfilePage {
     estrelaCheia = '.star filled';
     movieCard = '.profile-review-card'
     linkNomeFilme = '.review-card-header';
-    logoutLink = '[href="/logout"]'
+    logoutLink = '[href="/logout"]';
+    ratingsContainer = '.ratings-container';
 
     clickLinkFilme(){
         cy.get(this.linkNomeFilme).click()

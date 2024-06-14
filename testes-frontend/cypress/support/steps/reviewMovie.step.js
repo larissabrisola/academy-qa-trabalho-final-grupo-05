@@ -35,12 +35,10 @@ Before(() => {
     })
 })
 
-
 After(() => {
     cy.promoveAdmin(uToken)
     cy.deleteUser(uId, uToken)
 })
-
 
 Given('que estou logado e na tela de um filme específico', () => {
     cy.visit(Cypress.env('inicial_url') + 'login');
@@ -73,6 +71,28 @@ When('concluir operação', () => {
     cy.contains('button', 'Enviar').click();
 })
 
+When('inserir um texto de avaliação', () => {
+    movieDetails.typeReview('Gostei!')
+})
+
+When('atribuir uma nota', () => {
+    movieDetails.clickRatingStars();
+    cy.wait(2000);
+})
+
+When('reescrever nova avaliação', () => {
+    cy.get(movieDetails.inputReview).clear();
+    movieDetails.typeReview('Não gostei!')
+})
+
+When('inserir um texto avaliativo com 500 caracteres', () => {
+    movieDetails.typeReview('n'.repeat(500))
+})
+
+When('inserir um texto avaliativo com mais de 500 caracteres', () => {
+    movieDetails.typeReview('n'.repeat(501))
+})
+
 Then('será possível visualizar imediatamente a avaliação criada', () => {
     cy.contains(movieDetails.nameUser, name);
     cy.contains(name).should('be.visible');
@@ -86,7 +106,6 @@ Then('o sistema encaminhará para a tela de login', () => {
     cy.contains(pageLogin.loginContent,'Entre com suas credenciais').should('be.visible');
 })
 
-
 Then('não será possível criar uma avaliação', () => {
     cy.contains(movieDetails.modalErro, 'Ocorreu um erro')
     cy.contains(movieDetails.modalErro, 'Selecione uma estrela para avaliar o filme')
@@ -97,15 +116,6 @@ Then('será possível visualizar a opção {string}', (mensagem) => {
     cy.contains(mensagem).should('be.visible')
 })
 
-When('inserir um texto de avaliação', () => {
-    movieDetails.typeReview('Gostei!')
-})
-
-When('atribuir uma nota', () => {
-    movieDetails.clickRatingStars();
-    cy.wait(2000);
-})
-
 Then('a nota é exibida e avaliação fica em branco', () => {
     cy.contains(movieDetails.nameUser, name);
     cy.contains(name).should('be.visible');
@@ -113,21 +123,8 @@ Then('a nota é exibida e avaliação fica em branco', () => {
     cy.get(movieDetails.cardReview).should('be.empty')
 })
 
-When('reescrever nova avaliação', () => {
-    cy.get(movieDetails.inputReview).clear();
-    movieDetails.typeReview('Não gostei!')
-})
-
 Then('a avaliação antiga será atualizada', () => {
     cy.contains(movieDetails.userReviewCard, 'Não gostei!').should('be.visible')
-})
-
-When('inserir um texto avaliativo com 500 caracteres', () => {
-    movieDetails.typeReview('n'.repeat(500))
-})
-
-When('inserir um texto avaliativo com mais de 500 caracteres', () => {
-    movieDetails.typeReview('n'.repeat(501))
 })
 
 Then('a avaliação não será enviada', () => {
