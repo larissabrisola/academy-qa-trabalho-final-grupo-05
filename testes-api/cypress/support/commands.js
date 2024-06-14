@@ -28,16 +28,16 @@ Cypress.Commands.add("login", function (email, senha, failOnStatusCode) {
 })
 
 
-Cypress.Commands.add('promoteAdmin', function () {
-  cy.request({
-    method: 'PATCH',
+// Cypress.Commands.add('promoteAdmin', function () {
+//   cy.request({
+//     method: 'PATCH',
+//     url:  Cypress.env('api_url') + 'users/admin',
+//     headers: {
+//       Authorization: `Bearer ${Cypress.env('accessToken')}`
+//     }
+//   })
+// })
 
-    url: 'users/admin',
-    headers: {
-      Authorization: `Bearer ${Cypress.env('accessToken')}`
-    }
-  })
-})
 
 
 Cypress.Commands.add('promoteCritic', function () {
@@ -244,7 +244,7 @@ Cypress.Commands.add('promoteAdmin', function (token) {
     headers: {
       Authorization: "Bearer " + token
     }
-  })
+  }).then(response => Cypress.env('adminAccessToken', token))
 })
 Cypress.Commands.add('promoteCritic', function (token) {
   cy.request({
@@ -253,7 +253,7 @@ Cypress.Commands.add('promoteCritic', function (token) {
     headers: {
       Authorization: "Bearer " + token
     }
-  })
+  }).then(response => Cypress.env('criticAccessToken', token))
 })
 
 Cypress.Commands.add('deleteMovie', function (id, token) {
