@@ -11,8 +11,7 @@ const inicialPage = new InicialPage()
 let uId
 let uToken
 let filme
-let mediaAudiencia
-let mediaCritica
+
 let name
 let email
 let password = "1234567"
@@ -65,6 +64,14 @@ Then('tenho acesso à todas aos detalhes do filme selecionado', () => {
     cy.contains(movieDetails.dataMovie, filme.durationInMinutes / 60).should('be.visible')
     cy.contains(movieDetails.dataMovie, filme.genre).should('be.visible')
     cy.get(movieDetails.moviePoster).should('be.visible')
+})
+
+Then('consigo visualizar a média das avaliações da audiência', () => {
+    cy.get(movieDetails.containerMedia).contains('Avaliação da audiência')
+})
+
+Then('consigo visualizar a média das avaliações da crítica', () => {
+    cy.get(movieDetails.containerMedia).contains('Avaliação da crítica')
 })
 
 Then('consigo criar uma avaliação', () => {

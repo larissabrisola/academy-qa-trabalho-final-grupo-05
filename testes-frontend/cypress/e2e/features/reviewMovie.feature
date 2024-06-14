@@ -44,7 +44,7 @@ Feature: Avaliação de filmes
         When atribuir uma nota
         And inserir um texto avaliativo com 500 caracteres
         And concluir operação
-        Then será possível visualizar a avaliação criada
+        Then será possível visualizar imediatamente a avaliação criada
     
     # @ignore
     Scenario: Não deve ser possível escrever uma avaliação com mais que 500 caracteres

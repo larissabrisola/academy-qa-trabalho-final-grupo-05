@@ -14,6 +14,7 @@ export default class MovieDetailsPage {
     descriptionMovie = '.movie-detail-description'
     dataMovie = '.movie-details-info-with-icon'
     moviePoster = '.w-full.h-auto.rounded-lg'
+    containerMedia = '.star-container'
     
     buttonSignInToReview = '[href="/login"]'
     buttonEnviar = '[type="submit"]'
