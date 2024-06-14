@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-describe("Testes de listagem de usuarios", () => {
+describe("Testes de listagem de usuários", () => {
   let id;
   let token;
   let nome = faker.person.fullName();
