@@ -74,11 +74,11 @@ Cria review na api
 
     #Cria filme na API
     ${basetitle}=          FakerLibrary.First Name 
-    ${title}=              Set Variable    a volta de ${basetitle}
+    ${tituloM}=              Set Variable    a volta de ${basetitle}
     ${description}=        FakerLibrary.Catch Phrase
     ${duration}=           Convert To Integer    120
     ${releaseYear}=        Convert To Integer    1999
-    ${payloadFilme}=       Create Dictionary    title=${title}    genre=Terror    description=${description}    durationInMinutes=${duration}    releaseYear=${releaseYear}
+    ${payloadFilme}=       Create Dictionary    title=${tituloM}    genre=Terror    description=${description}    durationInMinutes=${duration}    releaseYear=${releaseYear}
     ${responseFilme}=      POST On Session    criar_sessao    /movies     headers=${headers}    json=${payloadFilme}
     ${idFilme}=            Get Dictionary Items   ${responseFilme.json()}
     ${idFilme}=            Get From List    ${idFilme}    7    
@@ -90,7 +90,7 @@ Cria review na api
     ${responseReview}=     POST On Session    criar_sessao    /users/review     headers=${headers}    json=${payloadReview}
     Set Global Variable    ${nomeUser}
     Set Global Variable    ${email}    
-    Set Global Variable    ${title}    
+    Set Global Variable    ${tituloM}    
     Set Global Variable    ${description}    
     Set Global Variable    ${review}
 

@@ -30,3 +30,8 @@ Deve ser possível visualizar informações de uma avaliação
     Dado que estou na tela de filmes
     Quando selecionar um filme qualquer
     Entao consigo visualizar todas os detalhes de uma avaliação
+
+Deve ser possível visualizar informações de uma avaliação swipe
+    Dado que me encontro na tela de filmes 
+    Quando selecionar o filme criado
+    Entao consigo visualizar todas os detalhes de uma avaliação

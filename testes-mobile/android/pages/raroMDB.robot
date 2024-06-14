@@ -284,6 +284,8 @@ Entao tenho acesso à todas os detalhes do filme selecionado
 
 Dado que estou na tela de filmes
     Cria Filme na api
+    Clica e espera    ${buttonMenu}    ${buttonFilmes}
+    Click Element     ${buttonFilmes}
     Verifica primeiro filme
     Critica Primeiro Filme
 
@@ -300,6 +302,16 @@ Entao consigo criar uma avaliação
 Entao consigo visualizar todas os detalhes de uma avaliação
     ${filme}=    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]/android.view.View[3]
     ${textoReview}=     Set Variable    Por "${nomeUser}" em  
-    Verifica primeiro filme
-    Critica Primeiro Filme
-    Verifica contentDesc    ${filme}    ${textoReview}   
+    Swipe By Percent    50    60    50    10
+    Verifica contentDesc    ${filme}    ${textoReview} 
+
+Quando selecionar o filme criado
+    ${filme}=    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]
+    Swipe Until Element Is Visible    ${filme}    200
+    Wait Until Element Is Visible    ${filme}
+    Click Element    ${filme}
+
+Dado que me encontro na tela de filmes 
+    Cria review na api
+    Clica e espera    ${buttonMenu}    ${buttonFilmes}
+    Click Element     ${buttonFilmes}
