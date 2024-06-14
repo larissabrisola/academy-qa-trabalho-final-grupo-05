@@ -1,0 +1,72 @@
+[
+    {
+      "title": "Suzume",
+      "genre": "Animation",
+      "description": "Suzume, 17, lost her mother as a little girl. On her way to school, she meets a mysterious young man. But her curiosity unleashes a calamity that endangers the entire population of Japan, and so Suzume embarks on a journey to set things right.",
+      "durationInMinutes": 120,
+      "releaseYear": 2022
+    },
+    {
+      "title": "Ready Or Not",
+      "genre": "Comedia/Horror",
+      "description": "A bride’s wedding night takes a sinister turn when her eccentric new in-laws force her to take part in a terrifying game.",
+      "durationInMinutes": 100,
+      "releaseYear": 2019
+    },
+    {
+      "title": "Nimona",
+      "genre": "Animation",
+      "description": "A knight framed for a tragic crime teams with a scrappy, shape-shifting teen to prove his innocence.",
+      "durationInMinutes": 100,
+      "releaseYear": 2023
+    }, 
+    {
+      "title": "Nimona 2",
+      "genre": "Animation",
+      "description": "A knight framed for a tragic crime teams with a scrappy, shape-shifting teen to prove his innocence.",
+      "durationInMinutes": 100,
+      "releaseYear": 2023
+    }, 
+    {
+      "title": "Nimona 3",
+      "genre": "Animation",
+      "description": "A knight framed for a tragic crime teams with a scrappy, shape-shifting teen to prove his innocence.",
+      "durationInMinutes": 100,
+      "releaseYear": 2023
+    }, 
+    {
+      "title": "Nimona 4",
+      "genre": "Animation",
+      "description": "A knight framed for a tragic crime teams with a scrappy, shape-shifting teen to prove his innocence.",
+      "durationInMinutes": 100,
+      "releaseYear": 2023
+    }, 
+    {
+      "title": "Nimona 5",
+      "genre": "Animation",
+      "description": "A knight framed for a tragic crime teams with a scrappy, shape-shifting teen to prove his innocence.",
+      "durationInMinutes": 100,
+      "releaseYear": 2023
+    }, 
+    {
+        "title": "Ready Or Not 8",
+        "genre": "Comedia/Horror",
+        "description": "A bride’s wedding night takes a sinister turn when her eccentric new in-laws force her to take part in a terrifying game.",
+        "durationInMinutes": 100,
+        "releaseYear": 2019
+      },
+      {
+        "title": "Ready Or Not 9",
+        "genre": "Comedia/Horror",
+        "description": "A bride’s wedding night takes a sinister turn when her eccentric new in-laws force her to take part in a terrifying game.",
+        "durationInMinutes": 100,
+        "releaseYear": 2019
+      },
+      {
+        "title": "Ready Or Not 10",
+        "genre": "Comedia/Horror",
+        "description": "A bride’s wedding night takes a sinister turn when her eccentric new in-laws force her to take part in a terrifying game.",
+        "durationInMinutes": 100,
+        "releaseYear": 2019
+      }
+  ]
