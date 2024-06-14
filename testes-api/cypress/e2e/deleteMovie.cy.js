@@ -1,50 +1,35 @@
 import { faker } from "@faker-js/faker"
 
 describe('Deletar filme', () => {
-    const user = createUser()
-    const usuarioAdmin = createUser()
-    const usuarioCritico = createUser()
 
-    let usuarioCriado
-    let usuarioAdminCriado
-    let usuarioCriticoCriado
-    let usuarioAdminToken
+    let filme;
 
-    before(() => {
-        cy.createUser(user.nome, user.email, user.senha, true)
-            .then(response => usuarioCriado = response.body)
-        cy.createUser(usuarioAdmin.nome, usuarioAdmin.email, usuarioAdmin.senha, true)
-            .then(response => usuarioAdminCriado = response.body)
-        cy.createUser(usuarioCritico.nome, usuarioCritico.email, usuarioCritico.senha, true)
-            .then(response => usuarioCriticoCriado = response.body)
+    let uId;
+    let adminId;
+    let criticId;
 
-        cy.login(user.email, user.senha, true)
-        cy.login(usuarioAdmin.email, usuarioAdmin.senha, true).then((response) => {
-            usuarioAdminToken = response.body.accessToken
-            cy.promoteAdmin(usuarioAdminToken)
-        })
-        cy.login(usuarioCritico.email, usuarioCritico.senha, true).then((response) => {
-            cy.promoteCritic(response.body.accessToken)
-        })
-
-    })
+    let uToken;
+    let adminToken;
+    let criticToken;
 
     beforeEach(() => {
-        cy.wrap(usuarioCriado).as('usuarioCriado')
-        cy.wrap(usuarioAdminCriado).as('usuarioAdminCriado')
-        cy.wrap(usuarioCriticoCriado).as('usuarioCriticoCriado')
-        cy.createMovie().then((body) => cy.wrap(body).as('filmeCriado'))
+        cy.adminCreatesAMovie(faker.person.firstName() + 'e os duendes', faker.music.songName(), faker.lorem.sentences(), 100, 2020).then((response) => {
+            filme = response.body
+        })
     })
 
     after(() => {
-        cy.deleteUser(usuarioCriado.id, usuarioAdminToken)
-        cy.deleteUser(usuarioCriticoCriado.id, usuarioAdminToken)
-        cy.deleteUser(usuarioAdminCriado.id, usuarioAdminToken)
+        cy.deleteMovie(filme.id, adminToken)
+        cy.deleteUser(uId, adminToken)
+        cy.deleteUser(criticId, adminToken)
+        cy.deleteUser(adminId, adminToken)
     })
 
-    it('Deve ser retornado status 204 e body vazio ao deletar um filme com sucesso', () => {
-        cy.get('@filmeCriado').then((filme) => {
-            cy.deleteMovie(filme.id, Cypress.env('adminAccessToken')).then((response) => {
+    it('Deve ser possível deletar um filme como usuário do tipo admin', () => {
+        cy.createAndLogAdmin(faker.person.fullName(), faker.internet.exampleEmail(), 'linuxtips').then((response) => {
+            adminId = response.id
+            adminToken = response.token
+            cy.deleteMovie(filme.id, adminToken).then((response) => {
                 expect(response.status).to.equal(204)
                 expect(response.body).to.be.empty
                 cy.request({
@@ -57,13 +42,14 @@ describe('Deletar filme', () => {
         })
     })
 
-    it('Deve ser retornado status 401 caso seja passado um token inválido ao tentar deletar um filme', () => {
-        cy.get('@filmeCriado').then((filme) => {
+    it('Não deve ser possível deletar um filme informando token inválido', () => {
+        cy.createAndLogAdmin(faker.person.fullName() + 'e os duendes', faker.internet.exampleEmail(), 'linuxtips').then((response) => {
+            adminId = response.id
+            adminToken = response.token
             cy.deleteMovie(filme.id, '', false).then((response) => {
                 expect(response.status).to.equal(401)
                 expect(response.body.message).to.equal("Access denied.")
                 expect(response.body.error).to.equal("Unauthorized")
-                expect(response.body.statusCode).to.equal(401)
                 expect(response.body.statusCode).to.equal(response.status)
                 cy.request({
                     method: "GET",
@@ -76,12 +62,13 @@ describe('Deletar filme', () => {
         })
     })
 
-    it('Deve ser retornado status 403 caso um usuario comum tente deletar um filme', () => {
-        cy.get('@filmeCriado').then((filme) => {
-            cy.deleteMovie(filme.id, Cypress.env('accessToken'), false).then((response) => {
+    it('Não deve ser possível deletar filme como um usuário do tipo comum', () => {
+        cy.createAndLoginUser(faker.person.fullName(), faker.internet.exampleEmail(), 'linuxtips').then((response) => {
+            uId = response.id
+            uToken = response.token
+            cy.deleteMovie(filme.id, uToken, false).then((response) => {
                 expect(response.status).to.equal(403)
                 expect(response.body.message).to.equal("Forbidden")
-                expect(response.body.statusCode).to.equal(403)
                 expect(response.body.statusCode).to.equal(response.status)
                 cy.request({
                     method: "GET",
@@ -94,12 +81,13 @@ describe('Deletar filme', () => {
         })
     })
 
-    it('Deve ser retornado status 403 caso um usuario critico tente deletar um filme', () => {
-        cy.get('@filmeCriado').then((filme) => {
-            cy.deleteMovie(filme.id, Cypress.env('criticAccessToken'), false).then((response) => {
+    it('Não deve ser possível deletar filme como um usuário do tipo crítico', () => {
+        cy.createAndLoginCritic(faker.person.fullName(), faker.internet.exampleEmail(), 'linuxtips').then((response) => {
+            criticId = response.id
+            criticToken = response.token
+            cy.deleteMovie(filme.id, criticToken, false).then((response) => {
                 expect(response.status).to.equal(403)
                 expect(response.body.message).to.equal("Forbidden")
-                expect(response.body.statusCode).to.equal(403)
                 expect(response.body.statusCode).to.equal(response.status)
                 cy.request({
                     method: "GET",
@@ -112,13 +100,14 @@ describe('Deletar filme', () => {
         })
     })
 
-    it('Não deve ser possivel deletar um filme passando seu titulo como parametro', () => {
-        cy.get('@filmeCriado').then((filme) => {
-            cy.deleteMovie(filme.title, Cypress.env('adminAccessToken'), false).then((response) => {
+    it('Não deve ser possível deletar um filme passando seu título como parâmetro', () => {
+        cy.createAndLogAdmin(faker.person.fullName(), faker.internet.exampleEmail(), 'linuxtips').then((response) => {
+            adminId = response.id
+            adminToken = response.token
+            cy.deleteMovie(filme.title, adminToken, false).then((response) => {
                 expect(response.status).to.equal(400)
                 expect(response.body.message).to.contains("Validation failed")
                 expect(response.body.error).to.equal("Bad Request")
-                expect(response.body.statusCode).to.equal(400)
                 expect(response.body.statusCode).to.equal(response.status)
                 cy.request({
                     method: "GET",
@@ -131,13 +120,14 @@ describe('Deletar filme', () => {
         })
     })
 
-    it('Não deve ser possivel deletar um filme passando seu genero como parametro', () => {
-        cy.get('@filmeCriado').then((filme) => {
-            cy.deleteMovie(filme.genre, Cypress.env('adminAccessToken'), false).then((response) => {
+    it('Não deve ser possível deletar um filme passando seu gênero como parâmetro', () => {
+        cy.createAndLogAdmin(faker.person.fullName(), faker.internet.exampleEmail(), 'linuxtips').then((response) => {
+            adminId = response.id
+            adminToken = response.token
+            cy.deleteMovie(filme.genre, adminToken, false).then((response) => {
                 expect(response.status).to.equal(400)
                 expect(response.body.message).to.contains("Validation failed")
                 expect(response.body.error).to.equal("Bad Request")
-                expect(response.body.statusCode).to.equal(400)
                 expect(response.body.statusCode).to.equal(response.status)
                 cy.request({
                     method: "GET",
@@ -150,13 +140,14 @@ describe('Deletar filme', () => {
         })
     })
 
-    it('Não deve ser possivel deletar um filme passando sua descricao como parametro', () => {
-        cy.get('@filmeCriado').then((filme) => {
-            cy.deleteMovie(filme.description, Cypress.env('adminAccessToken'), false).then((response) => {
+    it('Não deve ser possível deletar um filme passando sua descrição como parâmetro', () => {
+        cy.createAndLogAdmin(faker.person.fullName(), faker.internet.exampleEmail(), 'linuxtips').then((response) => {
+            adminId = response.id
+            adminToken = response.token
+            cy.deleteMovie(filme.description, adminToken, false).then((response) => {
                 expect(response.status).to.equal(400)
                 expect(response.body.message).to.contains("Validation failed")
                 expect(response.body.error).to.equal("Bad Request")
-                expect(response.body.statusCode).to.equal(400)
                 expect(response.body.statusCode).to.equal(response.status)
                 cy.request({
                     method: "GET",
@@ -169,11 +160,3 @@ describe('Deletar filme', () => {
         })
     })
 })
-
-function createUser() {
-    return {
-        nome: faker.person.firstName(),
-        email: faker.internet.email(),
-        senha: faker.internet.password({ length: 7 })
-    }
-}
