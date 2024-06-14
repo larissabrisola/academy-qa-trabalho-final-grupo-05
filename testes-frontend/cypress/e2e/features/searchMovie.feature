@@ -21,6 +21,12 @@ Feature: Pesquisa de filme
         When informar o nome de um filme que foi deletado
         And concluir operação
         Then não será possível visualizar o filme na lista
+
+    Scenario: Não deve ser possível encontrar um filme não cadastrado
+        Given que estou logado e na tela de filmes
+        When informar o nome de um filme não cadastrado
+        And concluir operação
+        Then não será possível visualizar o filme na lista
     
     Scenario: Deve ser possível encontrar um filme inserindo seu título parcialmente
         Given que estou logado e na tela de filmes

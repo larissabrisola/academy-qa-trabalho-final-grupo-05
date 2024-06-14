@@ -11,7 +11,7 @@ Feature: Avaliação de filmes
         Then será possível visualizar imediatamente a avaliação criada
     
     # @ignore
-    Scenario: Não deve ser possível consultar avaliação do usuário sem estar logado
+    Scenario: Não deve ser possível criar avaliação do usuário sem estar logado
         Given que acesso à tela de filmes
         When buscar e selecionar um filme específico
         Then será possível visualizar a opção "Entre para poder escrever sua review"

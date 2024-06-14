@@ -60,6 +60,10 @@ When('concluir operação', () => {
     inicialPage.clickButtonSearch()
 })
 
+When('informar o nome de um filme não cadastrado', () => {
+    inicialPage.typePesquisa('AriErikoLariManoscreu')
+})
+
 Then('será possível visualizar o filme pesquisado', () => {
     cy.contains(inicialPage.movieTitle, filme.title)
 })
