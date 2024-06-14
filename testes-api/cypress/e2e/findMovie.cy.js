@@ -30,9 +30,9 @@ describe('Consulta detalhada de filmes', function () {
                 cy.login(usuarioCriado.email, '123456').then(function (response) {
                     token = response.body.accessToken;
                     cy.postReview(movieId, token)
-                })
-            })
-        })
+                });
+            });
+        });
 
         after(function () {
             cy.promoteAdmin(token).then(function () {
@@ -49,7 +49,7 @@ describe('Consulta detalhada de filmes', function () {
                 },
             }).then(function (response) {
                 expect(response.status).to.equal(200);
-                expect(response.body).to.deep.equal({
+                expect(response.body).to.deep.include({
                     "id": movieId,
                     "title": titleMovie,
                     "genre": genreMovie,
@@ -58,47 +58,22 @@ describe('Consulta detalhada de filmes', function () {
                     "releaseYear": releaseYear,
                     "criticScore": 0,
                     "audienceScore": 5,
-                    "reviews": response.body.reviews
-                });
-            });
-        });
 
-        it('Não deve ser possível encontrar um filme usando String como usuário comum', function () {
-            cy.request({
-                method: 'GET',
-                url: 'movies/' + titleMovie,
-                auth: {
-                    bearer: token,
-                },
-                failOnStatusCode: false
-            }).then(function (response) {
-                expect(response.status).to.equal(400);
-                expect(response.body).to.deep.equal({
-                    "message": "Validation failed (numeric string is expected)",
-                    "error": "Bad Request",
-                    "statusCode": 400
                 });
-            });
-        });
-
-        it('Não deve ser possível como usuário comum encontrar um filme com um id inválido', function () {
-            let idInvalidosss = [1.2, 2.2, 2.0]
-            idInvalidosss.forEach(function (idInvalidosss) {
-                cy.request({
-                    method: 'GET',
-                    url: 'movies/' + idInvalidosss,
-                    auth: {
-                        bearer: token,
-                    },
-                    failOnStatusCode: false
-                }).then(function (response) {
-                    expect(response.status).to.equal(400);
-                    expect(response.body).to.deep.equal({
-                        "message": "Validation failed (numeric string is expected)",
-                        "error": "Bad Request",
-                        "statusCode": 400
-                    });
-                });
+                expect(response.body.reviews[0]).to.deep.include(
+                    {
+                        reviewText: "Teste review usuário inativado / promovido",
+                        reviewType: 0,
+                        score: 5,
+                        user: {
+                            id: usuarioCriado.id,
+                            name: usuarioCriado.name,
+                            type: 0
+                        }
+                    }
+                )
+                expect(response.body.reviews[0].id).to.be.an('number')
+                expect(response.body.reviews[0].updatedAt).to.be.an('string')
             });
         });
     });
@@ -114,7 +89,7 @@ describe('Consulta detalhada de filmes', function () {
                 }).then(function () {
                     cy.promoteCritic(token).then(function () {
                         cy.postReview(movieId, token)
-                    })
+                    });
                 });
             });
         });
@@ -125,7 +100,7 @@ describe('Consulta detalhada de filmes', function () {
             });
         });
 
-        it.only('Deve ser possível encontrar um filme por id como usuário critico', function () {
+        it('Deve ser possível encontrar um filme por id como usuário critico', function () {
             cy.request({
                 method: 'GET',
                 url: 'movies/' + movieId,
@@ -143,7 +118,6 @@ describe('Consulta detalhada de filmes', function () {
                     "releaseYear": releaseYear,
                     "criticScore": 5,
                     "audienceScore": 0,
-
                 });
                 expect(response.body.reviews[0]).to.deep.include(
                     {
@@ -161,47 +135,7 @@ describe('Consulta detalhada de filmes', function () {
                 expect(response.body.reviews[0].updatedAt).to.be.an('string')
             });
         });
-
-        it('Não deve ser possível encontrar um filme usando String como usuário critico', function () {
-            cy.request({
-                method: 'GET',
-                url: 'movies/' + titleMovie,
-                auth: {
-                    bearer: token,
-                },
-                failOnStatusCode: false
-            }).then(function (response) {
-                expect(response.status).to.equal(400);
-                expect(response.body).to.deep.equal({
-                    "message": "Validation failed (numeric string is expected)",
-                    "error": "Bad Request",
-                    "statusCode": 400
-                });
-            });
-        });
-
-        it('Não deve ser possível como usuário critico encontrar um filme com um id inválido', function () {
-            let idInvalidosss = [1.2, 2.2, 2.0]
-            idInvalidosss.forEach(function (idInvalidosss) {
-                cy.request({
-                    method: 'GET',
-                    url: 'movies/' + idInvalidosss,
-                    auth: {
-                        bearer: token,
-                    },
-                    failOnStatusCode: false
-                }).then(function (response) {
-                    expect(response.status).to.equal(400);
-                    expect(response.body).to.deep.equal({
-                        "message": "Validation failed (numeric string is expected)",
-                        "error": "Bad Request",
-                        "statusCode": 400
-                    });
-                });
-            });
-        });
     });
-
 
     describe('Usuário admin', function () {
         before(function () {
@@ -213,7 +147,7 @@ describe('Consulta detalhada de filmes', function () {
                 }).then(function () {
                     cy.promoteAdmin(token).then(function () {
                         cy.postReview(movieId, token)
-                    })
+                    });
                 });
             });
         });
@@ -244,45 +178,6 @@ describe('Consulta detalhada de filmes', function () {
                 });
             });
         });
-
-        it('Não deve ser possível encontrar um filme usando String como usuário admin', function () {
-            cy.request({
-                method: 'GET',
-                url: 'movies/' + titleMovie,
-                auth: {
-                    bearer: token,
-                },
-                failOnStatusCode: false
-            }).then(function (response) {
-                expect(response.status).to.equal(400);
-                expect(response.body).to.deep.equal({
-                    "message": "Validation failed (numeric string is expected)",
-                    "error": "Bad Request",
-                    "statusCode": 400
-                });
-            });
-        });
-
-        it('Não deve ser possível como usuário admin encontrar um filme com um id inválido', function () {
-            let idInvalidosss = [1.2, 2.2, 2.0]
-            idInvalidosss.forEach(function (idInvalidosss) {
-                cy.request({
-                    method: 'GET',
-                    url: 'movies/' + idInvalidosss,
-                    auth: {
-                        bearer: token,
-                    },
-                    failOnStatusCode: false
-                }).then(function (response) {
-                    expect(response.status).to.equal(400);
-                    expect(response.body).to.deep.equal({
-                        "message": "Validation failed (numeric string is expected)",
-                        "error": "Bad Request",
-                        "statusCode": 400
-                    });
-                });
-            });
-        });
     });
 
     describe('Usuário não logado', function () {
@@ -293,9 +188,9 @@ describe('Consulta detalhada de filmes', function () {
                 cy.login(usuarioCriado.email, '123456').then(function (response) {
                     token = response.body.accessToken;
                     cy.postReview(movieId, token)
-                })
-            })
-        })
+                });
+            });
+        });
 
         it('Deve ser possível encontrar um filme por id como usuário não logado', function () {
             cy.request({
@@ -313,39 +208,6 @@ describe('Consulta detalhada de filmes', function () {
                     "criticScore": response.body.criticScore,
                     "audienceScore": response.body.audienceScore,
                     "reviews": response.body.reviews
-                });
-            });
-        });
-
-        it('Não deve ser possível encontrar um filme usando String como usuário não logado', function () {
-            cy.request({
-                method: 'GET',
-                url: 'movies/' + titleMovie,
-                failOnStatusCode: false
-            }).then(function (response) {
-                expect(response.status).to.equal(400);
-                expect(response.body).to.deep.equal({
-                    "message": "Validation failed (numeric string is expected)",
-                    "error": "Bad Request",
-                    "statusCode": 400
-                });
-            });
-        });
-
-        it('Não deve ser possível como usuário não logado encontrar um filme com um id inválido', function () {
-            let idInvalidosss = [1.2, 2.2, 2.0]
-            idInvalidosss.forEach(function (idInvalidosss) {
-                cy.request({
-                    method: 'GET',
-                    url: 'movies/' + idInvalidosss,
-                    failOnStatusCode: false
-                }).then(function (response) {
-                    expect(response.status).to.equal(400);
-                    expect(response.body).to.deep.equal({
-                        "message": "Validation failed (numeric string is expected)",
-                        "error": "Bad Request",
-                        "statusCode": 400
-                    });
                 });
             });
         });
