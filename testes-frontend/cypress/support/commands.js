@@ -187,7 +187,36 @@ Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationI
   })
   });
 
-  Cypress.Commands.add('adminCreatesALotOfMovies', function (movies, failOnStatusCode) {
+  Cypress.Commands.add('deleteMovie', function (id, token) {
+    cy.request({
+      method: 'DELETE',   
+      url: Cypress.env('api_url') + "movies/" + id,
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+  })
+
+  Cypress.Commands.add('createMovie', () => {
+    cy.request({
+      method: "POST",
+      url: Cypress.env('api_url') + "movies",
+      headers: {
+        Authorization: `Bearer ${Cypress.env('accessToken')}`
+      },
+      body: {
+        title: faker.person.firstName() + " o retorno",
+        genre: "Terror",
+        description: faker.lorem.words({ min: 6, max: 12 }),
+        durationInMinutes: 120,
+        releaseYear: 2000,
+      },
+    }).then((response) => {
+      return response.body
+    })
+  })
+
+Cypress.Commands.add('adminCreatesALotOfMovies', function (movies, failOnStatusCode) {
     cy.createAndLogAdmin(faker.animal.fish(), faker.internet.exampleEmail(), 'lionxitps').then((response) => {
       let token = response.token
   
