@@ -78,6 +78,7 @@ ${texto_de_suaNota}         xpath=//android.view.View[@content-desc="Dê sua not
 ${inputTextAvalia}          xpath=//android.widget.EditText
 ${mensagemAlerta}           xpath=//android.view.View[@content-desc="Faça login e tente novamente."]
 ${mensagemAlertaSucesso}    xpath=//android.view.View[@content-desc="Sua review foi adicionada!"]
+${mensagemAlertaSemNota}    xpath=//android.view.View[@content-desc="Não foi possível adicionar sua review."]
 
 
 *** Keywords ***
@@ -87,6 +88,7 @@ Dado que o usuário se encontra na página de cadastro
     Clica e espera    ${buttonRegistrese}    ${inputNome}
 
 Dado que acesso à tela de filmes
+    Verifica primeiro filme
     Wait Until Element Is Visible    ${buttonMenu}
     Clica e espera    ${buttonMenu}    ${buttonFilmes}
     Clica e espera    ${buttonFilmes}    ${filme_home}
@@ -98,6 +100,8 @@ Quando selecionar um filme
     Wait Until Element Is Visible    ${button+atualizar}
 
 Então será possível visualizar a avaliação criada
+    Wait Until Element Is Visible    ${mensagemAlertaSucesso}
+    Verifica contentDesc    ${mensagemAlertaSucesso}    Sua review foi adicionada!
     ${Nome_Review}    Set Variable    Por "${nome}" em ${Data_atual}
     ${criticaDoFilme}    Set Variable
     ...    //android.widget.ImageView[contains(@content-desc, '${tituloM}')]//android.view.View[contains(@content-desc, '${Nome_Review}')]
@@ -111,14 +115,24 @@ Então será possível visualizar a avaliação criada
 E selecionar para adicionar uma avaliação
     Clica e espera    ${button+atualizar}    ${telaReview}
 
+E fazer uma avaliação sem informar a nota
+    Clica e espera    ${button+atualizar}    ${telaReview}
+    Clica e digita    ${inputTextAvalia}    Não coloquei nenhuma nota HAHAHAHA!
+
 E fazer as avaliações
     Click Element    ${3estrelas}
     Clica e digita    ${inputTextAvalia}    Estou fazendo a avaliação mas não estou logado!
 
-E clicar no botão salvar
-    Clica e espera    ${buttonSalvar}    ${mensagemAlerta}
+E confirmar a avaliação
+    Click Element    ${buttonSalvar}
+
+Então a avaliação não será feita
+    Wait Until Element Is Visible    ${mensagemAlertaSemNota}
+    Verifica contentDesc    ${mensagemAlertaSemNota}    Não foi possível adicionar sua review.
 
 Então o sistema exibirá uma mensagem de alerta
+    Wait Until Element Is Visible    ${mensagemAlerta}
+    Verifica contentDesc    ${mensagemAlerta}    Faça login e tente novamente.
     Element Should Be Visible    ${mensagemAlerta}
 
 Dado que usuário está na tela de login
@@ -148,9 +162,6 @@ E criar uma nova avaliação
     Clica e espera    ${button+atualizar}    ${telaReview}
     Click Element    ${3estrelas}
     Clica e digita    ${inputTextAvalia}    Podem ver pois eu gostei!!!
-
-E confirmar operação
-    Clica e espera    ${buttonSalvar}    ${mensagemAlertaSucesso}
 
 Quando informar email cadastrado
     ${nome}    FakerLibrary.Name

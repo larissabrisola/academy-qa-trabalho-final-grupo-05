@@ -14,7 +14,7 @@ Deve ser possível um usuário logado criar uma avaliaçao e atribuir uma nota p
     Dado que um usuário está na tela de filmes
     Quando selecionar um filme
     E criar uma nova avaliação
-    E confirmar operação
+    E confirmar a avaliação
     Então será possível visualizar a avaliação criada
 
 Não deve ser possivel um usuario não logado fazer uma avaliaçao
@@ -22,15 +22,15 @@ Não deve ser possivel um usuario não logado fazer uma avaliaçao
     Quando selecionar um filme
     E selecionar para adicionar uma avaliação
     E fazer as avaliações
-    E clicar no botão salvar
+    E confirmar a avaliação
     Então o sistema exibirá uma mensagem de alerta
 
 Não deve ser possível criar uma avaliação sem atribuir nota
-    Dado que estou logado na tela de um filme específico
-    Quando inserir um texto de avaliação
-    E concluir a operação
-    Então não será possível criar uma avaliação
-    E o sistema exibirá uma mensagem de alerta
+    Dado que um usuário está na tela de filmes
+    Quando selecionar um filme
+    E fazer uma avaliação sem informar a nota
+    E confirmar a avaliação
+    Então a avaliação não será feita
 
 Deve ser possível atribuir uma nota sem criar texto avaliativo
     Dado estou logado e na tela de um filme específico
