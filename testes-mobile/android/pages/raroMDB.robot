@@ -115,13 +115,49 @@ Então será possível visualizar a avaliação criada
 E selecionar para adicionar uma avaliação
     Clica e espera    ${button+atualizar}    ${telaReview}
 
+E criar uma avaliação
+    Clica e espera    ${button+atualizar}    ${telaReview}
+    Click Element    ${3estrelas}
+    Clica e digita    ${inputTextAvalia}    Malemá esse filme!
+    E confirmar a avaliação
+    Wait Until Element Is Visible    ${mensagemAlertaSucesso}
+    Verifica contentDesc    ${mensagemAlertaSucesso}    Sua review foi adicionada!
+    ${Nome_Review}    Set Variable    Por "${nome}" em ${Data_atual}
+    ${criticaDoFilme}    Set Variable
+    ...    //android.widget.ImageView[contains(@content-desc, '${tituloM}')]//android.view.View[contains(@content-desc, '${Nome_Review}')]
+    Press Keycode    4
+    Press Keycode    4
+    Wait Until Element Is Visible    ${button+atualizar}
+    Swipe Until Element Is Visible    ${criticaDoFilme}    15
+    Verifica contentDesc    ${criticaDoFilme}    ${Nome_Review}
+    Verifica contentDesc    ${criticaDoFilme}    Malemá esse filme!
+
+E fazer uma nova avaliação do mesmo filme
+    E selecionar para adicionar uma avaliação
+    Click Element    ${2estrelas}
+    Clica e digita    ${inputTextAvalia}    Ahh! Não gostei muito não!
+    E confirmar a avaliação
+
 E fazer uma avaliação sem informar a nota
     Clica e espera    ${button+atualizar}    ${telaReview}
     Clica e digita    ${inputTextAvalia}    Não coloquei nenhuma nota HAHAHAHA!
 
+Então somente a avaliação antiga será atualizada
+    Wait Until Element Is Visible    ${mensagemAlertaSucesso}
+    Verifica contentDesc    ${mensagemAlertaSucesso}    Sua review foi adicionada!
+    ${Nome_Review}    Set Variable    Por "${nome}" em ${Data_atual}
+    ${criticaDoFilme}    Set Variable
+    ...    //android.widget.ImageView[contains(@content-desc, '${tituloM}')]//android.view.View[contains(@content-desc, '${Nome_Review}')]
+    Press Keycode    4
+    Press Keycode    4
+    Wait Until Element Is Visible    ${button+atualizar}
+    Swipe Until Element Is Visible    ${criticaDoFilme}    15
+    Verifica contentDesc    ${criticaDoFilme}    ${Nome_Review}
+    Verifica contentDesc    ${criticaDoFilme}    Ahh! Não gostei muito não!
+
 E fazer as avaliações
     Click Element    ${3estrelas}
-    Clica e digita    ${inputTextAvalia}    Estou fazendo a avaliação mas não estou logado!
+    Clica e digita    ${inputTextAvalia}    Fazendo uma avaliação!
 
 E confirmar a avaliação
     Click Element    ${buttonSalvar}
@@ -134,6 +170,16 @@ Então o sistema exibirá uma mensagem de alerta
     Wait Until Element Is Visible    ${mensagemAlerta}
     Verifica contentDesc    ${mensagemAlerta}    Faça login e tente novamente.
     Element Should Be Visible    ${mensagemAlerta}
+
+E inserir um texto avaliativo com 500 caracteres
+    ${texto500}    FakerLibrary.Random Letters    500
+    Click Element    ${3estrelas}
+    Clica e digita    ${inputTextAvalia}    ${texto500}
+
+E inserir um texto avaliativo com 501 caracteres
+    ${texto501}    FakerLibrary.Random Letters    501
+    Click Element    ${3estrelas}
+    Clica e digita    ${inputTextAvalia}    ${texto501}
 
 Dado que usuário está na tela de login
     Wait Until Element Is Visible    ${buttonMenu}

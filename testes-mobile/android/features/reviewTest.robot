@@ -37,27 +37,27 @@ Deve ser possível atribuir uma nota sem criar texto avaliativo
     Quando selecionar um filme
     E fazer uma avaliação sem informar a texto
     E confirmar a avaliação
-    Então a avaliação não será feita
+    Então será possível visualizar a avaliação criada
 
-Não deve ser possível duplicar uma avaliação
-    Dado que estou logado
-    Quando acessar meu perfil
-    E selecionar uma avaliação feita anteriormente
-    E atribuir nova avaliação
-    Então a avaliação antiga será atualizada
-    E não será possível criar nova avaliação
+Não deve ser possível fazer uma segunda avaliação do mesmo filme
+    Dado que um usuário está na tela de filmes
+    Quando selecionar um filme
+    E criar uma avaliação
+    E fazer uma nova avaliação do mesmo filme
+    Então somente a avaliação antiga será atualizada
 
 Deve ser possível escrever uma avaliação com 500 caracteres
-    Dado que estou logado e na tela de um filme específico
-    Quando atribuir uma nota
+    Dado que um usuário está na tela de filmes
+    Quando selecionar um filme
+    E selecionar para adicionar uma avaliação
     E inserir um texto avaliativo com 500 caracteres
-    E concluir a operação
-    Então a avaliação será criada
-    E será possível visualizar a avaliação na tela do filme
+    E confirmar a avaliação
+    Então será possível visualizar a avaliação criada
 
 Não deve ser possível escrever uma avaliação com mais que 500 caracteres
-    Dado que estou logado e na tela de um filme específico
-    Quando atribuir uma nota
-    E inserir um texto avaliativo com mais de 500 caracteres
-    E concluir a operação
-    Então a avaliação não será criada
+    Dado que um usuário está na tela de filmes
+    Quando selecionar um filme
+    E selecionar para adicionar uma avaliação
+    E inserir um texto avaliativo com 501 caracteres
+    E confirmar a avaliação
+    Então será possível visualizar a avaliação criada
