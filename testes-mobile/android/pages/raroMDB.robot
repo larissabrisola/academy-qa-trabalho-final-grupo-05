@@ -22,20 +22,20 @@ ${buttonFilmes}             ${prefixoView}    [@content-desc="Filmes"]
 ${buttonLogin}              ${prefixoBTN}    [@content-desc="Login"]
 ${buttonReview}             ${prefixoFrame}    [@resource-id="android:id/content"]
 ${1estrelas}
-...    ${prefixoFrame}
-...    [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[1]
+...                         ${prefixoFrame}
+...                         [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[1]
 ${2estrelas}
-...    ${prefixoFrame}
-...    [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[2]
+...                         ${prefixoFrame}
+...                         [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[2]
 ${3estrelas}
-...    ${prefixoFrame}
-...    [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[3]
+...                         ${prefixoFrame}
+...                         [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[3]
 ${4estrelas}
-...    ${prefixoFrame}
-...    [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[4]
+...                         ${prefixoFrame}
+...                         [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[4]
 ${5estrelas}
-...    ${prefixoFrame}
-...    [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[5]
+...                         ${prefixoFrame}
+...                         [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[5]
 ${buttonSalvar}             ${prefixoBTN}    [@content-desc="Salvar"]
 
 # alertas
@@ -48,8 +48,8 @@ ${senhasDiferentes}         ${prefixoView}    [@content-desc="As senhas não coi
 ${emailCadastrado}          ${prefixoView}    [@content-desc="E-mail já cadastrado. Utilize outro e-mail."]
 ${cadastroRealizado}        ${prefixoView}    [@content-desc="Cadastro realizado!"]
 ${erroRegInvalid}
-...    ${prefixoView}
-...    [@content-desc="Ocorreu um erro ao realizar o cadastro. Tente novamente mais tarde."]
+...                         ${prefixoView}
+...                         [@content-desc="Ocorreu um erro ao realizar o cadastro. Tente novamente mais tarde."]
 ${sucessoLogin}             ${prefixoView}    [@content-desc="Login realizado!"]
 ${userOuSenhaInvalido}      ${prefixoView}    [@content-desc="Usuário ou senha inválidos."]
 
@@ -74,13 +74,8 @@ ${button+atualizar}         xpath=//android.widget.FrameLayout[@resource-id="and
 ${tela_avaliação}           xpath=//android.view.View[@content-desc="Avaliação da audiência 3 avaliações"]
 ${telaReview}               xpath=//android.view.View[@content-desc="Review"]
 ${texto_de_suaNota}         xpath=//android.view.View[@content-desc="Dê sua nota para o filme:"]
-${1estrela}                 xpath=//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[1]
-${2estrelas}                xpath=//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[2]
-${3estrelas}                xpath=//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[3]
-${4estrelas}                xpath=//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[4]
-${5estrelas}                xpath=//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]/android.view.View[5]
+
 ${inputTextAvalia}          xpath=//android.widget.EditText
-${botaoSalvar}              xpath=//android.widget.Button[@content-desc="Salvar"]
 ${mensagemAlerta}           xpath=//android.view.View[@content-desc="Faça login e tente novamente."]
 ${mensagemAlertaSucesso}    xpath=//android.view.View[@content-desc="Sua review foi adicionada!"]
 
@@ -92,10 +87,25 @@ Dado que o usuário se encontra na página de cadastro
     Clica e espera    ${buttonRegistrese}    ${inputNome}
 
 Dado que acesso à tela de filmes
-
-'    Wait Until Element Is Visible    ${buttonMenu}
+    Wait Until Element Is Visible    ${buttonMenu}
     Clica e espera    ${buttonMenu}    ${buttonFilmes}
     Clica e espera    ${buttonFilmes}    ${filme_home}
+
+Quando selecionar um filme
+    Clica e espera    ${filme_home}    ${button+atualizar}
+
+E selecionar para adicionar uma avaliação
+    Clica e espera    ${button+atualizar}    ${telaReview}
+
+E fazer as avaliações
+    Click Element    ${3estrelas}
+    Clica e digita    ${inputTextAvalia}    Estou fazendo a avaliação mas não estou logado!
+
+E clicar no botão salvar
+    Clica e espera    ${buttonSalvar}    ${mensagemAlerta}
+
+Então o sistema exibirá uma mensagem de alerta
+    Element Should Be Visible    ${mensagemAlerta}
 
 Dado que usuário está na tela de login
     Wait Until Element Is Visible    ${buttonMenu}
