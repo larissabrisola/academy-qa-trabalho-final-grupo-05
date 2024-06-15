@@ -140,6 +140,10 @@ Dado que usuário está na tela de login
     Clica e espera    ${buttonMenu}    ${buttonMenuLogin}
     Clica e espera    ${buttonMenuLogin}    ${inputEmailLogin}
 
+E fazer uma avaliação sem informar a texto
+    Clica e espera    ${button+atualizar}    ${telaReview}
+    Click Element    ${3estrelas}
+
 Dado que um usuário está na tela de filmes
     Cria Filme na api
     Verifica primeiro filme

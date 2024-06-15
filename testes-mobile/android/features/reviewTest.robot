@@ -33,10 +33,11 @@ Não deve ser possível criar uma avaliação sem atribuir nota
     Então a avaliação não será feita
 
 Deve ser possível atribuir uma nota sem criar texto avaliativo
-    Dado estou logado e na tela de um filme específico
-    Quando atribuir uma nota
-    E concluir a operação
-    Então a nota é exibida e avaliação fica em branco
+    Dado que um usuário está na tela de filmes
+    Quando selecionar um filme
+    E fazer uma avaliação sem informar a texto
+    E confirmar a avaliação
+    Então a avaliação não será feita
 
 Não deve ser possível duplicar uma avaliação
     Dado que estou logado
