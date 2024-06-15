@@ -92,7 +92,21 @@ Dado que acesso à tela de filmes
     Clica e espera    ${buttonFilmes}    ${filme_home}
 
 Quando selecionar um filme
-    Clica e espera    ${filme_home}    ${button+atualizar}
+    ${filme}    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]
+    Wait Until Element Is Visible    ${filme}
+    Click Element    ${filme}
+    Wait Until Element Is Visible    ${button+atualizar}
+
+Então será possível visualizar a avaliação criada
+    ${Nome_Review}    Set Variable    Por "${nome}" em ${Data_atual}
+    ${criticaDoFilme}    Set Variable
+    ...    //android.widget.ImageView[contains(@content-desc, '${tituloM}')]//android.view.View[contains(@content-desc, '${Nome_Review}')]
+    Press Keycode    4
+    Press Keycode    4
+    Wait Until Element Is Visible    ${button+atualizar}
+    Swipe Until Element Is Visible    ${criticaDoFilme}    15
+    Verifica contentDesc    ${criticaDoFilme}    ${Nome_Review}
+    Verifica contentDesc    ${criticaDoFilme}    Podem ver pois eu gostei!!!
 
 E selecionar para adicionar uma avaliação
     Clica e espera    ${button+atualizar}    ${telaReview}
@@ -111,6 +125,32 @@ Dado que usuário está na tela de login
     Wait Until Element Is Visible    ${buttonMenu}
     Clica e espera    ${buttonMenu}    ${buttonMenuLogin}
     Clica e espera    ${buttonMenuLogin}    ${inputEmailLogin}
+
+Dado que um usuário está na tela de filmes
+    Cria Filme na api
+    Verifica primeiro filme
+    Wait Until Element Is Visible    ${buttonMenu}
+    Clica e espera    ${buttonMenu}    ${buttonMenuLogin}
+    Clica e espera    ${buttonMenuLogin}    ${inputEmailLogin}
+    ${nome}    FakerLibrary.Name
+    ${email}    FakerLibrary.Email
+    Create Session    criar_sessao    ${BASE_URL}
+    ${payload}    Create Dictionary    name=${nome}    email=${email}    password=123456
+    ${response}    POST On Session    criar_sessao    /users    json=${payload}
+    Should Be Equal As Numbers    ${response.status_code}    201
+
+    Set Global Variable    ${nome}
+    Clica e digita    ${inputEmailLogin}    ${email}
+    Clica e digita    ${inputSenhaLogin}    123456
+    Clica e espera    ${buttonLogin}    ${filme_home}
+
+E criar uma nova avaliação
+    Clica e espera    ${button+atualizar}    ${telaReview}
+    Click Element    ${3estrelas}
+    Clica e digita    ${inputTextAvalia}    Podem ver pois eu gostei!!!
+
+E confirmar operação
+    Clica e espera    ${buttonSalvar}    ${mensagemAlertaSucesso}
 
 Quando informar email cadastrado
     ${nome}    FakerLibrary.Name
