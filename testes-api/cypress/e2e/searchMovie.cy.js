@@ -5,38 +5,33 @@ describe('Buscar filme com o usuário logado e autenticado no sistema', () => {
     let uToken;
     let filme;
 
-    before(() => {
-        const user = createUserForMovies();
-        cy.createUser(user.name, user.email, user.password).then((response) => {
-            uId = response.body.id;
-        })
-        cy.login(user.email, user.password).then((response) => {
-            uToken = response.body.accessToken
-            cy.promoteAdmin(uToken);
-        })
-        cy.createMovie().then((response) => {
-            cy.wrap(response).as('data')
-        });
-        cy.get('@data').then((data) => {
-            filme = data;
-        })
-    })
+    let movie = {
+        title: faker.person.firstName(), 
+        genre: faker.person.jobArea(), 
+        description: faker.lorem.sentences()
+    };
 
-    after(() => {
-        cy.deleteUser(uId, uToken);
+    before(() => {
+        cy.adminCreatesAMovie(movie.title, movie.genre, movie.description, 100, 2020).then((response) => {
+            filme = response.body
+        })
     })
 
     it('Deve ser possível encontrar um filme por meio de seu título estando logado no sistema', () => {
-        cy.request({
-            method: 'GET',
-            url: 'movies/search?title=' + filme.title,
-            headers: {
-                Authorization: `Bearer ${uToken}`
-            }
-        }).then((response) => {
-            expect(response.status).to.equal(200);
-            expect(response.body[0]).to.include(filme)
+        cy.createAndLoginUser("juju", faker.internet.exampleEmail(), 'boitata').then((response)=>{
+            uToken = response.token
+            cy.request({
+                method: 'GET',
+                url: 'movies/search?title=' + filme.title,
+                headers: {
+                    Authorization: `Bearer ${uToken}`
+                }
+            }).then((response) => {
+                expect(response.status).to.equal(200);
+                expect(response.body[0]).to.include(filme)
+            })
         })
+       
     })
 
     it('Deve ser possível encontrar um filme por meio de seu título sem estar logado no sistema', () => {
@@ -49,40 +44,52 @@ describe('Buscar filme com o usuário logado e autenticado no sistema', () => {
         })
     })
 
-    it('Não deve ser possível encontrar um filme deletado', () => {
-        cy.deleteMovie(filme.id, uToken)
-        cy.request({
-            method: 'GET',
-            url: 'movies/search?title=' + filme.title,
-            headers: {
-                Authorization: `Bearer ${uToken}`
-            }
-        }).then((response) => {
-            expect(response.status).to.equal(200);
-            expect(response.body).be.empty;
-        })
-    })
-
     it('Deve ser possível encontrar um filme inserindo dados parciais', () => {
-        const parcialTitle = filme.title.slice(0, 3)
+        cy.adminCreatesAMovie(movie.title, movie.genre, movie.description, 100, 2020).then((response) => {
+            filme = response.body
+        })
+        
+        const parcialTitle = filme.title.slice(1, 3)
         cy.request({
             method: 'GET',
             url: 'movies/search?title=' + parcialTitle
             }).then((response) => {
                 expect(response.status).to.equal(200);
                 expect(response.body).to.be.an('array');
-                cy.log(response.body)
-
-                const movies = response.body;
-                const containsFilme = movies.some(movie => movie.title.includes(parcialTitle))
-                expect(containsFilme).to.be.true
+                expect(response.body[0].title).to.contains(parcialTitle)
         })
+    })
+
+    it('Não deve ser possível encontrar um filme deletado', () => {
+        let filmin
+        cy.createAndLogAdmin('asdsa', faker.internet.exampleEmail(), 'aopdfopa').then((response)=>{
+            uToken = response.token
+            Cypress.env('accessToken', uToken)
+            cy.createMovie().then((response)=>{
+                filmin = response
+                cy.deleteMovie(filmin.id, uToken )
+            }).then((filmin)=>{
+                cy.request({
+                    method: 'GET',
+                    url: 'movies/search?title=' + filmin.title,
+                    headers: {
+                        Authorization: `Bearer ${uToken}`
+                    }
+                }).then((response) => {
+                    expect(response.status).to.equal(200);
+                    expect(response.body).to.be.empty;
+                })
+            })
+
+            
+        })
+        
     })
 
     it('Não deve ser possível buscar filme inserindo multiplos parâmetros', () => {
         cy.request({
             method: 'GET',
-            url: 'movies/search?title=' + filme.title + ' de ' + filme.releaseYear
+            url: 'movies/search?title=' + filme.title + '  ' + filme.releaseYear
             }).then((response) => {
                 expect(response.status).to.equal(200);
                 expect(response.body).be.empty;
@@ -99,11 +106,3 @@ describe('Buscar filme com o usuário logado e autenticado no sistema', () => {
         })
     })
 })
-
-function createUserForMovies() {
-    return {
-        name: faker.person.fullName(),
-        email: faker.internet.email().toLowerCase(),
-        password: faker.internet.password({ length: 10 }),
-    };
-};
