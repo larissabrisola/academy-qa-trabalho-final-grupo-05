@@ -28,26 +28,6 @@ Cypress.Commands.add("login", function (email, senha, failOnStatusCode) {
   });
 });
 
-// Cypress.Commands.add('promoteAdmin', function () {
-//   cy.request({
-//     method: 'PATCH',
-//     url:  Cypress.env('api_url') + 'users/admin',
-//     headers: {
-//       Authorization: `Bearer ${Cypress.env('accessToken')}`
-//     }
-//   })
-// })
-
-// Cypress.Commands.add('promoteCritic', function () {
-//   cy.request({
-//     method: 'PATCH',
-//     url: 'users/apply',
-//     headers: {
-//       Authorization: `Bearer ${Cypress.env('accessToken')}`
-//     }
-//   })
-// })
-
 Cypress.Commands.add("createAndLoginUser", function (nome, email, senha) {
   let uId;
   let uToken;
@@ -84,16 +64,6 @@ Cypress.Commands.add("deleteUser", function (id, token, failOnStatusCode) {
     failOnStatusCode: failOnStatusCode,
   });
 });
-
-// Cypress.Commands.add("inactivateUser", function () {
-//   cy.request({
-//     method: "PATCH",
-//     url: "users/inactivate",
-//     headers: {
-//       Authorization: `Bearer ${Cypress.env('accessToken')}`
-//     }
-//   });
-// });
 
 Cypress.Commands.add("createAndLogAdmin", function (nome, email, senha) {
   let uId;
