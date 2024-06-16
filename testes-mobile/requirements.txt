@@ -5,3 +5,4 @@ robotframework-faker
 Appium-Python-Client<4.0.0
 selenium==4.12
 setuptools
+DateTime
