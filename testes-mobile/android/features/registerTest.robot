@@ -15,7 +15,7 @@ Deve ser possivel cadastrar usuário
     E preencher o formulário com email válido
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário será cadastrado
+    Então o usuário será cadastrado
 
 Deve ser possivel cadastrar com nome contendo 100 caracteres
     Dado que o usuário se encontra na página de cadastro
@@ -23,7 +23,7 @@ Deve ser possivel cadastrar com nome contendo 100 caracteres
     E preencher o formulário com email válido
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário será cadastrado
+    Então o usuário será cadastrado
 
 Deve ser possivel cadastrar com email contendo 60 caracteres
     Dado que o usuário se encontra na página de cadastro
@@ -31,7 +31,7 @@ Deve ser possivel cadastrar com email contendo 60 caracteres
     E preencher o formulário com email contendo 60 caracteres
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário será cadastrado
+    Então o usuário será cadastrado
 
 Deve ser possivel cadastrar com senha contendo 12 caracteres
     Dado que o usuário se encontra na página de cadastro
@@ -39,7 +39,7 @@ Deve ser possivel cadastrar com senha contendo 12 caracteres
     E preencher o formulário com email válido
     E preencher o formulário com senha contendo 12 caracteres
     E clicar em Cadastrar
-    Entao o usuário será cadastrado
+    Então o usuário será cadastrado
 
 Deve ser possivel cadastrar com nome contendo 1 caractere
     Dado que o usuário se encontra na página de cadastro
@@ -47,7 +47,7 @@ Deve ser possivel cadastrar com nome contendo 1 caractere
     E preencher o formulário com email válido
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário será cadastrado
+    Então o usuário será cadastrado
     
 Deve ser possivel cadastrar o usuario com qualquer tipo de nome
     [Template]    Deve ser possivel cadastrar o usuario com qualquer tipo de nome
@@ -63,35 +63,35 @@ Não deve ser possivel cadastrar com email já utilizado - mensagem de alerta de
     E preencher o formulário com email já cadastrado
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "E-mail já cadastrado. Utilize outro e-mail"
+    Então o usuário não será cadastrado e receberá um aviso "E-mail já cadastrado. Utilize outro e-mail"
 
 Não deve ser possivel cadastrar se o campo nome estiver vazio
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com email válido
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "Informe o nome."
+    Então o usuário não será cadastrado e receberá um aviso "Informe o nome."
 
 Não deve ser possivel cadastrar se o campo email estiver vazio
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com nome válido
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "Informe o e-mail."
+    Então o usuário não será cadastrado e receberá um aviso "Informe o e-mail."
 
 Não deve ser possivel cadastrar se o campo senha estiver vazio
     Dado que o usuário se encontra na página de cadastro
     Quando preencher o formulário com nome válido
     E preencher o formulário com email válido
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "Informe uma senha."
+    Então o usuário não será cadastrado e receberá um aviso "Informe uma senha."
 
 Não deve ser possivel cadastrar se todos campos estiverem vazios
     Dado que o usuário se encontra na página de cadastro
     Quando clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "Informe o nome."
-    Entao o usuário não será cadastrado e receberá um aviso "Informe o e-mail."
-    Entao o usuário não será cadastrado e receberá um aviso "Informe uma senha."
+    Então o usuário não será cadastrado e receberá um aviso "Informe o nome."
+    Então o usuário não será cadastrado e receberá um aviso "Informe o e-mail."
+    Então o usuário não será cadastrado e receberá um aviso "Informe uma senha."
 
 
 Não deve ser possivel cadastrar com formato de email inválido
@@ -108,7 +108,7 @@ Não deve ser possivel cadastrar com email contendo 61 ou mais caracteres
     E preencher o formulário com email contendo 61 caracteres
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso de erro no cadastro
+    Então o usuário não será cadastrado e receberá um aviso de erro no cadastro
 
 Não deve ser possivel cadastrar com email contendo 4 ou menos caracteres
     Dado que o usuário se encontra na página de cadastro
@@ -116,7 +116,7 @@ Não deve ser possivel cadastrar com email contendo 4 ou menos caracteres
     E preencher o formulário com email "a@c.a"
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso de email invalido
+    Então o usuário não será cadastrado e receberá um aviso de email invalido
 
 Não deve ser possivel cadastrar com senha contendo 5 ou menos caracteres
     Dado que o usuário se encontra na página de cadastro
@@ -125,7 +125,7 @@ Não deve ser possivel cadastrar com senha contendo 5 ou menos caracteres
     E preencher o formulário com senha com 5 digitos
     E confirmar a senha com 5 digitos
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso de erro no cadastro
+    Então o usuário não será cadastrado e receberá um aviso de erro no cadastro
 
 Não deve ser possivel cadastrar com senha contendo 13 ou mais caracteres
     Dado que o usuário se encontra na página de cadastro
@@ -134,7 +134,7 @@ Não deve ser possivel cadastrar com senha contendo 13 ou mais caracteres
     E preencher o formulário com senha com 13 caracteres
     E confirmar a senha com 13 caracteres
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso de erro no cadastro
+    Então o usuário não será cadastrado e receberá um aviso de erro no cadastro
 
 Não deve ser possivel cadastrar nome contendo 101 ou mais caracteres
     Dado que o usuário se encontra na página de cadastro
@@ -142,7 +142,7 @@ Não deve ser possivel cadastrar nome contendo 101 ou mais caracteres
     E preencher o formulário com email válido
     E preencher o formulário com senha válida
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso de erro no cadastro
+    Então o usuário não será cadastrado e receberá um aviso de erro no cadastro
 
 Não deve ser possivel realizar o cadastro se a senha e confirmação da senha não forem iguais
     Dado que o usuário se encontra na página de cadastro
@@ -151,7 +151,7 @@ Não deve ser possivel realizar o cadastro se a senha e confirmação da senha n
     E preencher o formulário com uma senha
     E confirmarçao de senha diferente
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "As senhas não coincidem."
+    Então o usuário não será cadastrado e receberá um aviso "As senhas não coincidem."
 
 Não deve ser possivel realizar o cadastro sem confirmar senha
     Dado que o usuário se encontra na página de cadastro
@@ -159,4 +159,4 @@ Não deve ser possivel realizar o cadastro sem confirmar senha
     E preencher o formulário com email válido
     E preencher o formulário com uma senha
     E clicar em Cadastrar
-    Entao o usuário não será cadastrado e receberá um aviso "Confirme a senha."
+    Então o usuário não será cadastrado e receberá um aviso "Confirme a senha."

@@ -43,19 +43,19 @@ Cria Filme na api
 
     # Cria filme na API
     ${basetitle}=    FakerLibrary.First Name
-    ${title}=    Set Variable    a volta de ${basetitle}
+    ${tituloM}=    Set Variable    a volta de ${basetitle}
     ${description}=    FakerLibrary.Catch Phrase
     ${duration}=    Convert To Integer    120
     ${releaseYear}=    Convert To Integer    1999
     ${payloadFilme}=    Create Dictionary
-    ...    title=${title}
+    ...    title=${tituloM}
     ...    genre=Terror
     ...    description=${description}
     ...    durationInMinutes=${duration}
     ...    releaseYear=${releaseYear}
     ${responseFilme}=    POST On Session    criar_sessao    /movies    headers=${headers}    json=${payloadFilme}
     Set Global Variable    ${email}
-    Set Global Variable    ${title}
+    Set Global Variable    ${tituloM}
     Set Global Variable    ${description}
 
 Cria review na api
@@ -79,12 +79,12 @@ Cria review na api
 
     # Cria filme na API
     ${basetitle}=    FakerLibrary.First Name
-    ${title}=    Set Variable    a volta de ${basetitle}
+    ${tituloM}=    Set Variable    a volta de ${basetitle}
     ${description}=    FakerLibrary.Catch Phrase
     ${duration}=    Convert To Integer    120
     ${releaseYear}=    Convert To Integer    1999
     ${payloadFilme}=    Create Dictionary
-    ...    title=${title}
+    ...    title=${tituloM}
     ...    genre=Terror
     ...    description=${description}
     ...    durationInMinutes=${duration}
@@ -104,7 +104,7 @@ Cria review na api
     ...    json=${payloadReview}
     Set Global Variable    ${nomeUser}
     Set Global Variable    ${email}
-    Set Global Variable    ${title}
+    Set Global Variable    ${tituloM}
     Set Global Variable    ${description}
 
 Critica Primeiro Filme
@@ -148,11 +148,32 @@ Verifica primeiro filme
     Set Global Variable    ${idMovie}
     Set Global Variable    ${genero}
     Set Global Variable    ${descricao}
-    Variable    ${tituloM}  
+    Set Global Variable    ${tituloM}  
 
     Set Global Variable    ${idMovie}
     Set Global Variable    ${genero}
     Set Global Variable    ${descricao}
+
+Verifica segundo filme
+    Create Session    criar_sessao    ${BASE_URL}
+    ${response}=    GET On Session    criar_sessao    /movies
+    ${segundoFilme}=    Get From List    ${response.json()}    1
+    ${lista}=    Get Dictionary Items    ${segundoFilme}    0
+    ${idMovie}=    Get From List    ${lista}    1
+    ${tituloM}=    Get From List    ${lista}    3
+    ${genero}=    Get From List    ${lista}    5
+    ${descricao}=    Get From List    ${lista}    7
+    ${idMovie}=    Convert to Integer    ${idMovie}
+    Set Global Variable    ${tituloM}
+    Set Global Variable    ${idMovie}
+    Set Global Variable    ${genero}
+    Set Global Variable    ${descricao}
+    Set Global Variable    ${tituloM}  
+
+    Set Global Variable    ${idMovie}
+    Set Global Variable    ${genero}
+    Set Global Variable    ${descricao}
+
 
 Swipe Until Element Is Visible
     [Arguments]    ${locator}    ${limit}
