@@ -5,15 +5,15 @@ Library     Process
 
 *** Keywords ***
 Clica e espera
-    [Arguments]    ${elementoAClicar}    ${elementoEsperado}
+    [Arguments]      ${elementoAClicar}    ${elementoEsperado}
     Click Element    ${elementoAClicar}
     Wait Until Element Is Visible    ${elementoEsperado}
 
 Clica e digita
-    [Arguments]    ${elementoAClicar}    ${texto}
+    [Arguments]      ${elementoAClicar}    ${texto}
     Click Element    ${elementoAClicar}
     Click Element    ${elementoAClicar}
-    Input Text    ${elementoAClicar}    ${texto}
+    Input Text       ${elementoAClicar}    ${texto}
 
 Verifica contentDesc
     [Arguments]    ${elemento}    ${conteudo}
@@ -106,7 +106,6 @@ Cria review na api
     Set Global Variable    ${email}
     Set Global Variable    ${title}
     Set Global Variable    ${description}
-    Set Global Variable    ${review}
 
 Critica Primeiro Filme
     Verifica primeiro filme
@@ -149,18 +148,8 @@ Verifica primeiro filme
     Set Global Variable    ${idMovie}
     Set Global Variable    ${genero}
     Set Global Variable    ${descricao}
+    Variable    ${tituloM}  
 
-Verifica segundo filme
-    Create Session    criar_sessao    ${BASE_URL}
-    ${response}=    GET On Session    criar_sessao    /movies
-    ${primeiroFilme}=    Get From List    ${response.json()}    1
-    ${lista}=    Get Dictionary Items    ${primeiroFilme}    0
-    ${idMovie}=    Get From List    ${lista}    1
-    ${tituloM}=    Get From List    ${lista}    3
-    ${genero}=    Get From List    ${lista}    5
-    ${descricao}=    Get From List    ${lista}    7
-    ${idMovie}=    Convert to Integer    ${idMovie}
-    Set Global Variable    ${tituloM}
     Set Global Variable    ${idMovie}
     Set Global Variable    ${genero}
     Set Global Variable    ${descricao}

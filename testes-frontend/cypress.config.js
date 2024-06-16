@@ -15,6 +15,7 @@ module.exports = defineConfig({
       register_url: "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/register",
       login_url: "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/login", 
       manageAccount: "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/account", 
+      inicial_url: "https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/",
       TAGS: "not @ignore",
     },
     specPattern: "cypress/e2e/**/*.feature",
