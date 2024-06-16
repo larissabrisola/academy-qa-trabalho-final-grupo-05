@@ -1,16 +1,20 @@
 import { faker } from "@faker-js/faker";
 
-Cypress.Commands.add("createUser", function (nome, email, senha, failOnStatusCode) {
-  cy.request(
-    {
-      method: 'POST', url: "users",
+Cypress.Commands.add(
+  "createUser",
+  function (nome, email, senha, failOnStatusCode) {
+    cy.request({
+      method: "POST",
+      url: "users",
       body: {
-        "name": nome,
-        "email": email,
-        "password": senha
-      }, failOnStatusCode: failOnStatusCode
-    })
-});
+        name: nome,
+        email: email,
+        password: senha,
+      },
+      failOnStatusCode: failOnStatusCode,
+    });
+  }
+);
 
 Cypress.Commands.add("login", function (email, senha, failOnStatusCode) {
   cy.request({
@@ -18,15 +22,11 @@ Cypress.Commands.add("login", function (email, senha, failOnStatusCode) {
     url: "auth/login",
     body: {
       email: email,
-      password: senha
+      password: senha,
     },
-    failOnStatusCode: failOnStatusCode
-  }).then((response) => {
-    const accessToken = response.body.accessToken
-    Cypress.env('accessToken', accessToken)
-  })
-})
-
+    failOnStatusCode: failOnStatusCode,
+  });
+});
 
 // Cypress.Commands.add('promoteAdmin', function () {
 //   cy.request({
@@ -38,17 +38,15 @@ Cypress.Commands.add("login", function (email, senha, failOnStatusCode) {
 //   })
 // })
 
-
-
-Cypress.Commands.add('promoteCritic', function () {
-  cy.request({
-    method: 'PATCH',
-    url: 'users/apply',
-    headers: {
-      Authorization: `Bearer ${Cypress.env('accessToken')}`
-    }
-  })
-})
+// Cypress.Commands.add('promoteCritic', function () {
+//   cy.request({
+//     method: 'PATCH',
+//     url: 'users/apply',
+//     headers: {
+//       Authorization: `Bearer ${Cypress.env('accessToken')}`
+//     }
+//   })
+// })
 
 Cypress.Commands.add("createAndLoginUser", function (nome, email, senha) {
   let uId;
@@ -82,19 +80,20 @@ Cypress.Commands.add("deleteUser", function (id, token, failOnStatusCode) {
     url: "users/" + id,
     headers: {
       Authorization: "Bearer " + token,
-    }, failOnStatusCode: failOnStatusCode
+    },
+    failOnStatusCode: failOnStatusCode,
   });
 });
 
-Cypress.Commands.add("inactivateUser", function () {
-  cy.request({
-    method: "PATCH",
-    url: "users/inactivate",
-    headers: {
-      Authorization: `Bearer ${Cypress.env('accessToken')}`
-    }
-  });
-});
+// Cypress.Commands.add("inactivateUser", function () {
+//   cy.request({
+//     method: "PATCH",
+//     url: "users/inactivate",
+//     headers: {
+//       Authorization: `Bearer ${Cypress.env('accessToken')}`
+//     }
+//   });
+// });
 
 Cypress.Commands.add("createAndLogAdmin", function (nome, email, senha) {
   let uId;
@@ -160,44 +159,59 @@ Cypress.Commands.add("createAndLoginCritic", function (nome, email, senha) {
   });
 });
 
-Cypress.Commands.add('adminCreatesAMovie', (title, genre, description, durationInMinutes, releaseYear, failOnStatusCode) => {
-  cy.createAndLogAdmin(faker.animal.fish(), faker.internet.exampleEmail(), 'lionxitps').then((response) => {
-    let token = response.token
+Cypress.Commands.add(
+  "adminCreatesAMovie",
+  (
+    title,
+    genre,
+    description,
+    durationInMinutes,
+    releaseYear,
+    failOnStatusCode
+  ) => {
+    cy.createAndLogAdmin(
+      faker.animal.fish(),
+      faker.internet.exampleEmail(),
+      "lionxitps"
+    ).then((response) => {
+      let token = response.token;
 
-    cy.request({
-      method: "POST",
-      url: "movies",
-      headers: {
-        Authorization: "Bearer " + `${token}`,
-      },
-      body: {
-        title: title,
-        genre: genre,
-        description: description,
-        durationInMinutes: durationInMinutes,
-        releaseYear: releaseYear,
-      }, failOnStatusCode
-    })
-  })
-});
+      cy.request({
+        method: "POST",
+        url: "movies",
+        headers: {
+          Authorization: "Bearer " + `${token}`,
+        },
+        body: {
+          title: title,
+          genre: genre,
+          description: description,
+          durationInMinutes: durationInMinutes,
+          releaseYear: releaseYear,
+        },
+        failOnStatusCode,
+      });
+    });
+  }
+);
 
-Cypress.Commands.add('getUserViaID', (id, failOnStatusCode) => {
+Cypress.Commands.add("getUserViaID", (id, failOnStatusCode) => {
   cy.request({
     method: "GET",
     url: "users/" + id,
     headers: {
-      Authorization: `Bearer ${Cypress.env('accessToken')}`
+      Authorization: `Bearer ${Cypress.env("accessToken")}`,
     },
-    failOnStatusCode: failOnStatusCode
-  })
-})
+    failOnStatusCode: failOnStatusCode,
+  });
+});
 
-Cypress.Commands.add('createMovie', () => {
+Cypress.Commands.add("createMovie", () => {
   cy.request({
     method: "POST",
     url: "movies",
     headers: {
-      Authorization: `Bearer ${Cypress.env('accessToken')}`
+      Authorization: `Bearer ${Cypress.env("accessToken")}`,
     },
     body: {
       title: faker.person.firstName() + " o retorno",
@@ -207,61 +221,62 @@ Cypress.Commands.add('createMovie', () => {
       releaseYear: 2000,
     },
   }).then((response) => {
-    return response.body
-  })
-})
+    return response.body;
+  });
+});
 
-Cypress.Commands.add('postReview', (idFilme, token) => {
+Cypress.Commands.add("postReview", (idFilme, token) => {
   cy.request({
     method: "POST",
     url: "users/review",
     headers: {
-      Authorization: "Bearer " + token
+      Authorization: "Bearer " + token,
     },
     body: {
       movieId: idFilme,
       score: 5,
       reviewText: "Teste review usuário inativado / promovido",
     },
-  })
-})
+  });
+});
 
-Cypress.Commands.add("inactivateWithToken", function (token) {
+Cypress.Commands.add("inactivateUser", function (token) {
   cy.request({
     method: "PATCH",
     url: "users/inactivate",
     headers: {
-      Authorization: "Bearer " + token
-    }
+      Authorization: "Bearer " + token,
+    },
   });
 });
 
-Cypress.Commands.add('promoteAdmin', function (token) {
+Cypress.Commands.add("promoteAdmin", function (token) {
   cy.request({
-    method: 'PATCH',
+    method: "PATCH",
+    url: "users/admin",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+});
 
-    url: 'users/admin',
-    headers: {
-      Authorization: "Bearer " + token
-    }
-  }).then(response => Cypress.env('adminAccessToken', token))
-})
-Cypress.Commands.add('promoteCritic', function (token) {
+Cypress.Commands.add("promoteCritic", function (token) {
   cy.request({
-    method: 'PATCH',
-    url: 'users/apply',
+    method: "PATCH",
+    url: "users/apply",
     headers: {
-      Authorization: "Bearer " + token
-    }
-  }).then(response => Cypress.env('criticAccessToken', token))
-})
+      Authorization: "Bearer " + token,
+    },
+  });
+});
 
-Cypress.Commands.add('deleteMovie', function (id, token) {
+Cypress.Commands.add("deleteMovie", function (id, token, failOnStatusCode) {
   cy.request({
-    method: 'DELETE',   
-    url: 'movies/' + id,
+    method: "DELETE",
+    url: "movies/" + id,
     headers: {
-      Authorization: "Bearer " + token
-    }
-  })
-})
+      Authorization: "Bearer " + token,
+    },
+    failOnStatusCode: false,
+  });
+});
