@@ -56,6 +56,7 @@ ${inputReview}           //android.widget.EditText
 #Filmes
 ${reviewsAudience}       ${prefixoView}    [contains(@content-desc,"Avaliação da audiência")]
 ${reviewsCritic}         ${prefixoView}    [contains(@content-desc,"Avaliação da crítica")]
+${button+atualizar}      ${prefixoFrame}   [@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button
 
 
 
@@ -261,6 +262,8 @@ Entao tenho acesso à todas os detalhes do filme selecionado
     Verifica contentDesc    ${descMovie}      ${descricao}
 
 Entao consigo criar uma avaliação
+    Wait Until Element Is Visible    ${button+atualizar} 
+    Clica e espera    ${button+atualizar}    ${inputReview}
     Element Should Be Visible         ${1estrelas}
     Element Should Be Visible         ${2estrelas}
     Element Should Be Visible         ${3estrelas}
