@@ -138,6 +138,21 @@ Critica Primeiro Filme
 Verifica primeiro filme
     Create Session    criar_sessao    ${BASE_URL}
     ${response}=    GET On Session    criar_sessao    /movies
+    ${primeiroFilme}=    Get From List    ${response.json()}    0
+    ${lista}=    Get Dictionary Items    ${primeiroFilme}    0
+    ${idMovie}=    Get From List    ${lista}    1
+    ${tituloM}=    Get From List    ${lista}    3
+    ${genero}=    Get From List    ${lista}    5
+    ${descricao}=    Get From List    ${lista}    7
+    ${idMovie}=    Convert to Integer    ${idMovie}
+    Set Global Variable    ${tituloM}
+    Set Global Variable    ${idMovie}
+    Set Global Variable    ${genero}
+    Set Global Variable    ${descricao}
+
+Verifica segundo filme
+    Create Session    criar_sessao    ${BASE_URL}
+    ${response}=    GET On Session    criar_sessao    /movies
     ${primeiroFilme}=    Get From List    ${response.json()}    1
     ${lista}=    Get Dictionary Items    ${primeiroFilme}    0
     ${idMovie}=    Get From List    ${lista}    1

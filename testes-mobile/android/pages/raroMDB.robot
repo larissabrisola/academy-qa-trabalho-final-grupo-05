@@ -166,6 +166,28 @@ Então a avaliação não será feita
     Wait Until Element Is Visible    ${mensagemAlertaSemNota}
     Verifica contentDesc    ${mensagemAlertaSemNota}    Não foi possível adicionar sua review.
 
+Dado que existem filmes cadastrados
+    Cria Filme na api
+    Cria Filme na api
+
+Então o usuário poderá ver todos os dados do filme
+    Verifica primeiro filme
+    Critica Primeiro Filme
+    ${filme}    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]
+    Wait Until Element Is Visible    ${filme}   
+    Verifica contentDesc    ${filme}    ${tituloM}
+    Verifica contentDesc    ${filme}    ${descricao}
+    Verifica segundo filme
+    ${filme}    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]
+    Wait Until Element Is Visible    ${filme}    
+    Verifica contentDesc    ${filme}    ${tituloM}
+    Verifica contentDesc    ${filme}    ${descricao}
+
+Quando o usuário acessar a área de filmes
+    Wait Until Element Is Visible    ${buttonMenu}
+    Clica e espera    ${buttonMenu}    ${buttonFilmes}
+    Clica e espera    ${buttonFilmes}    ${filme_home}
+
 Então o sistema exibirá uma mensagem de alerta
     Wait Until Element Is Visible    ${mensagemAlerta}
     Verifica contentDesc    ${mensagemAlerta}    Faça login e tente novamente.
