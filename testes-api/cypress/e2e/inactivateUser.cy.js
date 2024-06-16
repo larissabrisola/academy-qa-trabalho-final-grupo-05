@@ -41,7 +41,8 @@ describe("Inativação de usuário", () => {
     });
   });
 
-  it("Deve ser possível um usuário comum inativar a própria conta", () => {
+  it("Deve ser possível um usuário administrador inativar a própria conta", () => {
+    cy.promoteAdmin(token);
     cy.request({
       method: "PATCH",
       url: "users/inactivate",
@@ -60,9 +61,8 @@ describe("Inativação de usuário", () => {
       expect(response.body.error).to.deep.equal("Unauthorized");
     });
   });
-
-  it("Deve ser possível um usuário administrador inativar a própria conta", () => {
-    cy.promoteAdmin(token);
+  
+  it("Deve ser possível um usuário comum inativar a própria conta", () => {
     cy.request({
       method: "PATCH",
       url: "users/inactivate",
