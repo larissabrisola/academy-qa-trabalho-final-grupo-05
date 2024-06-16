@@ -10,7 +10,7 @@ Test Teardown       TearDown
 # Desejo poder escrever avaliações sobre os filmes
 # Para ser capaz de compartilhar minha opinião sobre os filmes
 
-Deve ser possível um usuário logado criar uma avaliaçao e atribuir uma nota para um filme
+Deve ser possível um usuário logado criar uma avaliação e atribuir uma nota para um filme
     Dado que um usuário está na tela de filmes
     Quando selecionar um filme
     E criar uma nova avaliação
