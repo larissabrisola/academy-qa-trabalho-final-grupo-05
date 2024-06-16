@@ -15,7 +15,7 @@ Deve ser possivel visualizar titulo, descrição, capa e nota dos filmes
     Quando o usuário acessar a área de filmes
     Então o usuário poderá ver todos os dados do filme
 
-Deve ser possivel consultar mais detalhes do filme ao seleciona-lo
+Deve ser possível consultar mais detalhes do filme ao seleciona-lo
     Dado que existem filmes cadastrados
     Quando o usuário acessar a área de filmes
     E acessar um filme

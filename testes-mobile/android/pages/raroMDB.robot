@@ -168,18 +168,19 @@ Então a avaliação não será feita
 
 Dado que existem filmes cadastrados
     Cria Filme na api
+    Verifica primeiro filme
     Cria Filme na api
 
 Então o usuário poderá ver todos os dados do filme
     Verifica primeiro filme
     Critica Primeiro Filme
     ${filme}    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]
-    Wait Until Element Is Visible    ${filme}   
+    Wait Until Element Is Visible    ${filme}
     Verifica contentDesc    ${filme}    ${tituloM}
     Verifica contentDesc    ${filme}    ${descricao}
     Verifica segundo filme
     ${filme}    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]
-    Wait Until Element Is Visible    ${filme}    
+    Wait Until Element Is Visible    ${filme}
     Verifica contentDesc    ${filme}    ${tituloM}
     Verifica contentDesc    ${filme}    ${descricao}
 
@@ -198,6 +199,11 @@ E inserir um texto avaliativo com 500 caracteres
     Click Element    ${3estrelas}
     Clica e digita    ${inputTextAvalia}    ${texto500}
 
+E acessar um filme
+    ${filme}    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]
+    Wait Until Element Is Visible    ${filme}
+    Click Element    ${filme}
+
 E inserir um texto avaliativo com 501 caracteres
     ${texto501}    FakerLibrary.Random Letters    501
     Click Element    ${3estrelas}
@@ -211,6 +217,15 @@ Dado que usuário está na tela de login
 E fazer uma avaliação sem informar a texto
     Clica e espera    ${button+atualizar}    ${telaReview}
     Click Element    ${3estrelas}
+
+Então usuário será redirecionado para a tela de detalhes do filme
+    Wait Until Element Is Visible    ${reviewsAudience}
+    ${tituloMovie}    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]
+    ${generoMovie}    Set Variable    //android.widget.ImageView[contains(@content-desc,"${genero}")]
+    ${descMovie}    Set Variable    //android.widget.ImageView[contains(@content-desc,"${descricao}")]
+    Verifica contentDesc    ${tituloMovie}    ${tituloM}
+    Verifica contentDesc    ${generoMovie}    ${genero}
+    Verifica contentDesc    ${descMovie}    ${descricao}
 
 Dado que um usuário está na tela de filmes
     Cria Filme na api
