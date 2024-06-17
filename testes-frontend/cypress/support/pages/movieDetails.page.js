@@ -3,7 +3,7 @@ export default class MovieDetailsPage {
     inputReview = 'textarea[placeholder="O que você acha deste filme ?"]'
     stars = '.stars'
     ratingStar = '.review-form-star.false'
-    ratedStar = 'div.star-container-reviewcard'
+    ratedStar = '.star-container-reviewcard'
     nameUser = '.user-reviecard-info'
     userReviewCard = '.user-review-card'
     userReviewInfo = '.user-review-info'
@@ -15,7 +15,8 @@ export default class MovieDetailsPage {
     dataMovie = '.movie-details-info-with-icon'
     moviePoster = '.w-full.h-auto.rounded-lg'
     containerMedia = '.star-container'
-    
+    movieScoreAudiencia = '.movie-score-info > :nth-child(1) > :nth-child(3)'
+    movieScoreCritica = '.movie-score-info > :nth-child(2) > :nth-child(3)'
     buttonSignInToReview = '[href="/login"]'
     buttonEnviar = '[type="submit"]'
 
@@ -44,6 +45,5 @@ export default class MovieDetailsPage {
     avaliarFilme(texto) {
         this.clickRatingStars();
         this.typeReview(texto);
-        cy.wait(2000);
     }
 }

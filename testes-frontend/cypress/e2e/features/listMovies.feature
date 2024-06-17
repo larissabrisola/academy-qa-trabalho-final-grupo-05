@@ -4,7 +4,8 @@ Feature: Lista de filmes
         Given usuário está na tela inicial 
 
     Scenario: Deve ser possivel visualizar a lista de filmes estando autenticado
-        When está autenticado 
+        When existir filmes cadastrados 
+        And está autenticado 
         Then deve ser possivel visualizar as informações dos filmes 
 
     ## geral
