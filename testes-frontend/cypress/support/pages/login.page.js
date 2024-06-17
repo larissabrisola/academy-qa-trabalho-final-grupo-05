@@ -20,6 +20,5 @@ export default class LoginPage {
         this.typeEmail(email)
         this.typePassword(password)
         this.clickButtonLogin();
-        cy.wait(1200);
     }
 }

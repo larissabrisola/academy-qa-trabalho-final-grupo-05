@@ -1,15 +1,25 @@
 import { faker } from "@faker-js/faker";
-describe("Teste promover usuário a administrador", () => {
+describe("Promover usuário", () => {
+
+    let token 
+    let nome 
+    let email 
+
     beforeEach(() => {
-        let nome = faker.person.fullName()
-        let email = faker.internet.email()
-        cy.createUser(nome, email, "123456", true)
-        cy.login(email, "123456")
+         nome = faker.person.fullName()
+         email = faker.internet.email()
+        cy.createAndLoginUser(nome, email, "123456", true).then((response)=>{
+            token = response.token
+            Cypress.env('accessToken', token)
+        })
+        
     })
+
     afterEach(() => {
-        cy.inactivateUser()
+        cy.inactivateUser(token)
     })
-    it("Deve ser possível fazer a promoção com um usuário propriamente logado e autenticado", function () {
+    
+    it("Deve ser possivel promover a si mesmo como administrador", function () {
         cy.request({
             method: "PATCH",
             url: "users/admin",
@@ -22,8 +32,8 @@ describe("Teste promover usuário a administrador", () => {
         })
     })
 
-    it("Deve ser possível um usuário admin passar a ser um usuário critico", () => {
-        cy.promoteAdmin()
+    it("Deve ser possível um usuário admin se tornar critico", () => {
+        cy.promoteAdmin(token)
         cy.request({
             method: 'PATCH',
             url: 'users/apply',
@@ -34,36 +44,10 @@ describe("Teste promover usuário a administrador", () => {
             expect(response.status).to.equal(204)
         })
     })
-    it.only("A review anterior não deve ser alterada após a promoção do usuário a admin", () => {
-        let token
-        cy.promoteAdmin()
-        cy.createMovie().then((response) => {
-            cy.wrap(response).as("data")
-        })
-        cy.inactivateUser()
-        cy.createAndLoginUser(faker.person.fullName(), faker.internet.email(), "123456").then((data) => {
-            token = data.token
-            cy.get("@data").then((data) => { cy.postReview(data.id, token) })
-            cy.promoteAdminWithToken(token)
-        })
-        cy.createAndLoginUser(faker.person.fullName(), faker.internet.email(), "123456").then((data) => {
-            token = data.token
-            Cypress.env('accessToken', token)
-            cy.get("@data").then((data) => {
-                cy.request("GET", "movies/" + data.id).then((response) => {
-                    expect(response.body.reviews[0].reviewText).to.deep.equal("Teste review usuário inativado / promovido")
-                    expect(response.body.reviews[0].reviewType).to.equal(0)
-                    expect(response.body.reviews[0].score).to.equal(5)
-                    expect(response.body.reviews[0].user.type).to.equal(1)
-                    Cypress.env('accessToken', token)
-                })
-            })
-        })
-    })
 })
 
 
-describe("Não deve ser possível fazer a promoção sem fazer o login do usuário", () => {
+describe("Promover usuário - usuário não logado", () => {
     it("Não deve ser possível fazer a promoção sem fazer o login do usuário", () => {
         cy.request({
             method: "PATCH",

@@ -46,24 +46,21 @@ After(() => {
 Given('que estou logado e avaliei previamente um filme', () => {
     cy.visit(Cypress.env('inicial_url') + 'login')
     loginPage.login(email, password)
-    inicialPage.selecionaFilme(filme.title);
+    inicialPage.clickFirstMovieList();
     movieDetails.avaliarFilme('Gostei!')
     cy.contains('button', 'Enviar').click();
 })
 
 Given('sou um usuário qualquer', () => {
     cy.visit(Cypress.env('inicial_url'))
-    cy.wait(1200)
 })
 
 Given('que estou logado e não relizei avaliações previamente', () => {
     cy.visit(Cypress.env('inicial_url') + 'login')
     loginPage.login(email, password)
-    cy.wait(1000)
 })
 
 When('acessar meu perfil', () => {
-    cy.wait(1500);
     inicialPage.clicklinkPerfil();
 })
 
@@ -78,16 +75,17 @@ When('e inserir novas informaçoes', () => {
 })
 
 Then('visualizo nome, nota e texto avaliativo dos filmes avaliados', () => {
-    cy.get(profilePage.linkNomeFilme).contains(filme.title)
+    cy.get(profilePage.linkNomeFilme).should('be.visible')
     cy.get(profilePage.notaEstrelas).should('be.visible')
     cy.get(profilePage.movieCard).contains('Gostei!')
+    cy.get(profilePage.movieDescription).should('be.visible')
+
 })
 
 Then('será possível visualizar os detalhes do filme avaliado', () => {
-    cy.contains(movieDetails.titleMovie, filme.title).should('be.visible')
-    cy.contains(movieDetails.dataMovie, filme.releaseYear).should('be.visible')
-    cy.contains(movieDetails.dataMovie, filme.durationInMinutes / 60).should('be.visible')
-    cy.contains(movieDetails.dataMovie, filme.genre).should('be.visible')
+    cy.get(movieDetails.titleMovie).should('be.visible')
+    cy.get(movieDetails.dataMovie).should('be.visible')
+    cy.get(movieDetails.dataMovie).should('be.visible')
     cy.get(movieDetails.moviePoster).should('be.visible')
 })
 

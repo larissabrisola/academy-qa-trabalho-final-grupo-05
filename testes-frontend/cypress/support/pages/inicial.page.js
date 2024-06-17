@@ -8,6 +8,8 @@ export default class InicialPage {
     linkPerfil = '[href="/profile"]'
     buttonSearch = '.search-button'
 
+    firstMovieList = ".top-rated-movies > div.carousel-container > div.carousel-data > a:nth-child(1)"
+
     typePesquisa(filme){
         cy.get(this.inputPesquisa).type(filme)
     }
@@ -24,9 +26,7 @@ export default class InicialPage {
         cy.get(this.linkPerfil).click()
     }
 
-    selecionaFilme(filme){
-        this.typePesquisa(filme);
-        this.clickButtonSearch();
-        this.clickMovieCard();
+    clickFirstMovieList (){
+        cy.get(this.firstMovieList).click()
     }
 }

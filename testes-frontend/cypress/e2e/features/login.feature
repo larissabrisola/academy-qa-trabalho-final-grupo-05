@@ -3,7 +3,7 @@ Feature: Login
     Background: usuário está na tela de login
         Given usuário está na tela de login
 
-    Scenario: Login realizado com sucesso
+    Scenario: Deve ser possivel realizar login
         When informar email cadastrado
         And preencher a senha corretamente
         And clicar em Login

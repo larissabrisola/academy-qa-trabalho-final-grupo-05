@@ -8,7 +8,7 @@ Feature: Consulta de avaliações de usuário
         When acessar meu perfil
         Then visualizo nome, nota e texto avaliativo dos filmes avaliados
 
-    Scenario: Deve ser possível visualizar as informações dos filmes avaliados
+    Scenario: Deve ser possivel acessar detalhes dos filmes avaliados
         Given que estou logado e avaliei previamente um filme
         When acessar meu perfil
         And selecionar uma avaliação feita anteriormente
