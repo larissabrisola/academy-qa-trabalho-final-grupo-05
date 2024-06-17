@@ -26,7 +26,7 @@ Gestão do projeto, bugs encontrados e sugestões de melhorias podem ser encontr
 
 
 
-## FERRAMENTAS NECESSÁRIAS
+## FERRAMENTAS UTILIZADAS
 
 WEB:
 - Cypress - Framework que possibilitou a escrita de testes automatizados em JavaScript
