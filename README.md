@@ -4,7 +4,7 @@
 
 ![fully trained and highly experienced staff](https://media1.tenor.com/m/7AV6xe4BVyUAAAAC/pest-control-sarasota.gif)
 
-[Ariana Silva]()   - [Eriko Barbosa]()  - [Larissa Brisola]()   - [Manoel Porto]()
+[Ariana Silva](https://github.com/arianarsilva)   - [Eriko Barbosa](https://github.com/DevEriko)  - [Larissa Brisola](https://github.com/larissabrisola)   - [Manoel Porto](https://github.com/manoscreu)
 </div>
 
 
