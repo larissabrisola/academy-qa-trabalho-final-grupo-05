@@ -19,7 +19,7 @@ O Sistema RAROMDB permite que qualquer usuário tenha acesso a uma variedade de 
 
 ## SOBRE O PROJETO
 
-Desenvolvimento e implementação de testes no  ecossistema RAROmdb (WEB, MOBILE E API)
+Desenvolvimento e implementação de testes no  ecossistema RAROmdb (WEB, MOBILE E API) Teste de regressão, testes automatizados, testes manuais, testes exploratórios etc. foram realizados para garantir a qualidade do sistema.
 
 Gestão do projeto, bugs encontrados e sugestões de melhorias podem ser encontrados em: [TRELLO-BAYGON](https://trello.com/b/f7OrkV3y/projeto-final)
 
