@@ -43,4 +43,6 @@ MOBILE:
 API:
 - Cypress - Framework que possibilitou a escrita de testes automatizados em JavaScript
 - Jsonwebtoken - Utilizada para decodificar o token de usuário
+- FakerJS - Biblioteca utilizada para gerar dados para os testes
+
 
