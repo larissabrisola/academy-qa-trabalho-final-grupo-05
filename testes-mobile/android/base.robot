@@ -8,3 +8,4 @@ Library     XML
 Resource    utils/config.robot
 Resource    utils/commons.robot
 Resource    pages/raroMDB.robot
+
