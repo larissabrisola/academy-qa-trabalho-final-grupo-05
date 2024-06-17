@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 
-describe("Buscar filme com o usuário logado e autenticado no sistema", () => {
+describe("Buscar filme", () => {
   let uToken;
   let filme;
 
