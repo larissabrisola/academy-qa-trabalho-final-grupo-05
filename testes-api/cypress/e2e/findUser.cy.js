@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 
-describe("Testes da funcionalidade de encontrar usuários", () => {
+describe("Encontrar usuário", () => {
   let userName;
   let userEmail;
   let password;
