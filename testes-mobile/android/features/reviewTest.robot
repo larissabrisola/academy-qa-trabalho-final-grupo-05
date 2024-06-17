@@ -60,4 +60,4 @@ Não deve ser possível escrever uma avaliação com mais que 500 caracteres
     E selecionar para adicionar uma avaliação
     E inserir um texto avaliativo com 501 caracteres
     E confirmar a avaliação
-    Então será possível visualizar a avaliação criada
+    Então a avaliação não será feita

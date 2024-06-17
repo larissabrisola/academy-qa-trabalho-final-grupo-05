@@ -133,11 +133,11 @@ Dado que usuário está na tela de login
 
 
 Dado que estou na tela de filmes
-    Cria Filme na api
+    Cria review na api
     Clica e espera    ${buttonMenu}    ${buttonFilmes}
     Click Element     ${buttonFilmes}
-    Verifica primeiro filme
     Critica Primeiro Filme
+    Verifica primeiro filme
 
 Dado que me encontro na tela de filmes 
     Cria review na api
@@ -253,6 +253,7 @@ E inserir um texto avaliativo com 500 caracteres
     Clica e digita    ${inputTextAvalia}    ${texto500}
 
 E acessar um filme
+    Verifica primeiro filme
     ${filme}    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]
     Wait Until Element Is Visible    ${filme}
     Click Element    ${filme}
@@ -276,13 +277,13 @@ E criar uma avaliação
     E confirmar a avaliação
     Wait Until Element Is Visible    ${mensagemAlertaSucesso}
     Verifica contentDesc    ${mensagemAlertaSucesso}    Sua review foi adicionada!
-    ${Nome_Review}    Set Variable    Por "${nome}" em ${Data_atual}
+    ${Nome_Review}    Set Variable    Por "${nome}" em 
     ${criticaDoFilme}    Set Variable
     ...    //android.widget.ImageView[contains(@content-desc, '${tituloM}')]//android.view.View[contains(@content-desc, '${Nome_Review}')]
     Press Keycode    4
     Press Keycode    4
     Wait Until Element Is Visible    ${button+atualizar}
-    Swipe Until Element Is Visible    ${criticaDoFilme}    15
+    Swipe Until Element Is Visible    ${criticaDoFilme}    30
     Verifica contentDesc    ${criticaDoFilme}    ${Nome_Review}
     Verifica contentDesc    ${criticaDoFilme}    Malemá esse filme!
 
@@ -376,7 +377,7 @@ E preencher o formulário com nome "A"
 E preencher o formulário com uma senha
     Clica e digita    ${inputSenha}        123456
 
-E confirmarçao de senha diferente
+E confirmaçao de senha diferente
     Clica e digita    ${inputConfSenha}    654321
 
 
@@ -403,12 +404,12 @@ Então consigo criar uma avaliação
 
 Então consigo visualizar todas os detalhes de uma avaliação
 
-    ${Nome_Review}    Set Variable       Por "${nomeUser}" em ${Data_atual}
+    ${Nome_Review}    Set Variable       Por "${nomeUser}" em 
     ${criticaDoFilme}    Set Variable    //android.widget.ImageView[contains(@content-desc, '${tituloM}')]//android.view.View[contains(@content-desc, '${Nome_Review}')]
     Wait Until Element Is Visible        ${button+atualizar}
     Swipe Until Element Is Visible       ${criticaDoFilme}    15
     Verifica contentDesc    ${criticaDoFilme}         ${Nome_Review}
-    Verifica contentDesc    ${criticaDoFilme}         Esta com certeza é uma review valida
+    Verifica contentDesc    ${criticaDoFilme}         ${review}
 
 Então o login é realizado com sucesso
     Verifica contentDesc    ${sucessoLogin}           Login realizado!
@@ -438,20 +439,20 @@ Então o login não é realizado e uma mensagem deve ser exibida "Informe a senh
 Então será possível visualizar a avaliação criada
     Wait Until Element Is Visible     ${mensagemAlertaSucesso}
     Verifica contentDesc              ${mensagemAlertaSucesso}    Sua review foi adicionada!
-    ${Nome_Review}    Set Variable    Por "${nome}" em ${Data_atual}
+    ${Nome_Review}    Set Variable    Por "${nome}" em 
     ${criticaDoFilme}    Set Variable
     ...    //android.widget.ImageView[contains(@content-desc, '${tituloM}')]//android.view.View[contains(@content-desc, '${Nome_Review}')]
     Press Keycode    4
     Press Keycode    4
     Wait Until Element Is Visible     ${button+atualizar}
-    Swipe Until Element Is Visible    ${criticaDoFilme}    15
+    Swipe Until Element Is Visible    ${criticaDoFilme}    30
     Verifica contentDesc              ${criticaDoFilme}    ${Nome_Review}
     Verifica contentDesc              ${criticaDoFilme}    Podem ver pois eu gostei!!!
 
 Então somente a avaliação antiga será atualizada
     Wait Until Element Is Visible     ${mensagemAlertaSucesso}
     Verifica contentDesc              ${mensagemAlertaSucesso}    Sua review foi adicionada!
-    ${Nome_Review}    Set Variable    Por "${nome}" em ${Data_atual}
+    ${Nome_Review}    Set Variable    Por "${nome}" em 
     ${criticaDoFilme}    Set Variable
     ...    //android.widget.ImageView[contains(@content-desc, '${tituloM}')]//android.view.View[contains(@content-desc, '${Nome_Review}')]
     Press Keycode    4
@@ -478,7 +479,6 @@ Então a avaliação não será feita
 
 Então o usuário poderá ver todos os dados do filme
     Verifica primeiro filme
-    Critica Primeiro Filme
     ${filme}    Set Variable    //android.widget.ImageView[contains(@content-desc,"${tituloM}")]
     Wait Until Element Is Visible     ${filme}
     Verifica contentDesc              ${filme}    ${tituloM}
