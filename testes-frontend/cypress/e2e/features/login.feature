@@ -1,5 +1,8 @@
 Feature: Login
-
+    Como um usuário com registro no sistema
+    Desejo efetuar login
+    Para poder gerenciar minhas informações, avaliar filmes ou gerenciar o sistema.
+    
     Background: usuário está na tela de login
         Given usuário está na tela de login
 
