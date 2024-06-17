@@ -1,5 +1,8 @@
 Feature: Lista de filmes
-
+    Como uma pessoa qualquer acessando o sistema
+    Desejo poder visualizar os filmes cadastrados
+    Para poder analisar algumas informações dos filmes
+    
     Background: usuário está na tela inicial 
         Given usuário está na tela inicial 
 
