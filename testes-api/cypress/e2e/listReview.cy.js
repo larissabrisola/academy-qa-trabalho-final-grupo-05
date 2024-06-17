@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 
-describe("Listagem de avaliações de filmes", function () {
+describe("Lista de reviews do usuário", function () {
   let movieId;
   let movieTitle;
   let token;
