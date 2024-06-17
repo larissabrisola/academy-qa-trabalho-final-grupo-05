@@ -102,6 +102,7 @@ Cria review na api
     ...    /users/review
     ...    headers=${headers}
     ...    json=${payloadReview}
+    Set Global Variable    ${review}
     Set Global Variable    ${nomeUser}
     Set Global Variable    ${email}
     Set Global Variable    ${tituloM}
@@ -130,7 +131,7 @@ Critica Primeiro Filme
     ...    json=${payloadReview}
     Set Global Variable    ${nomeUser}
     Set Global Variable    ${email}
-    Set Global Variable    ${title}
+    Set Global Variable    ${tituloM}
     Set Global Variable    ${description}
     Set Global Variable    ${review}
 

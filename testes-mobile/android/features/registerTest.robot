@@ -149,7 +149,7 @@ Não deve ser possivel realizar o cadastro se a senha e confirmação da senha n
     Quando preencher o formulário com nome válido
     E preencher o formulário com email válido
     E preencher o formulário com uma senha
-    E confirmarçao de senha diferente
+    E confirmaçao de senha diferente
     E clicar em Cadastrar
     Então o usuário não será cadastrado e receberá um aviso "As senhas não coincidem."
 
