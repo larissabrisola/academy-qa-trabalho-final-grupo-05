@@ -42,7 +42,6 @@ AfterAll(() => {
 Given('que estou logado e na tela de filmes', () => {
     cy.visit(Cypress.env('inicial_url') + 'login');
     pageLogin.login(email, password);
-    cy.wait(1500);
 })
 
 Given('que estou na tela de filmes', () => {
@@ -68,10 +67,13 @@ Then('tenho acesso à todas aos detalhes do filme selecionado', () => {
 
 Then('consigo visualizar a média das avaliações da audiência', () => {
     cy.get(movieDetails.containerMedia).contains('Avaliação da audiência')
+    cy.get(movieDetails.movieScoreAudiencia).should('be.visible')
+
 })
 
 Then('consigo visualizar a média das avaliações da crítica', () => {
     cy.get(movieDetails.containerMedia).contains('Avaliação da crítica')
+    cy.get(movieDetails.movieScoreCritica).should('be.visible')
 })
 
 Then('consigo criar uma avaliação', () => {
